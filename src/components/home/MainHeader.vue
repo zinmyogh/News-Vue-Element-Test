@@ -8,15 +8,15 @@
     >
       <!-- <el-menu-item>
         <el-image class="logo" :src="url" :fits="fits"></el-image>
-      </el-menu-item> -->
+      </el-menu-item>-->
       <el-menu-item>
-        <img src="../../assets/images/logo.png" alt="" />
+        <img src="../../assets/images/logo.png" alt />
       </el-menu-item>
 
       <el-submenu class="header-bar-item" index="1">
         <template slot="title">
           <el-avatar :size="35">
-            <img src="../../assets/images/profile.png" alt="" />
+            <img src="../../assets/images/profile.png" alt />
           </el-avatar>
           <span style="padding-left: 10px">Zike8790</span>
         </template>
@@ -88,6 +88,7 @@ export default {
   margin: 0 auto;
   height: 100%;
   z-index: 100;
+  width: 1180px;
 }
 .header-bar .header-bar-item {
   float: right;

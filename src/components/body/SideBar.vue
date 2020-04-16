@@ -1,5 +1,5 @@
 <template>
-  <div class="side-bar">
+  <div>
     <el-row class="tac">
       <el-col class="side-bar-item">
         <el-menu
@@ -7,7 +7,8 @@
           class="el-menu-vertical-demo"
           active-text-color="red"
           :default-openeds="['1']"
-          unique-opened="true"
+          :unique-opened="true"
+          :router="true"
           @open="handleOpen"
           @close="handleClose"
         >
@@ -18,11 +19,11 @@
             </template>
             <el-menu-item-group>
               <template slot="title">发布</template>
-              <el-menu-item index="1-1">文章</el-menu-item>
-              <el-menu-item index="1-2">微头条</el-menu-item>
-              <el-menu-item index="1-3">视频</el-menu-item>
-              <el-menu-item index="1-4">微视频</el-menu-item>
-              <el-menu-item index="1-5">图集</el-menu-item>
+              <el-menu-item index="/create/article">文章</el-menu-item>
+              <el-menu-item index="/create/moment">微头条</el-menu-item>
+              <el-menu-item index="/create/video">视频</el-menu-item>
+              <el-menu-item index="/video">微视频</el-menu-item>
+              <el-menu-item index="/photo">图集</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
 
@@ -57,13 +58,13 @@ export default {
 </script>
 
 <style scoped>
-.side-bar {
+/* .side-bar {
+  position: relative;
   margin-top: 100px;
-  margin-left: 10%;
   height: 80vh;
-  /* background-color: aqua; */
-}
+  background-color: aqua;
+} */
 .el-submenu .el-menu-item {
-  min-width: 0 !important;
+  min-width: 150px !important;
 }
 </style>
