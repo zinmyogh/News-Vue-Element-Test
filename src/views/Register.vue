@@ -8,34 +8,58 @@
         :rules="rules"
         ref="model"
         @submit.native.prevent="register"
+        prop="model"
       >
-        <el-form-item label="用户名" prop="username">
+        <!-- <el-form-item label="用户名" prop="username">
           <el-input v-model="model.username"></el-input>
+        </el-form-item>-->
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="model.phone"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="model.password"></el-input>
+          <el-input
+            type="password"
+            v-model="model.password"
+            show-password
+          ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="conform_pass">
-          <el-input type="password" v-model="model.conform_pass"></el-input>
+          <el-input
+            type="password"
+            v-model="model.conform_pass"
+            show-password
+          ></el-input>
         </el-form-item>
         <div class="register">
-          <el-button type="primary" native-type="submit" style="width: 150px">注册账号</el-button>
+          <el-button type="primary" native-type="submit" style="width: 150px"
+            >注册账号</el-button
+          >
         </div>
       </el-form>
       <div class="register">
-        <el-link class="register" @click="goRegister()" type="info" :underline="false">已有账号，去登录</el-link>
+        <el-link
+          class="register"
+          @click="goRegister()"
+          type="info"
+          :underline="false"
+          >已有账号，去登录</el-link
+        >
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
+// import service from '../../utils/request'
 export default {
   name: "register",
   data() {
-    var checkName = (rule, value, callback) => {
+    var checkPhone = (rule, value, callback) => {
+      var regPhone = /^1[3456789]\d{9}$/;
       if (!value) {
-        return callback(new Error("用户名不能为空"));
+        return callback(new Error("手机号不能为空"));
+      } else if (!regPhone.test(value)) {
+        return callback(new Error("手机号格式不正确"));
       } else callback();
     };
     var validatePass = (rule, value, callback) => {
@@ -59,39 +83,47 @@ export default {
     };
     return {
       model: {
-        username: "",
+        phone: "",
         password: "",
-        conform_pass: ""
+        conform_pass: "",
       },
       rules: {
-        username: [{ validator: checkName, trigger: "blur" }],
+        phone: [{ validator: checkPhone, trigger: "blur" }],
         password: [{ validator: validatePass, trigger: "blur" }],
-        conform_pass: [{ validator: validatePass2, trigger: "blur" }]
-      }
+        conform_pass: [{ validator: validatePass2, trigger: "blur" }],
+      },
     };
   },
   methods: {
-    // async register() {
-    //   const res = await this.$http.post("register", this.model);
-    //   localStorage.token = res.data.token;
-    //   this.$router.push("/");
-    //   this.$message({
-    //     type: "success",
-    //     message: "register successfully! Welcome"
-    //   });
-    // },
     goRegister() {
       this.$router.push("/login");
     },
-    register() {
-      console.log(
-        "register",
-        this.model.username,
-        this.model.password,
-        this.model.conform_pass
+    async register() {
+      const res = await this.$service.post(
+        // `/user/register?phone=${this.model.phone}&&password=${this.model.password}`
+        "/user/register",
+        this.model
       );
-    }
-  }
+      if (res.data.code == 200) {
+        // console.log(res);
+        this.$message({
+          type: "success",
+          message: res.data.msg,
+        });
+        this.$router.push("/login");
+        // this.$router.push({
+        //   path: "/login",
+        //   query: { acc: this.model.phone }
+        // });
+      } else {
+        // console.log(res);
+        this.$message({
+          type: "error",
+          message: res.data.msg,
+        });
+      }
+    },
+  },
 };
 </script>
 

@@ -2,15 +2,27 @@
   <div class="login-background">
     <h1 style="color: white; padding-left: 20px">缅甸头条</h1>
     <el-card header class="login-card">
-      <el-form :model="model" status-icon :rules="rules" ref="model" @submit.native.prevent="login">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="model.username"></el-input>
+      <el-form
+        :model="loginForm"
+        status-icon
+        :rules="rules"
+        ref="loginForm"
+        prop="loginForm"
+        @submit.native.prevent="login"
+      >
+        <el-form-item label="用户名" prop="phone">
+          <el-input v-model="loginForm.phone"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password " v-model="model.password"></el-input>
+          <el-input type="password " v-model="loginForm.password" show-password></el-input>
         </el-form-item>
         <el-form-item class="login">
-          <el-button type="primary" native-type="submit" style="width: 150px">账号登录</el-button>
+          <el-button
+            type="primary"
+            :loading="loading"
+            native-type="submit"
+            style="width: 150px"
+          >账号登录</el-button>
         </el-form-item>
       </el-form>
 
@@ -25,51 +37,83 @@
 export default {
   name: "Login",
   data() {
-    var validateName = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入用户名"));
+    // var validateName = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error("请输入用户名"));
+    //   } else callback();
+    // };
+    var validatePhone = (rule, value, callback) => {
+      var regPhone = /^1[3456789]\d{9}$/;
+      if (!value || value === "") {
+        return callback(new Error("手机号不能为空"));
+      } else if (!regPhone.test(value)) {
+        return callback(new Error("手机号格式不正确"));
       } else callback();
     };
-
     var validatePass = (rule, value, callback) => {
-      if (value === "") {
+      if (!value || value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.model.checkPass !== "") {
-          this.$refs.model.validateField("checkPass");
+        if (this.loginForm.checkPass !== "") {
+          this.$refs.loginForm.validateField("checkPass");
         }
         callback();
       }
     };
 
     return {
-      model: {
-        username: "",
+      loginForm: {
+        phone: "",
         password: ""
       },
       rules: {
-        username: [{ validator: validateName, trigger: "blur" }],
+        phone: [{ validator: validatePhone, trigger: "blur" }],
         password: [{ validator: validatePass, trigger: "blur" }]
-      }
+      },
+      loading: false
     };
   },
   methods: {
-    // async login() {
-    //   const res = await this.$http.post("login", this.model);
-    //   localStorage.token = res.data.token;
-    //   this.$router.push("/");
-    //   this.$message({
-    //     type: "success",
-    //     message: "Login successfully! Welcome"
-    //   });
-    // },
     goRegister() {
       this.$router.push("/register");
     },
+
     login() {
-      console.log("loggin", this.model.username, this.model.password);
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              // console.log("res: ", res);
+              this.loading = false;
+              this.$router.push("/");
+            })
+            .catch(e => {
+              console.log(e);
+              this.loading = false;
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     }
+    // getParams() {
+    //   // 取到路由带过来的参数
+    //   const phone = this.$route.query.acc;
+    //   // const password = this.$route.query.password;
+    //   // 将数据放在当前组件的数据内
+    //   this.loginForm.phone = phone;
+    //   // this.loginForm.password = password;
+    // }
   }
+  // created() {
+  //   this.getParams();
+  // },
+  // watch: {
+  //   $route: "getParams"
+  // }
 };
 </script>
 
