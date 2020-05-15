@@ -1,4 +1,3 @@
-import request from "../utils/request";
 import { post } from "../utils/request";
 /**
  *
@@ -24,27 +23,3 @@ export const changePass = (data) => {
   console.log("apiPi: ", data);
   return post(`user/changepass`, data);
 };
-
-// export function Login(data) {
-//   console.log("api user: ", data);
-//   return request({
-//     url: "user/login",
-//     method: "post",
-//     data,
-//   });
-// }
-
-export function getInfo(token) {
-  return request({
-    url: "user/getuserinfo",
-    method: "get",
-    params: { token },
-  });
-}
-
-export function logout() {
-  return request({
-    url: "/vue-element-admin/user/logout",
-    method: "post",
-  });
-}

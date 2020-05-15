@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my_post">
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="文章" name="article">
         <MyArticlePost />
@@ -38,6 +38,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.my_post {
+  width: 1020px;
+  height: 750px;
+  overflow: scroll;
+  background-color: aquamarine;
+}
 .el-tabs {
   min-height: 750px;
 }

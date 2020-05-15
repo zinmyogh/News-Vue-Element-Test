@@ -1,14 +1,9 @@
 <template>
   <div class="header">
     <el-menu :default-active="activeIndex" class="header-bar" mode="horizontal" :router="true">
-      <!-- <el-menu-item>
-        <el-image class="logo" :src="url" :fits="fits"></el-image>
-      </el-menu-item>-->
       <el-menu-item>
-        <!-- <img src="../../assets/images/logo.png" alt /> -->
         <span style="font-size: 30px; color: #ff5555;font-weight:900;">缅甸头条</span>
       </el-menu-item>
-
       <el-submenu class="header-bar-item" index="1">
         <template slot="title">
           <el-avatar :size="35">
@@ -20,10 +15,6 @@
           <i class="el-icon-setting"></i>
           <span>账号设置</span>
         </el-menu-item>
-        <!-- <el-menu-item index="1-2">
-          <i class="el-icon-switch-button"></i>
-          <span>退出登录</span>
-        </el-menu-item>-->
       </el-submenu>
 
       <el-menu-item class="header-bar-item">
@@ -60,27 +51,6 @@ export default {
   },
   computed: {
     ...mapGetters(["name", "phone"])
-  },
-  // created() {
-  //   this.getUser();
-  // },
-  methods: {
-    // handleSelect(key, keyPath) {
-    //   // if (keyPath == "1-2") {
-    //   //   removeToken();
-    //   //   localStorage.clear();
-    //   //   setTimeout(() => {
-    //   //     this.$router.push("/login");
-    //   //   }, 1000);
-    //   // }
-    //   this.$router.push("/myaccount");
-    //   console.log(key, keyPath);
-    // }
-    // getUser() {
-    //   this.user = {
-    //     name: this.name
-    //   };
-    // }
   },
   mounted() {
     if (localStorage.userName == "null") {

@@ -37,11 +37,6 @@
 export default {
   name: "Login",
   data() {
-    // var validateName = (rule, value, callback) => {
-    //   if (value === "") {
-    //     callback(new Error("请输入用户名"));
-    //   } else callback();
-    // };
     var validatePhone = (rule, value, callback) => {
       var regPhone = /^1[3456789]\d{9}$/;
       if (!value || value === "") {
@@ -99,21 +94,7 @@ export default {
         }
       });
     }
-    // getParams() {
-    //   // 取到路由带过来的参数
-    //   const phone = this.$route.query.acc;
-    //   // const password = this.$route.query.password;
-    //   // 将数据放在当前组件的数据内
-    //   this.loginForm.phone = phone;
-    //   // this.loginForm.password = password;
-    // }
   }
-  // created() {
-  //   this.getParams();
-  // },
-  // watch: {
-  //   $route: "getParams"
-  // }
 };
 </script>
 

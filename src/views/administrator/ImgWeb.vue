@@ -63,7 +63,6 @@ export default {
           files.length
         } files this time, add up to ${files.length + fileList.length} totally`
       );
-      //imageLength = files.length;
     },
     beforeAvatarUpload(file) {
       //文件上传之前调用做一些拦截限制
@@ -97,5 +96,8 @@ export default {
 }
 .hide .el-upload--picture-card {
   display: none;
+}
+.el-breadcrumb {
+  padding: 10px 0 20px 0;
 }
 </style>

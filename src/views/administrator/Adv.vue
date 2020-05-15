@@ -5,7 +5,6 @@
       <el-breadcrumb-item>管理员</el-breadcrumb-item>
       <el-breadcrumb-item>发布广告</el-breadcrumb-item>
     </el-breadcrumb>
-    <!-- <el-form-item label="广告封面" prop="advCover"> -->
     <el-upload
       ref="avdForm"
       class="avatar-uploader"
@@ -18,7 +17,6 @@
       <img v-if="advImgUrl" :src="advImgUrl" class="avatar" />
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
-    <!-- </el-form-item> -->
     <el-form
       :model="advForm"
       status-icon
@@ -56,14 +54,9 @@ export default {
       callback();
     };
     var checkadvUrl = (rule, value, callback) => {
-      // let pattern = /^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/;
       if (value === "") {
         callback(new Error("广告方URL地址不能为空！"));
-      }
-      // else if (pattern.test(value)) {
-      //   callback(new Error("URL 格式不正确！"));
-      // }
-      else {
+      } else {
         callback();
       }
     };
@@ -98,7 +91,6 @@ export default {
   methods: {
     handleAvatarSuccess(res) {
       console.log(res);
-      // localStorage.setItem("profile", res.url);
       this.advImgUrl = res.url;
     },
     submitForm() {
@@ -149,7 +141,4 @@ export default {
 .el-input {
   width: 80%;
 }
-/* .hide .el-upload--picture-card {
-  display: none;
-} */
 </style>

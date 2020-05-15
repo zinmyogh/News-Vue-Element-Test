@@ -44,18 +44,6 @@
               style="overflow:hidden;"
             >{{introduction || "亲，还没有写励志短语。。。"}}</div>
           </div>
-          <!-- <div class="account_right1">
-            <div class="account_right1_1">地址</div>
-            <div class="account_right1_2">{{info.address}}</div>
-          </div>-->
-          <!-- <div class="account_right1">
-            <div class="account_right1_1">生日</div>
-            <div class="account_right1_2">{{info.birthday}}</div>
-          </div>-->
-          <!-- <div class="account_right11">
-            <div class="account_right1_1">性别</div>
-            <div class="account_right1_2">{{`${info.sex == '1' ? '男': '女'}`}}</div>
-          </div>-->
         </div>
       </div>
 
@@ -115,7 +103,6 @@
 </template>
 
 <script>
-// import { setInfo } from "../../api/user";
 import { changePass } from "../../api/user";
 import { mapGetters } from "vuex";
 import BaseUrl from "../../api/default";
@@ -144,17 +131,17 @@ export default {
   mounted() {
     this.$store.commit("user/SET_PHONE", localStorage.phone);
     if (localStorage.userName == "null") {
-      console.log("username null: >>>");
+      // console.log("username null: >>>");
       return;
     } else {
-      console.log("username not null: >>>>");
+      // console.log("username not null: >>>>");
       this.$store.commit("user/SET_NAME", localStorage.userName);
     }
     if (localStorage.introduction == "null") {
-      console.log("1111111");
+      // console.log("1111111");
       return;
     } else {
-      console.log("2222222");
+      // console.log("2222222");
       this.$store.commit("user/SET_INTRODUCTION", localStorage.introduction);
     }
     this.imageUrl = localStorage.profile;
@@ -171,7 +158,7 @@ export default {
         oldpassword: this.passFrom.oldpassword,
         newpassword: this.passFrom.newpassword
       };
-      console.log("enter passs: ", data);
+      // console.log("enter passs: ", data);
       changePass(data)
         .then(res => {
           if (res.data.code == 200) {
@@ -183,13 +170,13 @@ export default {
               message: res.data.msg
             });
           }
-          console.log("res: ", res);
+          // console.log("res: ", res);
         })
         .catch(e => {
           console.log("eee: ", e);
         });
       this.changePassForm = false;
-      console.log("change Password：》》》》");
+      // console.log("change Password：》》》》");
     },
     async changeInfo() {
       let data = {
@@ -211,9 +198,6 @@ export default {
       // .catch(e => {
       //   console.log(e);
       // });
-      // const res = await changeUserInfo(data);
-      // console.log(res.data.info);
-      // localStorage.setItem("info", JSON.stringify(res.data.info));
       this.updateInfoForm = false;
     },
     handleAvatarSuccess(res) {
@@ -233,14 +217,7 @@ export default {
       }
       return isJPG && isLt2M;
     }
-    // getu() {
-    //   return (this.$store.state.user.info = JSON.parse(localStorage.info));
-    //   console.log(this.$store.state.user.info);
-    // }
   }
-  // onMounted() {
-  //   // setInfo();
-  // }
 };
 </script>
 
@@ -287,7 +264,6 @@ export default {
   justify-content: flex-start;
   padding: 40px 0;
   border-bottom: 1px solid #dfdfdf;
-  /* background-color: red; */
 }
 
 .avator_right {
@@ -296,17 +272,13 @@ export default {
   vertical-align: top;
 }
 .name {
-  /* position: relative; */
-  /* padding-bottom: 30px; */
   font-size: 30px;
   padding-left: 20px;
-  /* background-color: #fff; */
   vertical-align: top;
 }
 .introduction {
   position: relative;
   top: 18px;
-  /* font-size: 15px; */
   font-size: 30px;
   color: gray;
   padding-left: 20px;
@@ -341,12 +313,10 @@ export default {
 }
 .account_right1_1 {
   position: absolute;
-  /* display: inline-block; */
   padding-top: 20px;
 }
 .account_right1_2 {
   position: absolute;
-  /* display: inline-block; */
   padding-top: 20px;
   padding-left: 150px;
 }

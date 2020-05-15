@@ -7,20 +7,15 @@ import Register from "../views/Register";
 import Adv from "../views/administrator/Adv";
 import Img from "../views/administrator/Img";
 import Cty from "../views/administrator/Cty";
-import AdminAccount from "../views/administrator/AdminAccount";
+// import AdminAccount from "../views/administrator/AdminAccount";
 
-// import ImgWeb from "../views/administrator/ImgWeb";
-// import ImgApp from "../views/administrator/ImgApp";
-// import MainContent from "../components/body/MainContent";
-import MainBody from "../components/body/MainBody";
-import CreateArticle from "../components/article/CreateArticle";
-import CreateMoment from "../components/CreateMoment";
-import CreateVideo from "../components/CreateVideo";
-import Video from "../components/Video";
+import MainBody from "../views/MainBody";
+import CreateArticle from "../views/CreateArticle";
+import CreateMoment from "../views/CreateMoment";
+import CreateVideo from "../views/CreateVideo";
 
-// import MyInfo from "../components/me/MyInfo";
-import MyPost from "../components/me/MyPost";
-import MyAccount from "../components/me/MyAccount";
+import MyPost from "../views/me/MyPost";
+import MyAccount from "../views/me/MyAccount";
 import Photo from "../components/Photo";
 import NotFound from "../views/error-page/404";
 
@@ -53,7 +48,6 @@ const routes = [
     redirect: "/mainbody",
     meta: {
       keepAlive: true,
-      // roles: ["admin", "editor"]
     },
     children: [
       {
@@ -77,20 +71,10 @@ const routes = [
         meta: { keepAlive: true },
       },
       {
-        path: "/video",
-        component: Video,
-        meta: { keepAlive: true },
-      },
-      {
         path: "/photo",
         component: Photo,
         meta: { keepAlive: true },
       },
-      // {
-      //   path: "/myinfo",
-      //   component: MyInfo,
-      //   meta: { keepAlive: true },
-      // },
       {
         path: "/mypost",
         component: MyPost,
@@ -104,33 +88,27 @@ const routes = [
       {
         path: "/administrator/upload/adv",
         component: Adv,
-        hidden: true,
+        meta: { keepAlive: true },
+        // hidden: true,
       },
       {
         path: "/administrator/upload/img",
         component: Img,
-        hidden: true,
-        // children: [
-        //   {
-        //     path: "/administrator/upload/imgweb",
-        //     component: ImgWeb,
-        //   },
-        //   {
-        //     path: "/administrator/upload/imgapp",
-        //     component: ImgApp,
-        //   },
-        // ],
+        meta: { keepAlive: true },
+        // hidden: true,
       },
       {
         path: "/administrator/upload/cty",
         component: Cty,
-        hidden: true,
+        meta: { keepAlive: true },
+        // hidden: true,
       },
-      {
-        path: "/administrator/upload/account",
-        component: AdminAccount,
-        hidden: true,
-      },
+      // {
+      //   path: "/administrator/upload/account",
+      //   component: AdminAccount,
+      //   meta: { keepAlive: true },
+      //   // hidden: true,
+      // },
     ],
   },
   {
@@ -147,7 +125,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  // mode: "history",
   routes,
 });
 

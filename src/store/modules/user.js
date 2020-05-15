@@ -1,15 +1,6 @@
-import { Login, SetInfo, getInfo, logout } from "@/api/user";
-import { setToken, removeToken } from "../../utils/auth";
-import { resetRouter } from "../../router";
+import { Login, SetInfo } from "@/api/user";
+import { setToken } from "../../utils/auth";
 
-// const info = {
-//   userID: "",
-//   userName: "",
-//   phone: "",
-//   password: "",
-//   profilePic: "",
-//   introduction: "",
-// };
 const state = {
   token: "",
   userID: "",
@@ -18,7 +9,6 @@ const state = {
   password: "",
   profilePic: "",
   introduction: "",
-  // info: info,
   roles: [],
 };
 
@@ -27,10 +17,6 @@ const mutations = {
     localStorage.setItem("token", token);
     state.token = token;
   },
-  // SET_INFO(state, payload) {
-  //   state.info = payload;
-  //   console.log("userinfo: ", state.info);
-  // },
   SET_NAME: (state, userName) => {
     console.log("mutations; ", userName);
     localStorage.setItem("userName", userName);
@@ -58,7 +44,6 @@ const mutations = {
 };
 
 const actions = {
-  // user login
   login({ commit }, userInfo) {
     const { phone, password } = userInfo;
     // console.log(phone, password);
@@ -78,14 +63,8 @@ const actions = {
             localStorage.setItem("roles", ["editor"]);
           }
           commit("SET_PHONE", JSON.parse(response.data.info.phone));
-          // localStorage.setItem("phone", JSON.parse(response.data.info.phone));
           commit("SET_NAME", response.data.info.userName);
-          // localStorage.setItem("userName", response.data.info.userName);
           commit("SET_INTRODUCTION", response.data.info.introduction);
-          // localStorage.setItem("introduction", response.data.info.introduction);
-          // commit("SET_INFO", response.data.info);
-          // localStorage.setItem("info", response.data.info);
-          // console.log(response.info.phone);
           resolve(response);
         })
         .catch((error) => {
@@ -106,75 +85,12 @@ const actions = {
           localStorage.setItem("userName", response.data.info.userName);
           commit("SET_INTRODUCTION", response.data.info.introduction);
           localStorage.setItem("introduction", response.data.info.introduction);
-          // commit("SET_INFO", JSON.stringify(localStorage.token));
-          // localStorage.setItem("info", JSON.stringify(response.data.info));
           resolve(response);
         })
         .catch((error) => {
           console.log("error lar");
           reject(error);
         });
-    });
-  },
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token)
-        .then((response) => {
-          const { data } = response;
-
-          if (!data) {
-            reject("Verification failed, please Login again.");
-          }
-
-          const { roles, name, avatar, introduction } = data;
-
-          // roles must be a non-empty array
-          if (!roles || roles.length <= 0) {
-            reject("getInfo: roles must be a non-null array!");
-          }
-
-          commit("SET_ROLES", roles);
-          commit("SET_NAME", name);
-          commit("SET_AVATAR", avatar);
-          commit("SET_INTRODUCTION", introduction);
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
-
-  // user logout
-  logout({ commit, state, dispatch }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token)
-        .then(() => {
-          commit("SET_TOKEN", "");
-          commit("SET_ROLES", []);
-          removeToken();
-          resetRouter();
-
-          // reset visited views and cached views
-          // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-          dispatch("tagsView/delAllViews", null, { root: true });
-
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
-
-  // remove token
-  resetToken({ commit }) {
-    return new Promise((resolve) => {
-      commit("SET_TOKEN", "");
-      commit("SET_ROLES", []);
-      removeToken();
-      resolve();
     });
   },
 };

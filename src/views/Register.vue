@@ -10,47 +10,27 @@
         @submit.native.prevent="register"
         prop="model"
       >
-        <!-- <el-form-item label="用户名" prop="username">
-          <el-input v-model="model.username"></el-input>
-        </el-form-item>-->
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="model.phone"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input
-            type="password"
-            v-model="model.password"
-            show-password
-          ></el-input>
+          <el-input type="password" v-model="model.password" show-password></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="conform_pass">
-          <el-input
-            type="password"
-            v-model="model.conform_pass"
-            show-password
-          ></el-input>
+          <el-input type="password" v-model="model.conform_pass" show-password></el-input>
         </el-form-item>
         <div class="register">
-          <el-button type="primary" native-type="submit" style="width: 150px"
-            >注册账号</el-button
-          >
+          <el-button type="primary" native-type="submit" style="width: 150px">注册账号</el-button>
         </div>
       </el-form>
       <div class="register">
-        <el-link
-          class="register"
-          @click="goRegister()"
-          type="info"
-          :underline="false"
-          >已有账号，去登录</el-link
-        >
+        <el-link class="register" @click="goRegister()" type="info" :underline="false">已有账号，去登录</el-link>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-// import service from '../../utils/request'
 export default {
   name: "register",
   data() {
@@ -85,13 +65,13 @@ export default {
       model: {
         phone: "",
         password: "",
-        conform_pass: "",
+        conform_pass: ""
       },
       rules: {
         phone: [{ validator: checkPhone, trigger: "blur" }],
         password: [{ validator: validatePass, trigger: "blur" }],
-        conform_pass: [{ validator: validatePass2, trigger: "blur" }],
-      },
+        conform_pass: [{ validator: validatePass2, trigger: "blur" }]
+      }
     };
   },
   methods: {
@@ -99,31 +79,21 @@ export default {
       this.$router.push("/login");
     },
     async register() {
-      const res = await this.$service.post(
-        // `/user/register?phone=${this.model.phone}&&password=${this.model.password}`
-        "/user/register",
-        this.model
-      );
+      const res = await this.$service.post("/user/register", this.model);
       if (res.data.code == 200) {
-        // console.log(res);
         this.$message({
           type: "success",
-          message: res.data.msg,
+          message: res.data.msg
         });
         this.$router.push("/login");
-        // this.$router.push({
-        //   path: "/login",
-        //   query: { acc: this.model.phone }
-        // });
       } else {
-        // console.log(res);
         this.$message({
           type: "error",
-          message: res.data.msg,
+          message: res.data.msg
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

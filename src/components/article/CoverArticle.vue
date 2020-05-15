@@ -47,7 +47,7 @@ export default {
       dialogVisible: false,
       imgList: [],
       token: { authorization: localStorage.token },
-      serverUrl: `${BaseUrl.BasuUrl}article/articleimage`
+      serverUrl: `${BaseUrl.BaseUrl}article/articleimage`
     };
   },
   methods: {
@@ -113,11 +113,6 @@ export default {
 .cover {
   display: flex;
 }
-
-/* .el-upload--picture-card {
-  width: 180px !important;
-} */
-
 .hide .el-upload--picture-card {
   display: none !important;
 }

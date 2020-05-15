@@ -21,7 +21,6 @@
       @focus="onEditorFocus($event)"
       @change="onEditorChange($event)"
     ></quill-editor>
-    <!-- <el-button type="danger" @click="to_data">base64</el-button> -->
   </div>
 </template>
 
@@ -80,9 +79,6 @@ export default {
         }
       },
       serverUrl: `${BaseUrl.BaseUrl}article/articleimage` // 这里写你要上传的图片服务器地址
-      // header: {
-      //   // token: sessionStorage.token
-      // } // 有的图片服务器要求请求头需要有token
     };
   },
   methods: {
@@ -148,8 +144,37 @@ export default {
         this.quillUpdateImg = false;
         return false;
       }
-    },
-    to_data() {
+    }
+  }
+};
+</script>
+
+<style>
+.editor {
+  line-height: normal !important;
+  position: relative;
+  height: 600px;
+}
+
+.ql-snow .ql-editor img {
+  max-width: 500px !important;
+  padding: 5px 50px !important;
+}
+.ql-toolbar.ql-snow {
+  border-bottom: 1px solid #ccc !important;
+}
+.ql-toolbar.ql-snow .ql-formats {
+  padding: 0 10px;
+}
+
+.innerImgUpload {
+  position: relative !important;
+  display: none;
+}
+</style>
+
+
+  <!--  to_data() {
       console.log("context: ", this.content);
       let Base64 = {
         encode(str) {
@@ -180,37 +205,4 @@ export default {
       console.log("encoded: ", encoded);
       console.log(decoded);
     }
-  },
-  mounted() {
-    console.log(BaseUrl.BasuUrl);
-  }
-};
-</script>
-
-<style>
-.editor {
-  line-height: normal !important;
-  position: relative;
-  height: 600px;
-}
-
-.ql-snow .ql-editor img {
-  max-width: 500px !important;
-  padding: 5px 50px !important;
-}
-.ql-toolbar.ql-snow {
-  border-bottom: 1px solid #ccc !important;
-  /* background-color: orangered; */
-  /* position: fixed; */
-  /* width: 978px; */
-  /* position: relative; */
-}
-.ql-toolbar.ql-snow .ql-formats {
-  padding: 0 10px;
-}
-
-.innerImgUpload {
-  position: relative !important;
-  display: none;
-}
-</style>
+    -->

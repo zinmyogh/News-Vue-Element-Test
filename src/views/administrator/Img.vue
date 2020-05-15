@@ -37,9 +37,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.el-breadcrumb {
-  padding: 20px;
-}
+
 .el-tabs {
   min-height: 750px;
 }

@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     addcate() {
-      // console.log(this.categoryName);
       let data = { categoryName: this.categoryNameA };
       addCty(data)
         .then(result => {
@@ -108,20 +107,19 @@ export default {
         });
       });
     },
-    updatecate(row) {
+    updatecate(index, row) {
       // console.log(index, row);
       this.$prompt("请输入新标题名称", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        // inputErrorMessage: "邮箱格式不正确"
       })
         .then(({ value }) => {
           let data = { categoryName: value, categoryOrder: row.categoryOrder };
+          console.log("update cty", data);
           updCty(data)
-            .then(() => {
+            .then(res => {
               this.$router.go(0);
-              // console.log(res);
+              console.log(res);
             })
             .catch(e => {
               console.log(e);
@@ -136,12 +134,15 @@ export default {
     }
   },
   mounted() {
+    console.log("mounted: ");
     getCty()
       .then(res => {
         this.categoryData = res.data.info;
+        // console.log(typeof this.categoryData);
         // console.log(res.data.info);
       })
       .catch(e => {
+        console.log("errror");
         console.log(e);
       });
   }

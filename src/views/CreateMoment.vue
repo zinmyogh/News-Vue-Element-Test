@@ -48,7 +48,7 @@
 
 <script>
 import BaseUrl from "../api/default";
-import { momentUpl } from "../api/moment";
+import { addMoment } from "../api/moment";
 export default {
   data() {
     return {
@@ -91,7 +91,7 @@ export default {
         this.imageList.push(res.url);
         // console.log("this.imageList: ", this.imageList);
         if (this.imageList.length == this.uploadLength) {
-          const result = await momentUpl(data);
+          const result = await addMoment(data);
           console.log("result: ", result);
           this.$message.success({
             message: result.data.msg
@@ -99,6 +99,8 @@ export default {
           setTimeout(() => {
             this.$refs.upload.clearFiles();
             this.content = "";
+            this.uploadLength = 0;
+            this.uploadRemain = 9;
           }, 1000);
 
           // console.log("result; ", result);
@@ -126,9 +128,9 @@ export default {
       //文件上传之前调用做一些拦截限制
       //console.log(file);
       const isJPG = true;
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 10;
       if (!isLt2M) {
-        this.$message.error("上传图片大小不能超过 2MB!");
+        this.$message.error("上传图片大小不能超过 10MB!");
       }
       return isJPG && isLt2M;
     },
@@ -139,7 +141,6 @@ export default {
       this.hideUpload = fileList.length == this.limitCount;
       // console.log(this.hideUpload);
     }
-    // momentUpl() {}
   }
 };
 </script>
@@ -155,7 +156,6 @@ export default {
   height: 80px;
 }
 .context .el-textarea textarea {
-  /* border: none; */
   resize: none;
 }
 .image-upload {

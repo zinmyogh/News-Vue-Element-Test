@@ -79,7 +79,7 @@ export default {
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
-      console.log(this.hideUpload);
+      // console.log(this.hideUpload);
     }
   }
 };

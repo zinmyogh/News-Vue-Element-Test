@@ -1,7 +1,7 @@
 <template>
   <div class="article">
     <el-card shadow="hover">
-      <el-form :model="titleForm" ref="titleForm" label-width="100px">
+      <el-form ref="titleForm" :model="titleForm" label-width="100px">
         <el-form-item
           label="文章标题："
           prop="title"
@@ -18,7 +18,6 @@
               :value="item.categoryID"
             >
               <span style="float: center">{{ item.categoryName }}</span>
-              <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.categoryID }}</span> -->
             </el-option>
           </el-select>
         </el-form-item>
@@ -26,10 +25,10 @@
 
       <!-- </div> -->
       <el-divider></el-divider>
-      <QuillEditor @input="articleContent" />
+      <QuillEditor ref="quill" @input="articleContent" />
       <!-- <wangEditor @change="articleContent" /> -->
       <el-divider></el-divider>
-      <CoverUpload @cover="coverList" />
+      <CoverUpload ref="cover" @cover="coverList" />
       <div class="upload-btn">
         <el-button @click="uploadArticle()" type="primary">点击上传文章</el-button>
       </div>
@@ -37,11 +36,11 @@
   </div>
 </template>
 <script>
-import QuillEditor from "./QuillEditor";
+import QuillEditor from "../components/article/QuillEditor";
 // import wangEditor from "./WangEditor";
-import CoverUpload from "./CoverArticle";
-import { getCty } from "../../api/admin";
-import { articleUpload } from "../../api/article";
+import CoverUpload from "../components/article/CoverArticle";
+import { getCty } from "../api/admin";
+import { addArticle } from "../api/article";
 
 export default {
   components: {
@@ -57,8 +56,6 @@ export default {
         categoryID: ""
       },
       content: "", //文章内容
-      // cover: "",
-      // categoryID: "",
       cover1: "",
       cover2: "",
       cover3: "",
@@ -74,8 +71,8 @@ export default {
 
   methods: {
     async uploadArticle() {
-      console.log(this.titleForm.categoryID);
-      console.log("uup article");
+      // console.log(this.titleForm.categoryID);
+      // console.log("uup article");
 
       let data = {
         caption: this.titleForm.title,
@@ -83,9 +80,27 @@ export default {
         content: this.content,
         cover1: this.cover
       };
-      // let content = this.content;
       // console.log("encode content; ", content);
-      const res = await articleUpload(data);
+      const res = await addArticle(data);
+      if (res.data.code == 200) {
+        this.$message.success({
+          message: res.data.msg
+        });
+        setTimeout(() => {
+          this.$router.go(0);
+        }, 1000);
+        // this.$refs.titleForm.resetFields();
+        // this.titleForm.categoryID = "";
+        // // this.content = "";
+        // // console.log("this.content: ", this.content);
+        // // this.$refs.quill.$refs.myQuillEditor.content = "";
+        // this.$refs.quill = "";
+        // this.$refs.cover.$refs.upload.clearFiles();
+      } else {
+        this.$message.error({
+          message: "Server Error! Please try again later!"
+        });
+      }
       console.log("article : >>>>> ", res);
       // this.$message({
       //   type: "success",
@@ -110,36 +125,36 @@ export default {
       // console.log("cofvvvver : ", covver);
     },
     articleContent(payload) {
-      this.content = payload;
-      // let Base64 = {
-      //   encode(str) {
-      //     return btoa(
-      //       encodeURIComponent(str).replace(
-      //         /%([0-9A-F]{2})/g,
-      //         function toSolidBytes(match, p1) {
-      //           return String.fromCharCode("0x" + p1);
-      //         }
-      //       )
-      //     );
-      //   },
-      //   decode(str) {
-      //     return decodeURIComponent(
-      //       atob(str)
-      //         .split("")
-      //         .map(function(c) {
-      //           return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-      //         })
-      //         .join("")
-      //     );
-      //   },
-      // };
-      // // 将富文本内容专程base64编码，这个用于上传到服务存储到数据库中
-      // let encoded = Base64.encode(payload);
-      // this.content = encoded;
-      // // // 将富文本的base64编码 转换成原来的格式，这个用于将数据库中的富文本展示在界面上
-      // // let decoded = Base64.decode(encoded);
-      // // console.log("encoded: ", encoded);
-      // // console.log(decoded);
+      // this.content = payload;
+      let Base64 = {
+        encode(str) {
+          return btoa(
+            encodeURIComponent(str).replace(
+              /%([0-9A-F]{2})/g,
+              function toSolidBytes(match, p1) {
+                return String.fromCharCode("0x" + p1);
+              }
+            )
+          );
+        },
+        decode(str) {
+          return decodeURIComponent(
+            atob(str)
+              .split("")
+              .map(function(c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+        }
+      };
+      // 将富文本内容专程base64编码，这个用于上传到服务存储到数据库中
+      let encoded = Base64.encode(payload);
+      this.content = encoded;
+      // // 将富文本的base64编码 转换成原来的格式，这个用于将数据库中的富文本展示在界面上
+      // let decoded = Base64.decode(encoded);
+      console.log("encoded: ", encoded);
+      // console.log(decoded);
     }
   },
   mounted() {
@@ -164,7 +179,6 @@ export default {
 .upload-btn {
   position: relative;
   padding-left: 170px;
-  /* text-align: center; */
   padding-top: 20px;
   margin-bottom: 100px;
 }

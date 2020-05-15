@@ -1,30 +1,26 @@
 import axios from "axios";
 import BaseURL from "../api/default";
-// import { MessageBox, Message } from "element-ui";
-// import store from "@/store";
-// import { getToken } from "@/utils/auth";
 
 // create an axios instance
 const service = axios.create({
   baseURL: BaseURL.BaseUrl, // url = base url + request url
-  // // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
 });
 
 // 添加请求拦截器
 service.interceptors.request.use(
   function(config) {
-    console.log("0");
+    console.log("requers.js:0");
     console.log(config.url);
     if (config.url != "user/login" || config.url != "user/register") {
       config.headers["authorization"] = localStorage.token;
     }
-    console.log("1");
+    console.log("request.js:1");
     // 在发送请求之前做些什么
     return config;
   },
   function(error) {
-    console.log("2");
+    console.log("request.js:2");
     // 对请求错误做些什么
     return Promise.reject(error);
   }
@@ -55,17 +51,12 @@ export function get(url) {
 
 //封装post请求
 export function post(url, data) {
-  // console.log("req: req", url, data);
   //默认配置
   let sendObject = {
     url: url,
     method: "post",
-    // headers: {
-    //   "Content-Type": "application/json;charset=UTF-8",
-    // },
     data: data,
   };
-  // sendObject.data = JSON.stringify(data);
   return service(sendObject);
 }
 

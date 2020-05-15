@@ -40,8 +40,6 @@
 <script>
 import MainHeader from "./Header";
 import SideBar from "./SideBar";
-// import Privacy from './footer/Privacy'
-// import store from "../store/index";
 
 export default {
   name: "Home",
@@ -49,12 +47,6 @@ export default {
     MainHeader,
     SideBar
   }
-  // computed: {
-  //   routes() {
-  //     console.log("Home store get");
-  //     return store.getters.routers;
-  // }
-  // }
 };
 </script>
 
@@ -66,8 +58,6 @@ export default {
 .wrapper {
   position: relative;
   width: 100vw;
-
-  /* background-color: blue; */
 }
 .home-wrap {
   display: flex;
@@ -81,9 +71,7 @@ export default {
   padding-right: 10px;
   height: 80vh;
   min-width: 150px;
-
   background-color: #f8f8f8;
-  /* background-color: aqua; */
 }
 .main-content {
   position: relative;
@@ -97,10 +85,8 @@ export default {
   height: 60px;
   bottom: 0;
   left: 0;
-  /* z-index: 1; */
   position: fixed;
   width: 100vw;
-  /* background-color: bisque; */
   text-align: center;
 }
 .footer span {
