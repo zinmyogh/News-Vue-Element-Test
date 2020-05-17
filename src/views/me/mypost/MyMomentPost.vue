@@ -1,61 +1,34 @@
 <template>
   <div class="my_moment_post">
-    <!-- <div class="time">{{ formatDate(new Date()) }}</div> -->
     <el-breadcrumb separator-class="el-icon-caret-right">
-      <!-- <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item> -->
       <el-breadcrumb-item>个人中心</el-breadcrumb-item>
       <el-breadcrumb-item>我的发布</el-breadcrumb-item>
       <el-breadcrumb-item>微头条</el-breadcrumb-item>
     </el-breadcrumb>
-    <div
-      class="moment_post"
-      v-for="moment in momentPost"
-      :key="moment.momentPostID"
-    >
+    <div class="moment_post" v-for="moment in momentPost" :key="moment.momentPostID">
       <div>
         <p>{{ moment.content }}</p>
       </div>
       <div class="images_list">
-        <img
-          v-for="(img, index) in splitImg(moment.images)"
-          :key="index"
-          :src="img"
-          alt
-        />
+        <img v-for="(img, index) in splitImg(moment.images)" :key="index" :src="img" alt />
       </div>
       <div>
         <div>
           <span>获赞 &nbsp;&nbsp;{{ moment.likeCount || 0 }}</span>
-          <span>{{ moment.createDate | time }}</span>
-          <el-button @click="momentView(moment.momentPostID)" type="text">
-            查看
-          </el-button>
-          <el-button
-            @click="momentEdit(moment.momentPostID)"
-            type="text"
-            style="color: #ff9900"
-          >
-            编辑
-          </el-button>
+          <span>{{ moment.createDate | dateDiff }}</span>
           <el-button
             @click="momentDelete(moment.momentPostID)"
             type="text"
             style="color: #e80000"
-          >
-            删除
-          </el-button>
+          >删除</el-button>
         </div>
       </div>
-      <!-- </div> -->
     </div>
-    <!-- <div>{{this.data}}</div> -->
   </div>
 </template>
 
 <script>
-import { getMoment } from "../../../api/moment";
-// let moment = require("moment");
-// import dateDiff from "../../../utils/time";
+import { getMoment, deleteMoment } from "../../../api/moment";
 export default {
   data() {
     return {
@@ -66,35 +39,55 @@ export default {
           content: "",
           images: "",
           likeCount: "",
-          createDate: "",
-        },
-      ],
+          createDate: ""
+        }
+      ]
     };
   },
   methods: {
     splitImg(images) {
       return images.split(",");
     },
-    momentView(data) {
-      console.log(data);
-    },
-    momentEdit(data) {
-      console.log(data);
-    },
-    momentDelete(data) {
-      console.log(data);
-    },
+    momentDelete(momentPostID) {
+      console.log("momentPostID: ", momentPostID);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // console.log("gg: ", momentPostID);
+          let data = { momentPostID: momentPostID };
+          console.log("delete: ", data);
+          const res = await deleteMoment(data);
+          if (res.data.code == 200) {
+            this.$message.success({
+              message: res.data.msg
+            });
+          } else {
+            this.$message.error({
+              message: res.data.msg
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    }
   },
   mounted() {
     // console.log("my moment post mounted>>>>>>");
     getMoment()
-      .then((res) => {
+      .then(res => {
         this.momentPost = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 

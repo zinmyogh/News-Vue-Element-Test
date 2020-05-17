@@ -1,4 +1,4 @@
-import { post, get } from "../utils/request";
+import { post, get, del } from "../utils/request";
 
 /**
  *
@@ -14,4 +14,20 @@ export const addVideo = (data) => {
 export const getVideo = () => {
   console.log("apiPi get video: ");
   return get(`video/getvideo`);
+};
+
+/**
+ * change video title
+ */
+export const updateVideoCaption = (data) => {
+  console.log("api change video title: ", data);
+  return post("video/updatevideo", data);
+};
+
+/**
+ * delete video post
+ */
+export const deleteVideoPost = (data) => {
+  console.log("api delete video post: ", data);
+  return del("video/deletevideo", data);
 };

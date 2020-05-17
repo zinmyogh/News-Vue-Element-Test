@@ -15,6 +15,7 @@ import CreateMoment from "../views/CreateMoment";
 import CreateVideo from "../views/CreateVideo";
 
 import MyPost from "../views/me/MyPost";
+import ReviewArticle from "../views/me/mypost/ArticlePostReview";
 import MyAccount from "../views/me/MyAccount";
 import Photo from "../components/Photo";
 import NotFound from "../views/error-page/404";
@@ -79,6 +80,14 @@ const routes = [
         path: "/mypost",
         component: MyPost,
         meta: { keepAlive: true },
+        // children: [
+
+        // ],
+      },
+      {
+        path: "/review/article",
+        name: "ReviewArticle",
+        component: ReviewArticle,
       },
       {
         path: "/myaccount",

@@ -1,4 +1,5 @@
 import moment from "moment";
+
 let dateDiff = (sDate2) => {
   //sDate1和sDate2是字符串 yyyy-MM-dd格式
   var oDate1, oDate2;
@@ -31,4 +32,18 @@ let dateDiff = (sDate2) => {
   }
 };
 
-export default dateDiff;
+let decode = (str) => {
+  return decodeURIComponent(
+    atob(str)
+      .split("")
+      .map(function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+};
+
+export default {
+  dateDiff,
+  decode,
+};

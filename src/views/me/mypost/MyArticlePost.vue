@@ -7,18 +7,14 @@
       <el-breadcrumb-item>文章</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div
-      v-for="article in articlePost"
-      :key="article.articlePostID"
-      class="article_wrap"
-    >
+    <div v-for="article in articlePost" :key="article.articlePostID" class="article_wrap">
       <div v-if="article.cover1">
         <img class="article_img" :src="splitImg(article.cover1)[0]" alt />
       </div>
       <div class="article_info">
         <div>
           <h3>{{ article.caption }}</h3>
-          <p v-html="delHtmlTag(decode(article.content))"></p>
+          <p v-html="delHtmlTag($options.filters.decode(article.content))"></p>
           <!-- <p >{{article.content}}</p> -->
         </div>
         <div class="article_action">
@@ -28,23 +24,19 @@
           <span>.</span>
           <!-- <span>{{article.viewCount}}</span>
           <span>{{article.likeCount}}</span>-->
-          <span>{{ article.createDate | time }}</span>
+          <span>{{ article.createDate | dateDiff }}</span>
           <div class="btn_group">
-            <el-button type="text" @click="articleView(article.articlePostID)"
-              >查看</el-button
-            >
+            <el-button type="text" @click="articleView(article.articlePostID)">查看</el-button>
             <el-button
               type="text"
               @click="articleEdit(article.articlePostID)"
               style="color: #ff9900"
-              >编辑</el-button
-            >
+            >编辑</el-button>
             <el-button
               type="text"
               @click="articleDelete(article.articlePostID)"
               style="color: #e80000"
-              >删除</el-button
-            >
+            >删除</el-button>
           </div>
         </div>
       </div>
@@ -55,7 +47,7 @@
 </template>
 
 <script>
-import { getArticle } from "../../../api/article";
+import { getArticle, deleteArticle } from "../../../api/article";
 export default {
   data() {
     return {
@@ -70,9 +62,9 @@ export default {
           viewCount: "",
           likeCount: "",
           createDate: "",
-          categoryName: "",
-        },
-      ],
+          categoryName: ""
+        }
+      ]
     };
   },
   methods: {
@@ -84,37 +76,53 @@ export default {
     },
     articleView(data) {
       console.log("articleView : ", data);
+      this.$router.push({
+        name: "ReviewArticle",
+        params: { articlePostID: data }
+      });
     },
     articleEdit(data) {
       console.log("articleEdit", data);
     },
-    articleDelete(data) {
-      console.log("articleDelete", data);
-    },
-    decode(str) {
-      return decodeURIComponent(
-        atob(str)
-          .split("")
-          .map(function(c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join("")
-      );
-    },
+    articleDelete(articlePostID) {
+      console.log("articlePostID: ", articlePostID);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // console.log("gg: ", articlePostID);
+          let data = { articlePostID: articlePostID };
+          console.log("delete: ", data);
+          const res = await deleteArticle(data);
+          if (res.data.code == 200) {
+            this.$message.success({
+              message: res.data.msg
+            });
+          } else {
+            this.$message.error({
+              message: res.data.msg
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    }
   },
   mounted() {
     getArticle()
-      .then((res) => {
-        // console.log(res.data.info);
+      .then(res => {
         this.articlePost = res.data.info;
-        // console.log(this.articlePost);
-        // console.log(this.articlePost[12].content);
-        // this.articlePost.push(res.data.info);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
@@ -122,7 +130,6 @@ export default {
 .article_wrap {
   display: flex;
   flex-direction: row;
-  /* box-sizing: border-box; */
   border-bottom: 1px solid #dfdfdf;
 }
 .article_img {

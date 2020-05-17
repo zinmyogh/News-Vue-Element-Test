@@ -1,35 +1,71 @@
 <template>
   <div class="main_body">
-    <div class="body_alert">
+    <div class="textBox">
       <i class="el-icon-warning"></i>
-      <span class="alert_msg">这是公告好不好！！！</span>
+      <transition name="slide">
+        <span class="alert_msg text" :key="text.id">{{text.val}}</span>
+      </transition>
     </div>
     <PanelGroup />
 
-    <el-carousel :interval="3000" type="card" height="200px">
+    <el-carousel height="200px" direction="vertical" :autoplay="false">
+      <el-carousel-item v-for="item in 3" :key="item">
+        <h3 class="medium">{{ item }}</h3>
+      </el-carousel-item>
+    </el-carousel>
+
+    <!-- <el-carousel :interval="3000" type="card" height="200px">
       <el-carousel-item v-for="item in 5" :key="item" autoplay>
         <img src="../assets/images/girl.jpg" alt />
       </el-carousel-item>
-    </el-carousel>
-    <dir style="background-color: red; height: 228px">lolololol</dir>
+    </el-carousel>-->
+    <Infinite />
+    <!-- <div style="background-color: red; height: 228px">lolololol</div> -->
   </div>
 </template>
 
 <script>
 import PanelGroup from "../components/PanelGroup";
+import Infinite from "../components/InfiniteScroll";
 export default {
   components: {
-    PanelGroup
+    PanelGroup,
+    Infinite
   },
   data() {
     return {
-      carasoulImg: [
-        { img: "http://pic39.nipic.com/20140315/2457331_090001037000_2.jpg" },
-        { img: "http://pic39.nipic.com/20140315/2457331_090001037000_2.jpg" },
-        { img: "http://pic39.nipic.com/20140315/2457331_090001037000_2.jpg" },
-        { img: "http://pic39.nipic.com/20140315/2457331_090001037000_2.jpg" }
-      ]
+      carasoulImg: [{}],
+      textArr: [
+        "1 第一条公告",
+        "2 第二条公告第二条公告",
+        "3 第三条公告第三条公告第三条公告"
+      ],
+      number: 0
     };
+  },
+  computed: {
+    text() {
+      return {
+        id: this.number,
+        val: this.textArr[this.number]
+      };
+    }
+  },
+  mounted() {
+    this.startMove();
+  },
+  methods: {
+    startMove() {
+      // eslint-disable-next-line
+      let timer = setTimeout(() => {
+        if (this.number === 2) {
+          this.number = 0;
+        } else {
+          this.number += 1;
+        }
+        this.startMove();
+      }, 2000); // 滚动不需要停顿则将2000改成动画持续时间
+    }
   }
 };
 </script>
@@ -38,10 +74,12 @@ export default {
 .main_body {
   padding: 10px 1px;
 }
-.body_alert {
+.textBox {
   padding: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #dfdfdf;
+  position: relative;
+  overflow: hidden;
 }
 .el-icon-warning {
   font-size: 23px;
@@ -52,8 +90,9 @@ export default {
   position: absolute;
 }
 .el-carousel {
-  padding-top: 10px;
+  padding: 0 0 20px 0;
 }
+
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
@@ -68,5 +107,25 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+i {
+  color: #4e4e4e;
+}
+.text {
+  width: 100%;
+  position: absolute;
+  color: #4e4e4e;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s linear;
+}
+.slide-enter {
+  transform: translateY(20px) scale(1);
+  opacity: 1;
+}
+.slide-leave-to {
+  transform: translateY(-20px) scale(0.8);
+  opacity: 0;
 }
 </style>

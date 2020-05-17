@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <div v-for="video in videoPost" :key="video.videoPostID" class="video_wrap">
       <div>
-        <video class="video_img" :src="video.videoURL"></video>
+        <video class="video_img" :src="video.videoURL" controls="controls"></video>
         <!-- <img class="video_img" :src="video.videoURL" alt /> -->
       </div>
       <div class="video_info">
@@ -22,33 +22,42 @@
           <span>.</span>
           <!-- <span>{{video.viewCount}}</span>
           <span>{{video.likeCount}}</span>-->
-          <span>{{ video.createDate | time }}</span>
+          <span>{{ video.createDate | dateDiff }}</span>
         </div>
         <div class="btn_group">
-          <el-button
-            type="text"
-            @click="videoEdit(video.videoPostID)"
-            style="color: #ff9900"
-            >编辑</el-button
-          >
-          <el-button
-            type="text"
-            @click="videoDelete(video.videoPostID)"
-            style="color: #e80000"
-            >删除</el-button
-          >
+          <el-button type="text" @click="videoEdit(video.videoPostID)" style="color: #ff9900">编辑</el-button>
+          <el-button type="text" @click="videoDelete(video.videoPostID)" style="color: #e80000">删除</el-button>
         </div>
       </div>
     </div>
-    <!-- <div>{{this.data}}</div> -->
+    <!-- change user info form-->
+    <el-dialog Caption="更新视屏标题" :visible.sync="updateVideoCaption">
+      <el-form :model="videoForm">
+        <el-form-item label="视屏标题" label-width="120px">
+          <el-input clearable maxlength="50" v-model="videoForm.videoCaption" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateVideoCaption = false">取消</el-button>
+        <el-button type="primary" @click="conformChange">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getVideo } from "../../../api/video";
+import {
+  getVideo,
+  updateVideoCaption,
+  deleteVideoPost
+} from "../../../api/video";
 export default {
   data() {
     return {
+      updateVideoCaption: false,
+      videoForm: {
+        videoCaption: ""
+      },
       videoPost: [
         {
           videoPostID: "",
@@ -59,31 +68,88 @@ export default {
           viewCount: "",
           likeCount: "",
           createDate: "",
-          categoryName: "",
-        },
+          categoryName: ""
+        }
       ],
+      id: ""
     };
   },
   methods: {
     videoEdit(data) {
+      this.updateVideoCaption = true;
       console.log("videoEdit", data);
+      this.id = data;
     },
-    videoDelete(data) {
-      console.log("videoDelete", data);
+    // videoDelete(data) {
+    //   console.log("videoDelete", data);
+    // },
+    async conformChange() {
+      if (this.videoForm.videoCaption) {
+        let data = {
+          videoPostID: this.id,
+          caption: this.videoForm.videoCaption
+        };
+        console.log("conform change!", data);
+        const res = await updateVideoCaption(data);
+        console.log(res);
+        if (res.data.code == 200) {
+          this.$message.success({
+            message: res.data.msg
+          });
+          this.updateVideoCaption = false;
+        } else {
+          this.$message.error({
+            message: res.data.msg
+          });
+        }
+      } else {
+        this.$message.error({
+          message: "视屏标题不能为空！"
+        });
+      }
     },
+    videoDelete(videoPostID) {
+      console.log("videoPostID: ", videoPostID);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // console.log("gg: ", videoPostID);
+          let data = { videoPostID: videoPostID };
+          console.log("delete: ", data);
+          const res = await deleteVideoPost(data);
+          if (res.data.code == 200) {
+            this.$message.success({
+              message: res.data.msg
+            });
+          } else {
+            this.$message.error({
+              message: res.data.msg
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    }
   },
   mounted() {
     // console.log("my video post mounted>>>>>>");
     getVideo()
-      .then((res) => {
+      .then(res => {
         // console.log(res.data.info);
         this.videoPost = res.data.info;
         // console.log("video>>>>>", this.videoPost);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 

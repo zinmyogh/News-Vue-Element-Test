@@ -13,39 +13,21 @@
         </div>
       </div>
     </div>
-    <div class="footer">
-      <router-link :to="{path:'/footer/privacy'}">privacy</router-link>
-      <span>|</span>
-      <router-link to="/">
-        <span>ahhaha</span>
-      </router-link>
-      <span>|</span>
-      <router-link to="/">
-        <span>ahhaha</span>
-      </router-link>
-      <span>|</span>
-      <router-link to="/">
-        <span>ahhaha</span>
-      </router-link>
-      <span>|</span>
-      <router-link to="/">
-        <span>ahhaha</span>
-      </router-link>
-      <br />
-      <div style="padding-top: 10px; color: #989898">&#169;2020 miandiantt.com All Rights Reserved</div>
-    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import MainHeader from "./Header";
 import SideBar from "./SideBar";
+import Footer from "./Footer";
 
 export default {
   name: "Home",
   components: {
     MainHeader,
-    SideBar
+    SideBar,
+    Footer
   }
 };
 </script>
@@ -58,6 +40,7 @@ export default {
 .wrapper {
   position: relative;
   width: 100vw;
+  height: 100vh;
 }
 .home-wrap {
   display: flex;
@@ -80,20 +63,5 @@ export default {
   background-color: #fff;
   width: 100vw;
   height: 80vh;
-}
-.footer {
-  height: 60px;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  width: 100vw;
-  text-align: center;
-}
-.footer span {
-  color: #989898;
-  padding: 10px;
-}
-a:-webkit-any-link {
-  text-decoration: none !important;
 }
 </style>

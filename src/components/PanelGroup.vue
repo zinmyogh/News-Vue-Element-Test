@@ -1,10 +1,15 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel">
         <div class="card-panel-description">
           <div class="card-panel-text">粉丝</div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to
+            :start-val="0"
+            :end-val="this.followers"
+            :duration="2600"
+            class="card-panel-num"
+          />
         </div>
         <div class="card-panel-icon-wrapper icon-fans">
           <i class="el-icon-user-solid" style="font-size: 45px" class-name="card-panel-icon" />
@@ -12,10 +17,10 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel">
         <div class="card-panel-description">
           <div class="card-panel-text">关注</div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="this.follow" :duration="3000" class="card-panel-num" />
         </div>
         <div class="card-panel-icon-wrapper icon-follower">
           <i class="el-icon-user" style="font-size: 45px" class-name="card-panel-icon" />
@@ -23,10 +28,15 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel">
         <div class="card-panel-description">
           <div class="card-panel-text">获赞</div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to
+            :start-val="0"
+            :end-val="this.totallike"
+            :duration="3200"
+            class="card-panel-num"
+          />
         </div>
         <div class="card-panel-icon-wrapper icon-like">
           <i class="el-icon-medal" style="font-size: 45px" class-name="card-panel-icon" />
@@ -34,10 +44,15 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel">
         <div class="card-panel-description">
           <div class="card-panel-text">我的文章</div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to
+            :start-val="0"
+            :end-val="this.articlepost"
+            :duration="3600"
+            class="card-panel-num"
+          />
         </div>
         <div class="card-panel-icon-wrapper icon-article">
           <i class="el-icon-finished" style="font-size: 45px" class-name="card-panel-icon" />
@@ -49,14 +64,44 @@
 
 <script>
 import CountTo from "vue-count-to";
+import {
+  getFollowers,
+  getFollow,
+  getTotalLike,
+  getArticlePostCount
+} from "../api/user";
 
 export default {
+  data() {
+    return {
+      followers: 0,
+      follow: 0,
+      totallike: 0,
+      articlepost: 0
+    };
+  },
   components: {
     CountTo
   },
-  methods: {
-    handleSetLineChartData(type) {
-      this.$emit("handleSetLineChartData", type);
+  async mounted() {
+    // console.log("activited::::::::::::::::::");
+    const followers = await getFollowers();
+    const follow = await getFollow();
+    const totallike = await getTotalLike();
+    const articlepost = await getArticlePostCount();
+    // console.log("followers>>>>>", followers, follow);
+    if (
+      followers.data.code == 200 &&
+      follow.data.code == 200 &&
+      totallike.data.code == 200 &&
+      articlepost.data.code == 200
+    ) {
+      this.followers = parseInt(followers.data.info[0].count);
+      this.follow = parseInt(follow.data.info[0].count);
+      this.totallike = parseInt(totallike.data.info[0].count);
+      this.articlepost = parseInt(articlepost.data.info[0].count);
+    } else {
+      return;
     }
   }
 };
