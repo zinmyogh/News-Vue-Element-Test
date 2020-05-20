@@ -14,7 +14,9 @@
       >
         <div class="hot_header">
           <u>
-            <div style="padding-bottom: 5px; font-weight: bold;">{{ hot.caption }}</div>
+            <div style="padding-bottom: 5px; font-weight: bold;">
+              {{ hot.caption }}
+            </div>
           </u>
           <div>
             <i class="el-icon-star-on"></i>
@@ -23,11 +25,12 @@
         </div>
 
         <i>
-          <div class="hot_content" v-html="delHtmlTag($options.filters.decode(hot.content))"></div>
+          <div
+            class="hot_content"
+            v-html="delHtmlTag($options.filters.decode(hot.content))"
+          ></div>
         </i>
       </div>
-
-      <!-- <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div> -->
     </el-card>
   </div>
 </template>
@@ -42,9 +45,9 @@ export default {
           articlePostID: "",
           caption: "",
           content: "",
-          likeCount: ""
-        }
-      ]
+          likeCount: "",
+        },
+      ],
     };
   },
   methods: {
@@ -52,27 +55,25 @@ export default {
       return content.replace(/<[^>]+>/g, "");
     },
     viewHot(id) {
-      console.log("hot id", id);
       this.$router.push({
         name: "ReviewArticle",
-        params: { articlePostID: id }
+        params: { articlePostID: id },
       });
-    }
+    },
   },
   mounted() {
     getHotArticle()
-      .then(res => {
-        console.log("hot article>>>>", res);
+      .then((res) => {
         this.data = res.data.info;
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
-  }
+  },
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .text {
   font-size: 14px;
 }

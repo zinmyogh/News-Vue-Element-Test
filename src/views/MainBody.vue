@@ -3,24 +3,16 @@
     <div class="textBox">
       <i class="el-icon-warning"></i>
       <transition name="slide">
-        <span class="alert_msg text" :key="text.id">{{text.val}}</span>
+        <span class="alert_msg text" :key="text.id">{{ text.val }}</span>
       </transition>
     </div>
     <PanelGroup />
-
     <el-carousel height="200px" direction="vertical" :autoplay="false">
       <el-carousel-item v-for="item in 3" :key="item">
         <h3 class="medium">{{ item }}</h3>
       </el-carousel-item>
     </el-carousel>
-
-    <!-- <el-carousel :interval="3000" type="card" height="200px">
-      <el-carousel-item v-for="item in 5" :key="item" autoplay>
-        <img src="../assets/images/girl.jpg" alt />
-      </el-carousel-item>
-    </el-carousel>-->
     <Infinite />
-    <!-- <div style="background-color: red; height: 228px">lolololol</div> -->
   </div>
 </template>
 
@@ -30,7 +22,7 @@ import Infinite from "../components/InfiniteScroll";
 export default {
   components: {
     PanelGroup,
-    Infinite
+    Infinite,
   },
   data() {
     return {
@@ -38,26 +30,25 @@ export default {
       textArr: [
         " 第一条公告",
         " 第二条公告第二条公告",
-        " 第三条公告第三条公告第三条公告"
+        " 第三条公告第三条公告第三条公告",
       ],
-      number: 0
+      number: 0,
     };
   },
   computed: {
     text() {
       return {
         id: this.number,
-        val: this.textArr[this.number]
+        val: this.textArr[this.number],
       };
-    }
+    },
   },
   mounted() {
     this.startMove();
   },
   methods: {
     startMove() {
-      // eslint-disable-next-line
-      let timer = setTimeout(() => {
+      setTimeout(() => {
         if (this.number === 2) {
           this.number = 0;
         } else {
@@ -65,8 +56,8 @@ export default {
         }
         this.startMove();
       }, 5000); // 滚动不需要停顿则将2000改成动画持续时间
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <router-link :to="{path:'/footer/privacy'}">privacy</router-link>
+    <router-link :to="{ path: '/footer/privacy' }">privacy</router-link>
     <span>|</span>
     <router-link to="/">
       <span>ahhaha</span>
@@ -18,7 +18,9 @@
       <span>ahhaha</span>
     </router-link>
     <br />
-    <div style="padding-top: 10px; color: #989898">&#169;2020 miandiantt.com All Rights Reserved</div>
+    <div style="padding-top: 10px; color: #989898">
+      &#169;2020 miandiantt.com All Rights Reserved
+    </div>
   </div>
 </template>
 
@@ -29,8 +31,6 @@ export default {};
 <style scoped>
 .footer {
   height: 60px;
-  /* left: 0; */
-  /* position: relative; */
   width: 100vw;
   text-align: center;
 }

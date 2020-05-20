@@ -6,11 +6,7 @@
   </div>
 </template>
 <script>
-export default {
-  mounted() {
-    // console.log("env......", process.env.NODE_ENV.link);
-  }
-};
+export default {};
 </script>
 <style scope>
 body {

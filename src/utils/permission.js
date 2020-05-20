@@ -9,11 +9,9 @@ store.state.user.roles.push(lroles);
 export default function checkPermission(value) {
   if (value && value instanceof Array && value.length > 0) {
     const roles = store.getters && store.getters.roles;
-    // console.log("permission utils: ", roles);
     const permissionRoles = value;
 
     const hasPermission = roles.some((role) => {
-      // console.log("lil i li li ", role);
       return permissionRoles.includes(role);
     });
 

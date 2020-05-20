@@ -7,8 +7,6 @@
           :default-active="$route.path"
           :default-openeds="['1', '2', '3']"
           :router="true"
-          @open="handleOpen"
-          @close="handleClose"
         >
           <el-submenu v-if="checkPermission(['editor', 'admin'])" index="1">
             <template slot="title">
@@ -34,9 +32,15 @@
               <i class="el-icon-s-custom"></i>
               <span>管理员</span>
             </template>
-            <el-menu-item index="/administrator/upload/cty">标题管理</el-menu-item>
-            <el-menu-item index="/administrator/upload/adv">发布广告</el-menu-item>
-            <el-menu-item index="/administrator/upload/img">发布图片</el-menu-item>
+            <el-menu-item index="/administrator/upload/cty"
+              >标题管理</el-menu-item
+            >
+            <el-menu-item index="/administrator/upload/adv"
+              >发布广告</el-menu-item
+            >
+            <el-menu-item index="/administrator/upload/img"
+              >发布图片</el-menu-item
+            >
           </el-submenu>
         </el-menu>
       </el-col>
@@ -53,13 +57,7 @@ export default {
   },
   methods: {
     checkPermission,
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
-  }
+  },
 };
 </script>
 

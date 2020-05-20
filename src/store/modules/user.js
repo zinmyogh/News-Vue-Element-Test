@@ -18,7 +18,6 @@ const mutations = {
     state.token = token;
   },
   SET_NAME: (state, userName) => {
-    // console.log("mutations; ", userName);
     localStorage.setItem("userName", userName);
     state.userName = userName;
   },
@@ -46,15 +45,11 @@ const mutations = {
 const actions = {
   login({ commit }, userInfo) {
     const { phone, password } = userInfo;
-    // console.log(phone, password);
     return new Promise((resolve, reject) => {
-      // console.log("enter");
       Login({ phone: phone, password: password })
         .then((response) => {
-          // console.log("response", response.data);
           commit("SET_TOKEN", response.data.token);
           setToken(response.data.token);
-          // commit("SET_NAME", response.info.phone);
           if (response.data.info.phone == "13100000000") {
             commit("SET_ROLES", ["admin"]);
             localStorage.setItem("roles", ["admin"]);
@@ -77,10 +72,8 @@ const actions = {
   setInfo({ commit }, data) {
     const { userName, introduction } = data;
     return new Promise((resolve, reject) => {
-      // console.log("enter");
       SetInfo({ userName: userName, introduction: introduction })
         .then((response) => {
-          console.log("response", response.data.info.userName);
           commit("SET_NAME", response.data.info.userName);
           localStorage.setItem("userName", response.data.info.userName);
           commit("SET_INTRODUCTION", response.data.info.introduction);
@@ -88,7 +81,6 @@ const actions = {
           resolve(response);
         })
         .catch((error) => {
-          console.log("error lar");
           reject(error);
         });
     });

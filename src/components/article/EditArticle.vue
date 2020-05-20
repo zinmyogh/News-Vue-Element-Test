@@ -60,19 +60,19 @@ const toolbarOptions = [
   [{ list: "bullet" }], // 有序、无序列表
   [{ align: [] }], // 对齐方式
   ["clean"], // 清除文本格式
-  ["image"] // 链接、图片、视频 // 链接、图片、视频
+  ["image"], // 链接、图片、视频 // 链接、图片、视频
 ];
 export default {
   props: {
     /*编辑器的内容*/
     value: {
-      type: String
+      type: String,
     },
     /*图片大小*/
     maxSize: {
       type: Number,
-      default: 4000 //kb
-    }
+      default: 4000, //kb
+    },
   },
   data() {
     return {
@@ -80,10 +80,9 @@ export default {
       content: this.value,
       quillUpdateImg: false, // 根据图片上传状态来确定是否显示loading动画，刚开始是false,不显示
       editCaption: {
-        renameCaption: ""
+        renameCaption: "",
       },
       editorOption: {
-        // placeholder: "",
         theme: "snow", // or 'bubble'
         placeholder: "您想说点什么？",
         modules: {
@@ -98,51 +97,48 @@ export default {
                 } else {
                   this.quill.format("image", false);
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      serverUrl: `${BaseUrl}article/articleimage` // 这里写你要上传的图片服务器地址
+      serverUrl: `${BaseUrl}article/articleimage`, // 这里写你要上传的图片服务器地址
     };
   },
   methods: {
     onEditorChange() {
       //内容改变事件
       this.$emit("input", this.content);
-      // console.log("//内容改变事件 ", this.content);
     },
     submitChange() {
-      //   console.log("submitchage", this.content);
       let data = {
         articlePostID: this.$route.params.articlePostID,
         caption: this.editCaption.renameCaption,
-        content: this.encode(this.content)
+        content: this.encode(this.content),
       };
       if (this.editCaption.renameCaption != "") {
         updateArticle(data)
-          .then(res => {
-            // console.log(res);
+          .then((res) => {
             if (res.data.code == 200) {
               setTimeout(() => {
                 this.editCaption.renameCaption = "";
                 this.content = "";
               }, 1000);
               return this.$message.success({
-                message: res.data.msg
+                message: res.data.msg,
               });
             } else {
               return this.$message.error({
-                message: res.data.msg
+                message: res.data.msg,
               });
             }
           })
-          .catch(e => {
+          .catch((e) => {
             console.log(e);
           });
       } else {
         return this.$message.error({
-          message: "标题不能为空！"
+          message: "标题不能为空！",
         });
       }
     },
@@ -160,7 +156,6 @@ export default {
       let quill = this.$refs.myQuillEditor.quill;
       // 如果上传成功
       if (res.code == 200) {
-        // console.log("haaaaaaaaaaaaaahahahah ... ", res.url);
         // 获取光标所在位置
         let length = quill.getSelection().index;
         // 插入图片  res.url为服务器返回的图片地址
@@ -214,22 +209,19 @@ export default {
           })
           .join("")
       );
-    }
+    },
   },
   activated() {
     let id = { articlePostID: this.$route.params.articlePostID };
-    // console.log(id);
     getArticleByID(id)
-      .then(res => {
-        // console.log(res.data.info[0].content);
+      .then((res) => {
         this.editCaption.renameCaption = res.data.info[0].caption;
         this.content = this.decode(res.data.info[0].content);
-        // console.log("after decode: ", this.content);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
-  }
+  },
 };
 </script>
 
@@ -255,7 +247,4 @@ export default {
   position: relative !important;
   display: none;
 }
-/* .el-form-item__label {
-  width: 100px !important;
-} */
 </style>

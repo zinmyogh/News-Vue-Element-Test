@@ -62,7 +62,7 @@ export default {
       uploadRemain: null,
       hideUpload: false,
       content: "",
-      imageList: []
+      imageList: [],
     };
   },
   methods: {
@@ -71,12 +71,12 @@ export default {
         return this.$refs.upload.submit();
       } else {
         return this.$message.error({
-          message: "动态不能为空！"
+          message: "动态不能为空！",
         });
       }
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log(file);
       this.hideUpload = fileList.length == this.limitCount;
       this.uploadRemain += 1;
       this.uploadLength -= 1;
@@ -84,18 +84,15 @@ export default {
     async handleSuccess(res) {
       let data = {
         content: this.content,
-        images: this.imageList
+        images: this.imageList,
       };
-      // console.log(res);
       if (res.code == 200) {
         console.log("moment imgUrl : ", res.url);
         this.imageList.push(res.url);
-        // console.log("this.imageList: ", this.imageList);
         if (this.imageList.length == this.uploadLength) {
           const result = await addMoment(data);
-          console.log("result: ", result);
           this.$message.success({
-            message: result.data.msg
+            message: result.data.msg,
           });
           setTimeout(() => {
             this.$refs.upload.clearFiles();
@@ -103,14 +100,11 @@ export default {
             this.uploadLength = 0;
             this.uploadRemain = 9;
           }, 1000);
-
-          // console.log("result; ", result);
         }
       } else {
         this.$message.error({
-          message: "上传是出现错误了！"
+          message: "上传是出现错误了！",
         });
-        // console.log("push imagelist error lar");
       }
     },
     handlePictureCardPreview(file) {
@@ -123,11 +117,9 @@ export default {
           files.length
         } files this time, add up to ${files.length + fileList.length} totally`
       );
-      //imageLength = files.length;
     },
     beforeAvatarUpload(file) {
       //文件上传之前调用做一些拦截限制
-      //console.log(file);
       const isJPG = true;
       const isLt2M = file.size / 1024 / 1024 < 10;
       if (!isLt2M) {
@@ -140,9 +132,8 @@ export default {
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
-      // console.log(this.hideUpload);
-    }
-  }
+    },
+  },
 };
 </script>
 

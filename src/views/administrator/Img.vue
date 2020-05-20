@@ -26,7 +26,6 @@
 
 <script>
 import BaseUrl from "../../api/default";
-// import { addMoment } from "../../api/moment";
 export default {
   data() {
     return {
@@ -37,12 +36,12 @@ export default {
       limitCount: 3,
       uploadRemain: null,
       hideUpload: false,
-      imageList: []
+      imageList: [],
     };
   },
   methods: {
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log(file);
       this.hideUpload = fileList.length == this.limitCount;
       this.uploadRemain += 1;
       this.uploadLength -= 1;
@@ -56,23 +55,18 @@ export default {
           files.length
         } files this time, add up to ${files.length + fileList.length} totally`
       );
-      //imageLength = files.length;
     },
     handleOnChange(file, fileList) {
       console.log("filelIst: ", fileList);
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
-      // console.log(this.hideUpload);
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
-</style>
-
-
+<style></style>
 
 <!--<template>
   <div class="container">

@@ -1,8 +1,11 @@
 <template>
   <div class="review" v-if="this.article != null">
-    <h2>{{this.article[0].caption}}</h2>
-    <h6>{{this.article[0].createDate}}</h6>
-    <div class="content" v-html="$options.filters.decode(this.article[0].content)"></div>
+    <h2>{{ this.article[0].caption }}</h2>
+    <h6>{{ this.article[0].createDate }}</h6>
+    <div
+      class="content"
+      v-html="$options.filters.decode(this.article[0].content)"
+    ></div>
   </div>
 </template>
 
@@ -15,24 +18,20 @@ export default {
         {
           caption: "",
           content: "",
-          createDate: ""
-        }
-      ]
+          createDate: "",
+        },
+      ],
     };
   },
   async activated() {
-    // console.log("review article post~~~~");
     let id = { articlePostID: this.$route.params.articlePostID };
-    // console.log("id>>>>>>>", id);
     if (id != undefined) {
       const res = await getArticleByID(id);
       this.article = res.data.info;
-      // console.log(this.article);
-      // console.log("res: ", res);
     } else {
       return;
     }
-  }
+  },
 };
 </script>
 

@@ -10,17 +10,13 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(
   function(config) {
-    // console.log("requers.js:0");
-    // console.log(config.url);
     if (config.url != "user/login" || config.url != "user/register") {
       config.headers["authorization"] = localStorage.token;
     }
-    // console.log("request.js:1");
     // 在发送请求之前做些什么
     return config;
   },
   function(error) {
-    // console.log("request.js:2");
     // 对请求错误做些什么
     return Promise.reject(error);
   }
@@ -40,7 +36,6 @@ service.interceptors.response.use(
 
 //封装get请求
 export function get(url) {
-  // console.log("req: req", url);
   //默认配置
   let sendObject = {
     url: url,
@@ -62,7 +57,6 @@ export function post(url, data) {
 
 //封装delete请求
 export function upd(url, data) {
-  // console.log("req: upd: ", url, data);
   //默认配置
   let sendObject = {
     url: url,
@@ -74,7 +68,6 @@ export function upd(url, data) {
 
 //封装delete请求
 export function del(url, data) {
-  // console.log("req: req", url, data);
   //默认配置
   let sendObject = {
     url: url,

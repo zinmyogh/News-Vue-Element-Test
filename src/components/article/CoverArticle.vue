@@ -9,7 +9,7 @@
       </el-radio-group>
       <div style="display: flex;">
         <el-upload
-          :class="{hide : uploadDisable}"
+          :class="{ hide: uploadDisable }"
           ref="upload"
           multiple
           v-show="showUpload"
@@ -47,14 +47,12 @@ export default {
       dialogVisible: false,
       imgList: [],
       token: { authorization: localStorage.token },
-      serverUrl: `${BaseUrl}article/articleimage`
+      serverUrl: `${BaseUrl}article/articleimage`,
     };
   },
   methods: {
-    //cover el-upload
     handleRemove(file, fileList) {
       this.uploadDisable = fileList.length == this.limit;
-      // this.$refs.upload.abort(file);
       console.log("file： ", file, "fileList：", fileList);
     },
     handlePictureCardPreview(file) {
@@ -65,26 +63,19 @@ export default {
       this.uploadDisable = fileList.length == this.limit;
     },
     hadleSuccess(response) {
-      // console.log(response.url);
       this.imgList.push(response.url);
-      // console.log(this.imgList);
       this.$emit("cover", this.imgList);
-      // console.log(this.imgList);
     },
     clearFiles() {
       this.$refs["coverUpload"].clearFiles();
     },
-    //radio change action
     radioChange(val) {
-      // console.log("radio", val);
       if (val == 3) {
         this.limit = val;
         this.showUpload = true;
         this.$refs.upload.clearFiles();
         this.uploadDisable = false;
         this.imgList = [];
-        // console.log("3 .... ", this.imgList);
-        // console.log("limit3:  ....  ", this.limit);
       }
       if (val == 1) {
         this.limit = val;
@@ -92,8 +83,6 @@ export default {
         this.$refs.upload.clearFiles();
         this.uploadDisable = false;
         this.imgList = [];
-        // console.log("1 .... ", this.imgList);
-        // console.log("limit 1: ", this.limit);
       }
       if (val == 0) {
         this.limit = 0;
@@ -101,11 +90,9 @@ export default {
         this.$refs.upload.clearFiles();
         this.uploadDisable = false;
         this.imgList = [];
-        // console.log("0 .... ", this.imgList);
-        // console.log("limit 0 : ", this.limit);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -45,7 +45,7 @@ export default {
       uploadLimit: 5,
       limitCount: 5,
       uploadRemain: null,
-      hideUpload: false
+      hideUpload: false,
     };
   },
   methods: {
@@ -63,11 +63,9 @@ export default {
           files.length
         } files this time, add up to ${files.length + fileList.length} totally`
       );
-      //imageLength = files.length;
     },
     beforeAvatarUpload(file) {
       //文件上传之前调用做一些拦截限制
-      //console.log(file);
       const isJPG = true;
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
@@ -79,9 +77,8 @@ export default {
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
-      // console.log(this.hideUpload);
-    }
-  }
+    },
+  },
 };
 </script>
 

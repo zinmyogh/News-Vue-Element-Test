@@ -7,7 +7,6 @@ import Register from "../views/Register";
 import Adv from "../views/administrator/Adv";
 import Img from "../views/administrator/Img";
 import Cty from "../views/administrator/Cty";
-// import AdminAccount from "../views/administrator/AdminAccount";
 
 import MainBody from "../views/MainBody";
 import CreateArticle from "../views/CreateArticle";
@@ -18,7 +17,6 @@ import EditArticle from "../components/article/EditArticle";
 import MyPost from "../views/me/MyPost";
 import ReviewArticle from "../components/article/ArticlePostReview";
 import MyAccount from "../views/me/MyAccount";
-import Photo from "../components/Photo";
 import NotFound from "../views/error-page/404";
 
 import Privacy from "../views/footer/Privacy";
@@ -34,8 +32,7 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
-    meta: { isPublic: true },
-    // meta: { keepAlive: true },
+    meta: { isPublic: true, keepAlive: true },
   },
   {
     path: "/register",
@@ -79,17 +76,9 @@ const routes = [
         meta: { keepAlive: true },
       },
       {
-        path: "/photo",
-        component: Photo,
-        meta: { keepAlive: true },
-      },
-      {
         path: "/mypost",
         component: MyPost,
         meta: { keepAlive: true },
-        // children: [
-
-        // ],
       },
       {
         path: "/review/article",
@@ -105,26 +94,17 @@ const routes = [
         path: "/administrator/upload/adv",
         component: Adv,
         meta: { keepAlive: true },
-        // hidden: true,
       },
       {
         path: "/administrator/upload/img",
         component: Img,
         meta: { keepAlive: true },
-        // hidden: true,
       },
       {
         path: "/administrator/upload/cty",
         component: Cty,
         meta: { keepAlive: true },
-        // hidden: true,
       },
-      // {
-      //   path: "/administrator/upload/account",
-      //   component: AdminAccount,
-      //   meta: { keepAlive: true },
-      //   // hidden: true,
-      // },
     ],
   },
   {
@@ -146,46 +126,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // console.log("router index -- token:  ",localStorage.token);
   if (!to.meta.isPublic && localStorage.token == undefined) {
     return next("/login");
   } else {
     next();
   }
 });
-
-// export const asyncRoutes = [
-//   // 404 page must be placed at the end !!!
-//   { path: "*", redirect: "/404", hidden: true },
-// ];
-// const createRouter = () =>
-//   new VueRouter({
-//     // mode: 'history', // require service support
-//     scrollBehavior: () => ({ y: 0 }),
-//     routes: constantRoutes,
-//   });
-
-// const router = createRouter();
-
-// // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-// export function resetRouter() {
-//   const newRouter = createRouter();
-//   router.matcher = newRouter.matcher; // reset router
-// }
-
-// router.beforeEach((to, from, next) => {
-//   // 检测路由配置中是否有requiresAuth这个meta属性
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     // 判断是否已登录
-//     if (this.$store.getters.isLoggedIn) {
-//       next();
-//       return;
-//     }
-//     // 未登录则跳转到登录界面
-//     next("/login");
-//   } else {
-//     next();
-//   }
-// });
 
 export default router;

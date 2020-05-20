@@ -3,7 +3,6 @@
     <div class="body_wrap">
       <div class="grid_body">
         <div class="avator">
-          <!-- <el-avatar shape="cicle" :size="100" cover :src="url"></el-avatar> -->
           <el-upload
             class="avatar-uploader"
             :action="serverUrl"
@@ -17,8 +16,10 @@
           </el-upload>
         </div>
         <div class="avator_right">
-          <div class="name">{{name || "___ ___"}}</div>
-          <div class="introduction">{{introduction || "靓，还没有写励志短语。。。"}}</div>
+          <div class="name">{{ name || "___ ___" }}</div>
+          <div class="introduction">
+            {{ introduction || "靓，还没有写励志短语。。。" }}
+          </div>
         </div>
       </div>
       <div class="account_info">
@@ -26,23 +27,27 @@
         <div class="account_info_right">
           <div class="account_right1">
             <div class="account_right1_1">名称</div>
-            <div class="account_right1_2">{{name || "___ ___"}}</div>
+            <div class="account_right1_2">{{ name || "___ ___" }}</div>
           </div>
           <div class="account_right1">
             <div class="account_right1_1">手机</div>
-            <div class="account_right1_2">{{phone}}</div>
+            <div class="account_right1_2">{{ phone }}</div>
           </div>
           <div class="account_right1">
             <div class="account_right1_1">密码</div>
 
-            <el-button style="padding-left: 150px;" type="text" @click="changePassForm = true">更改密码</el-button>
+            <el-button
+              style="padding-left: 150px;"
+              type="text"
+              @click="changePassForm = true"
+              >更改密码</el-button
+            >
           </div>
           <div class="account_right11">
             <div class="account_right1_1">励志短语</div>
-            <div
-              class="account_right1_2"
-              style="overflow:hidden;"
-            >{{introduction || "亲，还没有写励志短语。。。"}}</div>
+            <div class="account_right1_2" style="overflow:hidden;">
+              {{ introduction || "亲，还没有写励志短语。。。" }}
+            </div>
           </div>
         </div>
       </div>
@@ -56,14 +61,20 @@
           </div>
           <div class="account_right1">
             <div class="account_right1_1">账号类型</div>
-            <div
-              class="account_right1_2"
-              style="color: gray"
-            >{{phone == "13100000000" ? "管理员" : "个人"}}</div>
+            <div class="account_right1_2" style="color: gray">
+              {{ phone == "13100000000" ? "管理员" : "个人" }}
+            </div>
           </div>
           <div class="account_right11">
-            <el-button type="text" @click="updateInfoForm = true">更新信息</el-button>
-            <el-button type="text" @click="logout" style="padding-left: 82px; color: #e80000">退出登录</el-button>
+            <el-button type="text" @click="updateInfoForm = true"
+              >更新信息</el-button
+            >
+            <el-button
+              type="text"
+              @click="logout"
+              style="padding-left: 82px; color: #e80000"
+              >退出登录</el-button
+            >
           </div>
         </div>
       </div>
@@ -72,10 +83,18 @@
     <el-dialog title="更改密码" :visible.sync="changePassForm">
       <el-form :model="passFrom">
         <el-form-item label="旧密码" :label-width="formLabelWidth">
-          <el-input clearable v-model="passFrom.oldpassword" autocomplete="off"></el-input>
+          <el-input
+            clearable
+            v-model="passFrom.oldpassword"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="新密码" :label-width="formLabelWidth">
-          <el-input clearable v-model="passFrom.newpassword" autocomplete="off"></el-input>
+          <el-input
+            clearable
+            v-model="passFrom.newpassword"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -88,10 +107,18 @@
     <el-dialog title="更新信息" :visible.sync="updateInfoForm">
       <el-form :model="infoForm">
         <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input clearable v-model="infoForm.userName" autocomplete="off"></el-input>
+          <el-input
+            clearable
+            v-model="infoForm.userName"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="励志短语" :label-width="formLabelWidth">
-          <el-input clearable v-model="infoForm.introduction" autocomplete="off"></el-input>
+          <el-input
+            clearable
+            v-model="infoForm.introduction"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -116,32 +143,28 @@ export default {
       changePassForm: false,
       infoForm: {
         userName: "",
-        introduction: ""
+        introduction: "",
       },
       passFrom: {
         oldpassword: "",
-        newpassword: ""
+        newpassword: "",
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
     };
   },
   computed: {
-    ...mapGetters(["phone", "name", "introduction"])
+    ...mapGetters(["phone", "name", "introduction"]),
   },
   mounted() {
     this.$store.commit("user/SET_PHONE", localStorage.phone);
     if (localStorage.userName == "null") {
-      // console.log("username null: >>>");
       return;
     } else {
-      // console.log("username not null: >>>>");
       this.$store.commit("user/SET_NAME", localStorage.userName);
     }
     if (localStorage.introduction == "null") {
-      // console.log("1111111");
       return;
     } else {
-      // console.log("2222222");
       this.$store.commit("user/SET_INTRODUCTION", localStorage.introduction);
     }
     this.imageUrl = localStorage.profile;
@@ -156,52 +179,34 @@ export default {
     changePassword() {
       let data = {
         oldpassword: this.passFrom.oldpassword,
-        newpassword: this.passFrom.newpassword
+        newpassword: this.passFrom.newpassword,
       };
-      // console.log("enter passs: ", data);
       changePass(data)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg
+              message: res.data.msg,
             });
           } else {
             this.$message.error({
-              message: res.data.msg
+              message: res.data.msg,
             });
           }
-          // console.log("res: ", res);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log("eee: ", e);
         });
       this.changePassForm = false;
-      // console.log("change Password：》》》》");
     },
     async changeInfo() {
       let data = {
         userName: this.infoForm.userName,
-        introduction: this.infoForm.introduction
+        introduction: this.infoForm.introduction,
       };
       this.$store.dispatch("user/setInfo", data);
-      // .then(res => {
-      //   if (res.data.code == 200) {
-      //     this.$message.success({
-      //       message: res.data.msg
-      //     });
-      //   } else {
-      //     this.$message.error({
-      //       message: res.data.msg
-      //     });
-      //   }
-      // })
-      // .catch(e => {
-      //   console.log(e);
-      // });
       this.updateInfoForm = false;
     },
     handleAvatarSuccess(res) {
-      console.log(res);
       localStorage.setItem("profile", res.url);
       this.imageUrl = res.url;
     },
@@ -216,12 +221,12 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style >
+<style>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

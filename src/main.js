@@ -6,7 +6,7 @@ import store from "./store/index";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import VueQuillEditor from "vue-quill-editor";
-import filters from "./utils/time";
+import filters from "./utils/filters";
 import "quill/dist/quill.core.css"; // import styles
 import "quill/dist/quill.snow.css"; // for snow theme
 import "quill/dist/quill.bubble.css"; // for bubble theme

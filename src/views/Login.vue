@@ -14,7 +14,11 @@
           <el-input v-model="loginForm.phone"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password " v-model="loginForm.password" show-password></el-input>
+          <el-input
+            type="password "
+            v-model="loginForm.password"
+            show-password
+          ></el-input>
         </el-form-item>
         <el-form-item class="login">
           <el-button
@@ -22,12 +26,19 @@
             :loading="loading"
             native-type="submit"
             style="width: 150px"
-          >账号登录</el-button>
+            >账号登录</el-button
+          >
         </el-form-item>
       </el-form>
 
       <div class="register">
-        <el-link class="register" @click="goRegister" type="info" :underline="false">没有账号，去注册</el-link>
+        <el-link
+          class="register"
+          @click="goRegister"
+          type="info"
+          :underline="false"
+          >没有账号，去注册</el-link
+        >
       </div>
     </el-card>
   </div>
@@ -59,13 +70,13 @@ export default {
     return {
       loginForm: {
         phone: "",
-        password: ""
+        password: "",
       },
       rules: {
         phone: [{ validator: validatePhone, trigger: "blur" }],
-        password: [{ validator: validatePass, trigger: "blur" }]
+        password: [{ validator: validatePass, trigger: "blur" }],
       },
-      loading: false
+      loading: false,
     };
   },
   methods: {
@@ -74,27 +85,25 @@ export default {
     },
 
     login() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
-              // console.log("res: ", res);
               this.loading = false;
               this.$router.push("/");
             })
-            .catch(e => {
+            .catch((e) => {
               console.log(e);
               this.loading = false;
             });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -112,7 +121,6 @@ body {
   width: 100%;
   height: 90vh;
   position: absolute;
-  /* z-index: -1; */
 }
 
 .login-background::after {

@@ -12,7 +12,6 @@ export const Login = (data) => {
  * 添加用户信息{用户名，励志短语}
  */
 export const SetInfo = (data) => {
-  console.log("apiPi: ", data);
   return post(`user/adduserinfo`, data);
 };
 
@@ -20,7 +19,6 @@ export const SetInfo = (data) => {
  * 修改密码
  */
 export const changePass = (data) => {
-  console.log("apiPi: ", data);
   return post(`user/changepass`, data);
 };
 

@@ -12,7 +12,11 @@
           />
         </div>
         <div class="card-panel-icon-wrapper icon-fans">
-          <i class="el-icon-user-solid" style="font-size: 45px" class-name="card-panel-icon" />
+          <i
+            class="el-icon-user-solid"
+            style="font-size: 45px"
+            class-name="card-panel-icon"
+          />
         </div>
       </div>
     </el-col>
@@ -20,10 +24,19 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <div class="card-panel-text">关注</div>
-          <count-to :start-val="0" :end-val="this.follow" :duration="3000" class="card-panel-num" />
+          <count-to
+            :start-val="0"
+            :end-val="this.follow"
+            :duration="3000"
+            class="card-panel-num"
+          />
         </div>
         <div class="card-panel-icon-wrapper icon-follower">
-          <i class="el-icon-user" style="font-size: 45px" class-name="card-panel-icon" />
+          <i
+            class="el-icon-user"
+            style="font-size: 45px"
+            class-name="card-panel-icon"
+          />
         </div>
       </div>
     </el-col>
@@ -39,7 +52,11 @@
           />
         </div>
         <div class="card-panel-icon-wrapper icon-like">
-          <i class="el-icon-medal" style="font-size: 45px" class-name="card-panel-icon" />
+          <i
+            class="el-icon-medal"
+            style="font-size: 45px"
+            class-name="card-panel-icon"
+          />
         </div>
       </div>
     </el-col>
@@ -55,7 +72,11 @@
           />
         </div>
         <div class="card-panel-icon-wrapper icon-article">
-          <i class="el-icon-finished" style="font-size: 45px" class-name="card-panel-icon" />
+          <i
+            class="el-icon-finished"
+            style="font-size: 45px"
+            class-name="card-panel-icon"
+          />
         </div>
       </div>
     </el-col>
@@ -68,7 +89,7 @@ import {
   getFollowers,
   getFollow,
   getTotalLike,
-  getArticlePostCount
+  getArticlePostCount,
 } from "../api/user";
 
 export default {
@@ -77,19 +98,17 @@ export default {
       followers: 0,
       follow: 0,
       totallike: 0,
-      articlepost: 0
+      articlepost: 0,
     };
   },
   components: {
-    CountTo
+    CountTo,
   },
   async mounted() {
-    // console.log("activited::::::::::::::::::");
     const followers = await getFollowers();
     const follow = await getFollow();
     const totallike = await getTotalLike();
     const articlepost = await getArticlePostCount();
-    // console.log("followers>>>>>", followers, follow);
     if (
       followers.data.code == 200 &&
       follow.data.code == 200 &&
@@ -103,7 +122,7 @@ export default {
     } else {
       return;
     }
-  }
+  },
 };
 </script>
 

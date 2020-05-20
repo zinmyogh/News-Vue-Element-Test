@@ -5,7 +5,11 @@
       <el-breadcrumb-item>我的发布</el-breadcrumb-item>
       <el-breadcrumb-item>微头条</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="moment_post" v-for="moment in momentPost" :key="moment.momentPostID">
+    <div
+      class="moment_post"
+      v-for="moment in momentPost"
+      :key="moment.momentPostID"
+    >
       <div>
         <p>{{ moment.content }}</p>
       </div>
@@ -25,7 +29,8 @@
             @click="momentDelete(moment.momentPostID)"
             type="text"
             style="color: #e80000"
-          >删除</el-button>
+            >删除</el-button
+          >
         </div>
       </div>
     </div>
@@ -45,76 +50,67 @@ export default {
           content: "",
           images: "",
           likeCount: "",
-          createDate: ""
-        }
+          createDate: "",
+        },
       ],
-      imgUrl: []
+      imgUrl: [],
     };
   },
   methods: {
     splitImgAddUrl(images) {
-      // console.log("enter >>>>>>>><<<<<<<<< enter", images);
       if (images == "" || images == undefined || images == null) {
         return "";
       } else {
-        // console.log("first; ", images);
         let arrImg = [];
-        images.split(",").forEach(e => {
+        images.split(",").forEach((e) => {
           arrImg.push(ImgUrl + e);
         });
         return arrImg.toString();
-        // console.log(arrImg.toString());
       }
     },
     splitImg(image) {
-      // console.log("sssssss: ", image);
       if (image == undefined || image == "" || image == null) {
         return "";
       } else {
-        // console.log("second: ", image.split(","));
         return image.split(",");
       }
     },
     momentDelete(momentPostID) {
-      // console.log("momentPostID: ", momentPostID);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
-          // console.log("gg: ", momentPostID);
           let data = { momentPostID: momentPostID };
-          console.log("delete: ", data);
           const res = await deleteMoment(data);
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg
+              message: res.data.msg,
             });
           } else {
             this.$message.error({
-              message: res.data.msg
+              message: res.data.msg,
             });
           }
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
   activated() {
-    // console.log("my moment post mounted>>>>>>");
     getMoment()
-      .then(res => {
+      .then((res) => {
         this.momentPost = res.data.info;
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
-  }
+  },
 };
 </script>
 
@@ -136,9 +132,6 @@ span {
   font-size: 13px;
   color: #888888;
 }
-/* .moment_body {
-  display: flex;
-} */
 img {
   width: 150px;
   height: 150px;
