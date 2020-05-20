@@ -1,25 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home";
-import Login from "../views/Login";
-import Register from "../views/Register";
+const Home = () => import(/* webpackChunkName: "start" */ "../views/Home");
+const Login = () => import(/* webpackChunkName: "start" */ "../views/Login");
+const Register = () =>
+  import(/* webpackChunkName: "start" */ "../views/Register");
 
-import Adv from "../views/administrator/Adv";
-import Img from "../views/administrator/Img";
-import Cty from "../views/administrator/Cty";
+const Adv = () =>
+  import(/* webpackChunkName: "administrator" */ "../views/administrator/Adv");
+const Img = () =>
+  import(/* webpackChunkName: "administrator" */ "../views/administrator/Img");
+const Cty = () =>
+  import(/* webpackChunkName: "administrator" */ "../views/administrator/Cty");
 
-import MainBody from "../views/MainBody";
-import CreateArticle from "../views/CreateArticle";
-import CreateMoment from "../views/CreateMoment";
-import CreateVideo from "../views/CreateVideo";
-import EditArticle from "../components/article/EditArticle";
+const MainBody = () =>
+  import(/* webpackChunkName: "user-use" */ "../views/MainBody");
+const CreateArticle = () =>
+  import(/* webpackChunkName: "user-use" */ "../views/CreateArticle");
+const CreateMoment = () =>
+  import(/* webpackChunkName: "user-use" */ "../views/CreateMoment");
+const CreateVideo = () =>
+  import(/* webpackChunkName: "user-use" */ "../views/CreateVideo");
+const EditArticle = () =>
+  import(
+    /* webpackChunkName: "user-use" */ "../components/article/EditArticle"
+  );
+const ReviewArticle = () =>
+  import(
+    /* webpackChunkName: "user-use" */ "../components/article/ArticlePostReview"
+  );
 
-import MyPost from "../views/me/MyPost";
-import ReviewArticle from "../components/article/ArticlePostReview";
-import MyAccount from "../views/me/MyAccount";
-import NotFound from "../views/error-page/404";
-
-import Privacy from "../views/footer/Privacy";
+const MyPost = () =>
+  import(/* webpackChunkName: "info" */ "../views/me/MyPost");
+const MyAccount = () =>
+  import(/* webpackChunkName: "info" */ "../views/me/MyAccount");
+const NotFound = () =>
+  import(/* webpackChunkName: "info" */ "../views/error-page/404");
+const Privacy = () =>
+  import(/* webpackChunkName: "info" */ "../views/footer/Privacy");
 
 Vue.use(VueRouter);
 const originalPush = VueRouter.prototype.push;
