@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import BaseUrl from "../../api/default";
+import { BaseUrl } from "../../api/default";
 export default {
   data() {
     return {
@@ -47,7 +47,7 @@ export default {
       dialogVisible: false,
       imgList: [],
       token: { authorization: localStorage.token },
-      serverUrl: `${BaseUrl.BaseUrl}article/articleimage`
+      serverUrl: `${BaseUrl}article/articleimage`
     };
   },
   methods: {
@@ -65,9 +65,9 @@ export default {
       this.uploadDisable = fileList.length == this.limit;
     },
     hadleSuccess(response) {
-      // console.log(response);
+      // console.log(response.url);
       this.imgList.push(response.url);
-      console.log(this.imgList);
+      // console.log(this.imgList);
       this.$emit("cover", this.imgList);
       // console.log(this.imgList);
     },
@@ -83,7 +83,7 @@ export default {
         this.$refs.upload.clearFiles();
         this.uploadDisable = false;
         this.imgList = [];
-        console.log("3 .... ", this.imgList);
+        // console.log("3 .... ", this.imgList);
         // console.log("limit3:  ....  ", this.limit);
       }
       if (val == 1) {
@@ -92,7 +92,7 @@ export default {
         this.$refs.upload.clearFiles();
         this.uploadDisable = false;
         this.imgList = [];
-        console.log("1 .... ", this.imgList);
+        // console.log("1 .... ", this.imgList);
         // console.log("limit 1: ", this.limit);
       }
       if (val == 0) {
@@ -101,7 +101,7 @@ export default {
         this.$refs.upload.clearFiles();
         this.uploadDisable = false;
         this.imgList = [];
-        console.log("0 .... ", this.imgList);
+        // console.log("0 .... ", this.imgList);
         // console.log("limit 0 : ", this.limit);
       }
     }

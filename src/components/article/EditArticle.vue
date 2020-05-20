@@ -1,31 +1,55 @@
 <template>
   <div>
-    <!-- 图片上传组件辅助-->
-    <el-upload
-      class="innerImgUpload"
-      :action="serverUrl"
-      name="file"
-      :headers="token"
-      :show-file-list="false"
-      :on-success="uploadSuccess"
-      :on-error="uploadError"
-      :before-upload="beforeUpload"
-    ></el-upload>
+    <div style="display: flex; flex-direction: row">
+      <div style="width: 800px; padding: 0px">
+        <el-form
+          ref="form"
+          :model="editCaption"
+          label-width="100px"
+          style="padding: 20px 0 10px 0px"
+        >
+          <el-form-item label="文章标题：" prop="title">
+            <el-input
+              maxlength="50"
+              clearable
+              show-word-limit
+              v-model="editCaption.renameCaption"
+              style="width: 100%"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div style="padding: 20px 10px 0 50px">
+        <el-button type="primary" @click="submitChange">上传修改</el-button>
+      </div>
+    </div>
+    <div style="padding:0  20px 0 20px">
+      <!-- 图片上传组件辅助-->
+      <el-upload
+        class="innerImgUpload"
+        :action="serverUrl"
+        name="file"
+        :headers="token"
+        :show-file-list="false"
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
+        :before-upload="beforeUpload"
+      ></el-upload>
 
-    <quill-editor
-      class="editor"
-      v-model="content"
-      ref="myQuillEditor"
-      :options="editorOption"
-      @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
-      @change="onEditorChange($event)"
-    ></quill-editor>
+      <quill-editor
+        class="editor"
+        v-model="content"
+        ref="myQuillEditor"
+        :options="editorOption"
+        @change="onEditorChange($event)"
+      ></quill-editor>
+    </div>
   </div>
 </template>
 
 <script>
 import { BaseUrl, ImgUrl } from "../../api/default";
+import { getArticleByID, updateArticle } from "../../api/article";
 // 工具栏配置
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线
@@ -55,6 +79,9 @@ export default {
       token: { authorization: localStorage.token },
       content: this.value,
       quillUpdateImg: false, // 根据图片上传状态来确定是否显示loading动画，刚开始是false,不显示
+      editCaption: {
+        renameCaption: ""
+      },
       editorOption: {
         // placeholder: "",
         theme: "snow", // or 'bubble'
@@ -80,20 +107,45 @@ export default {
     };
   },
   methods: {
-    onEditorBlur() {
-      //失去焦点事件"
-      // console.log("//失去焦点事件");
-    },
-    onEditorFocus() {
-      //获得焦点事件"
-      // console.log("//获得焦点事件");
-    },
     onEditorChange() {
       //内容改变事件
       this.$emit("input", this.content);
       // console.log("//内容改变事件 ", this.content);
     },
-
+    submitChange() {
+      //   console.log("submitchage", this.content);
+      let data = {
+        articlePostID: this.$route.params.articlePostID,
+        caption: this.editCaption.renameCaption,
+        content: this.encode(this.content)
+      };
+      if (this.editCaption.renameCaption != "") {
+        updateArticle(data)
+          .then(res => {
+            // console.log(res);
+            if (res.data.code == 200) {
+              setTimeout(() => {
+                this.editCaption.renameCaption = "";
+                this.content = "";
+              }, 1000);
+              return this.$message.success({
+                message: res.data.msg
+              });
+            } else {
+              return this.$message.error({
+                message: res.data.msg
+              });
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } else {
+        return this.$message.error({
+          message: "标题不能为空！"
+        });
+      }
+    },
     // 富文本图片上传前
     beforeUpload(file) {
       // 显示loading动画
@@ -142,7 +194,41 @@ export default {
         this.quillUpdateImg = false;
         return false;
       }
+    },
+    encode(str) {
+      return btoa(
+        encodeURIComponent(str).replace(
+          /%([0-9A-F]{2})/g,
+          function toSolidBytes(match, p1) {
+            return String.fromCharCode("0x" + p1);
+          }
+        )
+      );
+    },
+    decode(str) {
+      return decodeURIComponent(
+        atob(str)
+          .split("")
+          .map(function(c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
     }
+  },
+  activated() {
+    let id = { articlePostID: this.$route.params.articlePostID };
+    // console.log(id);
+    getArticleByID(id)
+      .then(res => {
+        // console.log(res.data.info[0].content);
+        this.editCaption.renameCaption = res.data.info[0].caption;
+        this.content = this.decode(res.data.info[0].content);
+        // console.log("after decode: ", this.content);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 };
 </script>
@@ -169,5 +255,7 @@ export default {
   position: relative !important;
   display: none;
 }
+/* .el-form-item__label {
+  width: 100px !important;
+} */
 </style>
-

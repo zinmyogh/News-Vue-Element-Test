@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import BaseUrl from "../api/default";
+import { BaseUrl } from "../api/default";
 import { addMoment } from "../api/moment";
 export default {
   data() {
     return {
-      serverUrl: `${BaseUrl.BaseUrl}moment/uploadimages`,
+      serverUrl: `${BaseUrl}moment/uploadimages`,
       token: { authorization: localStorage.token },
       dialogImageUrl: "",
       dialogVisible: false,
@@ -88,6 +88,7 @@ export default {
       };
       // console.log(res);
       if (res.code == 200) {
+        console.log("moment imgUrl : ", res.url);
         this.imageList.push(res.url);
         // console.log("this.imageList: ", this.imageList);
         if (this.imageList.length == this.uploadLength) {

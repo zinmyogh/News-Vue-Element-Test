@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <div v-for="video in videoPost" :key="video.videoPostID" class="video_wrap">
       <div>
-        <video class="video_img" :src="video.videoURL" controls="controls"></video>
+        <video class="video_img" :src="videoUrl(video.videoURL)" controls="controls"></video>
         <!-- <img class="video_img" :src="video.videoURL" alt /> -->
       </div>
       <div class="video_info">
@@ -16,9 +16,9 @@
           <h3>{{ video.caption }}</h3>
         </div>
         <div class="video_action">
-          <span>获赞 {{ 20 }}</span>
+          <span>获赞 {{ video.likeCount ||0 }}</span>
           <span>.</span>
-          <span>观看 {{ 220 }}</span>
+          <span>观看 {{ video.viewCount || 0 }}</span>
           <span>.</span>
           <!-- <span>{{video.viewCount}}</span>
           <span>{{video.likeCount}}</span>-->
@@ -51,6 +51,7 @@ import {
   updateVideoCaption,
   deleteVideoPost
 } from "../../../api/video";
+import { ImgUrl } from "../../../api/default";
 export default {
   data() {
     return {
@@ -77,21 +78,25 @@ export default {
   methods: {
     videoEdit(data) {
       this.updateVideoCaption = true;
-      console.log("videoEdit", data);
+      // console.log("videoEdit", data);
       this.id = data;
     },
-    // videoDelete(data) {
-    //   console.log("videoDelete", data);
-    // },
+    videoUrl(video) {
+      // console.log("video Url : ", video);
+      if (video == "" || video == null || video == undefined) {
+        return "";
+      }
+      return ImgUrl + video;
+    },
     async conformChange() {
       if (this.videoForm.videoCaption) {
         let data = {
           videoPostID: this.id,
           caption: this.videoForm.videoCaption
         };
-        console.log("conform change!", data);
+        // console.log("conform change!", data);
         const res = await updateVideoCaption(data);
-        console.log(res);
+        // console.log(res);
         if (res.data.code == 200) {
           this.$message.success({
             message: res.data.msg
@@ -109,7 +114,7 @@ export default {
       }
     },
     videoDelete(videoPostID) {
-      console.log("videoPostID: ", videoPostID);
+      // console.log("videoPostID: ", videoPostID);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -118,7 +123,7 @@ export default {
         .then(async () => {
           // console.log("gg: ", videoPostID);
           let data = { videoPostID: videoPostID };
-          console.log("delete: ", data);
+          // console.log("delete: ", data);
           const res = await deleteVideoPost(data);
           if (res.data.code == 200) {
             this.$message.success({
@@ -138,7 +143,7 @@ export default {
         });
     }
   },
-  mounted() {
+  activated() {
     // console.log("my video post mounted>>>>>>");
     getVideo()
       .then(res => {
@@ -161,7 +166,6 @@ export default {
 .video_wrap {
   display: flex;
   flex-direction: row;
-  /* box-sizing: border-box; */
   border-bottom: 1px solid #dfdfdf;
 }
 .video_img {

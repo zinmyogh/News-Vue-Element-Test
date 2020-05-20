@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div style="padding-bottom: 10px;font-size: 18px; letter-spacing: 2px">
-        <i class="el-icon-s-data" style="padding: 10px; font-size: 18px"></i>
+      <div style="padding-bottom: 10px; font-size: 18px; letter-spacing: 2px;">
+        <i class="el-icon-s-data" style="padding: 10px; font-size: 18px;"></i>
         热点新闻
       </div>
 
@@ -14,11 +14,11 @@
       >
         <div class="hot_header">
           <u>
-            <div style="padding-bottom: 5px;font-weight:bold;">{{hot.caption}}</div>
+            <div style="padding-bottom: 5px; font-weight: bold;">{{ hot.caption }}</div>
           </u>
           <div>
             <i class="el-icon-star-on"></i>
-            {{hot.likeCount}}
+            {{ hot.likeCount }}
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style lang='scss' scoped>
 .text {
   font-size: 14px;
 }
@@ -87,12 +87,13 @@ export default {
   justify-content: space-between;
 }
 .hot_content {
-  display: inline-block;
   word-break: break-all;
   text-overflow: ellipsis;
-  display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
-  -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-  -webkit-line-clamp: 1; /** 显示的行数 **/
-  overflow: hidden; /** 隐藏超出的内容 **/
+  display: -webkit-box;
+  /*! autoprefixer: off */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  /*! autoprefixer: on */
+  overflow: hidden;
 }
 </style>

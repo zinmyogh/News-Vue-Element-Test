@@ -33,7 +33,7 @@
           <div class="card-panel-text">获赞</div>
           <count-to
             :start-val="0"
-            :end-val="this.totallike"
+            :end-val="this.totallike || 0"
             :duration="3200"
             class="card-panel-num"
           />
@@ -98,7 +98,7 @@ export default {
     ) {
       this.followers = parseInt(followers.data.info[0].count);
       this.follow = parseInt(follow.data.info[0].count);
-      this.totallike = parseInt(totallike.data.info[0].count);
+      this.totallike = parseInt(totallike.data.info[0].totalcount);
       this.articlepost = parseInt(articlepost.data.info[0].count);
     } else {
       return;

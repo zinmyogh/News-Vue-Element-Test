@@ -35,7 +35,7 @@
     <div class="videoArea">
       <video
         v-if="videoForm.showVideoPath !='' && !videoFlag"
-        :src="videoForm.showVideoPath"
+        :src="videoUrl(videoForm.showVideoPath)"
         class="video"
         controls="controls"
       >您的浏览器不支持视频播放</video>
@@ -45,7 +45,7 @@
 
 <script>
 import { getCty } from "../api/admin";
-import BaseUrl from "../api/default";
+import { BaseUrl, ImgUrl } from "../api/default";
 import { addVideo } from "../api/video";
 // import { post } from "../utils/request";
 export default {
@@ -53,7 +53,7 @@ export default {
     return {
       videoTitle: "",
       token: { authorization: localStorage.token },
-      url: `${BaseUrl.BaseUrl}article/articleimage`,
+      url: `${BaseUrl}article/articleimage`,
       //参数
       videoFlag: false,
       //是否显示进度条
@@ -76,6 +76,10 @@ export default {
     };
   },
   methods: {
+    videoUrl(video) {
+      console.log("videoDelete", video);
+      return ImgUrl + video;
+    },
     beforeUploadVideo(file) {
       var fileSize = file.size / 1024 / 1024 < 1024;
       if (

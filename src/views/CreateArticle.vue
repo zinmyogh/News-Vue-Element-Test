@@ -101,7 +101,7 @@ export default {
           message: "Server Error! Please try again later!"
         });
       }
-      console.log("article : >>>>> ", res);
+      // console.log("article : >>>>> ", res);
       // this.$message({
       //   type: "success",
       //   message: "Login successfully! Welcome",
@@ -109,20 +109,6 @@ export default {
     },
     coverList(payload) {
       this.cover = payload.toString();
-      console.log("coverList: ", this.cover);
-      // this.cover1 = payload[0];
-      // console.log("cover 1: ", this.cover1);
-      // this.cover2 = payload[1];
-      // console.log("cover 2: ", this.cover2);
-      // this.cover3 = payload[2];
-      // console.log("cover 3: ", this.cover3);
-      // this.cover3 = payload[3];
-      // for (let i = 0; i < payload.length; i++) {
-      //   this.cover = payload[i];
-      // }
-      // let covver = this.cover.split(",");
-
-      // console.log("cofvvvver : ", covver);
     },
     articleContent(payload) {
       // this.content = payload;
@@ -136,25 +122,10 @@ export default {
               }
             )
           );
-        },
-        decode(str) {
-          return decodeURIComponent(
-            atob(str)
-              .split("")
-              .map(function(c) {
-                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-              })
-              .join("")
-          );
         }
       };
-      // 将富文本内容专程base64编码，这个用于上传到服务存储到数据库中
       let encoded = Base64.encode(payload);
       this.content = encoded;
-      // // 将富文本的base64编码 转换成原来的格式，这个用于将数据库中的富文本展示在界面上
-      // let decoded = Base64.decode(encoded);
-      console.log("encoded: ", encoded);
-      // console.log(decoded);
     }
   },
   mounted() {
@@ -162,7 +133,7 @@ export default {
     getCty()
       .then(res => {
         this.categories = res.data.info;
-        console.log(this.categories);
+        // console.log(this.categories);
       })
       .catch(e => {
         console.log(e);

@@ -112,7 +112,7 @@ body {
   width: 100%;
   height: 90vh;
   position: absolute;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .login-background::after {

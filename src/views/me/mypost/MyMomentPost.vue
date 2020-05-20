@@ -10,7 +10,12 @@
         <p>{{ moment.content }}</p>
       </div>
       <div class="images_list">
-        <img v-for="(img, index) in splitImg(moment.images)" :key="index" :src="img" alt />
+        <img
+          v-for="(img, index) in splitImg(splitImgAddUrl(moment.images))"
+          :key="index"
+          :src="img"
+          alt
+        />
       </div>
       <div>
         <div>
@@ -29,6 +34,7 @@
 
 <script>
 import { getMoment, deleteMoment } from "../../../api/moment";
+import { ImgUrl } from "../../../api/default";
 export default {
   data() {
     return {
@@ -41,15 +47,36 @@ export default {
           likeCount: "",
           createDate: ""
         }
-      ]
+      ],
+      imgUrl: []
     };
   },
   methods: {
-    splitImg(images) {
-      return images.split(",");
+    splitImgAddUrl(images) {
+      // console.log("enter >>>>>>>><<<<<<<<< enter", images);
+      if (images == "" || images == undefined || images == null) {
+        return "";
+      } else {
+        // console.log("first; ", images);
+        let arrImg = [];
+        images.split(",").forEach(e => {
+          arrImg.push(ImgUrl + e);
+        });
+        return arrImg.toString();
+        // console.log(arrImg.toString());
+      }
+    },
+    splitImg(image) {
+      // console.log("sssssss: ", image);
+      if (image == undefined || image == "" || image == null) {
+        return "";
+      } else {
+        // console.log("second: ", image.split(","));
+        return image.split(",");
+      }
     },
     momentDelete(momentPostID) {
-      console.log("momentPostID: ", momentPostID);
+      // console.log("momentPostID: ", momentPostID);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -78,7 +105,7 @@ export default {
         });
     }
   },
-  mounted() {
+  activated() {
     // console.log("my moment post mounted>>>>>>");
     getMoment()
       .then(res => {

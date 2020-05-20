@@ -9,18 +9,18 @@
 
     <div v-for="article in articlePost" :key="article.articlePostID" class="article_wrap">
       <div v-if="article.cover1">
-        <img class="article_img" :src="splitImg(article.cover1)[0]" alt />
+        <img class="article_img" :src="splitImg(article.cover1)" alt />
       </div>
       <div class="article_info">
         <div>
           <h3>{{ article.caption }}</h3>
-          <p v-html="delHtmlTag($options.filters.decode(article.content))"></p>
+          <p class="content_2_l" v-html="delHtmlTag($options.filters.decode(article.content))"></p>
           <!-- <p >{{article.content}}</p> -->
         </div>
         <div class="article_action">
-          <span>获赞 {{ 20 }}</span>
+          <span>获赞 {{ article.likeCount || 0 }}</span>
           <span>.</span>
-          <span>阅读 {{ 220 }}</span>
+          <span>阅读 {{ article.viewCount || 0 }}</span>
           <span>.</span>
           <!-- <span>{{article.viewCount}}</span>
           <span>{{article.likeCount}}</span>-->
@@ -48,6 +48,7 @@
 
 <script>
 import { getArticle, deleteArticle } from "../../../api/article";
+import { ImgUrl } from "../../../api/default";
 export default {
   data() {
     return {
@@ -63,29 +64,35 @@ export default {
           likeCount: "",
           createDate: "",
           categoryName: ""
+          // imgUrl: ImgUrl
         }
       ]
     };
   },
   methods: {
     splitImg(cover1) {
-      return cover1.split(",");
+      // console.log("cover1: ", ImgUrl + cover1.split(","));
+      return ImgUrl + cover1.split(",")[0];
     },
     delHtmlTag(content) {
       return content.replace(/<[^>]+>/g, "");
     },
     articleView(data) {
-      console.log("articleView : ", data);
+      // console.log("articleView : ", data);
       this.$router.push({
         name: "ReviewArticle",
         params: { articlePostID: data }
       });
     },
     articleEdit(data) {
-      console.log("articleEdit", data);
+      // console.log("articleEdit", data);
+      this.$router.push({
+        name: "EditArticle",
+        params: { articlePostID: data }
+      });
     },
     articleDelete(articlePostID) {
-      console.log("articlePostID: ", articlePostID);
+      // console.log("articlePostID: ", articlePostID);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -94,7 +101,7 @@ export default {
         .then(async () => {
           // console.log("gg: ", articlePostID);
           let data = { articlePostID: articlePostID };
-          console.log("delete: ", data);
+          // console.log("delete: ", data);
           const res = await deleteArticle(data);
           if (res.data.code == 200) {
             this.$message.success({
@@ -114,7 +121,7 @@ export default {
         });
     }
   },
-  mounted() {
+  activated() {
     getArticle()
       .then(res => {
         this.articlePost = res.data.info;
@@ -126,7 +133,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .article_wrap {
   display: flex;
   flex-direction: row;
@@ -149,16 +156,17 @@ h3 {
   margin-block-start: 15px;
   margin-block-end: 0px;
 }
-p {
-  display: inline-block;
+.content_2_l {
   margin-block-start: 10px;
   margin-block-end: 0px;
   word-break: break-all;
   text-overflow: ellipsis;
-  display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
-  -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-  -webkit-line-clamp: 2; /** 显示的行数 **/
-  overflow: hidden; /** 隐藏超出的内容 **/
+  display: -webkit-box;
+  /*! autoprefixer: off */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  /*! autoprefixer: on */
+  overflow: hidden;
 }
 span {
   font-size: 13px;

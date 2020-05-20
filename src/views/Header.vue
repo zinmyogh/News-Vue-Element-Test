@@ -2,12 +2,12 @@
   <div class="header">
     <el-menu :default-active="activeIndex" class="header-bar" mode="horizontal" :router="true">
       <el-menu-item>
-        <span style="font-size: 30px; color: #ff5555;font-weight:900;">缅甸头条</span>
+        <span style="font-size: 30px; color: #0088ff;font-weight:900;">缅甸头条</span>
       </el-menu-item>
       <el-submenu class="header-bar-item" index="1">
         <template slot="title">
-          <el-avatar :size="35">
-            <img src="../assets/images/profile.png" alt />
+          <el-avatar :src="this.imageUrl" :size="35" @error="errorHandler">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
           <span style="padding-left: 10px">{{ (name ? name : phone) }}</span>
         </template>
@@ -42,7 +42,7 @@ export default {
   name: "MainHeader",
   data() {
     return {
-      user: {},
+      imageUrl: "",
       activeIndex: "1",
       fits: "scale-down",
       url:
@@ -52,11 +52,17 @@ export default {
   computed: {
     ...mapGetters(["name", "phone"])
   },
+  methods: {
+    errorHandler() {
+      return true;
+    }
+  },
   mounted() {
     if (localStorage.userName == "null") {
       return;
     } else {
       this.$store.commit("user/SET_NAME", localStorage.userName);
+      this.imageUrl = localStorage.profile;
     }
   }
 };

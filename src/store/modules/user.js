@@ -18,7 +18,7 @@ const mutations = {
     state.token = token;
   },
   SET_NAME: (state, userName) => {
-    console.log("mutations; ", userName);
+    // console.log("mutations; ", userName);
     localStorage.setItem("userName", userName);
     state.userName = userName;
   },
@@ -51,7 +51,7 @@ const actions = {
       // console.log("enter");
       Login({ phone: phone, password: password })
         .then((response) => {
-          console.log("response", response.data);
+          // console.log("response", response.data);
           commit("SET_TOKEN", response.data.token);
           setToken(response.data.token);
           // commit("SET_NAME", response.info.phone);

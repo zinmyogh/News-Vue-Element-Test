@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { getArticleByID } from "../../../api/article";
+import { getArticleByID } from "../../api/article";
 export default {
   data() {
     return {
@@ -21,14 +21,14 @@ export default {
     };
   },
   async activated() {
-    console.log("review article post~~~~");
+    // console.log("review article post~~~~");
     let id = { articlePostID: this.$route.params.articlePostID };
-    console.log("id>>>>>>>", id);
+    // console.log("id>>>>>>>", id);
     if (id != undefined) {
       const res = await getArticleByID(id);
       this.article = res.data.info;
-      console.log(this.article);
-      console.log("res: ", res);
+      // console.log(this.article);
+      // console.log("res: ", res);
     } else {
       return;
     }

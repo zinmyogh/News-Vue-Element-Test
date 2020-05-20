@@ -13,9 +13,10 @@ import MainBody from "../views/MainBody";
 import CreateArticle from "../views/CreateArticle";
 import CreateMoment from "../views/CreateMoment";
 import CreateVideo from "../views/CreateVideo";
+import EditArticle from "../components/article/EditArticle";
 
 import MyPost from "../views/me/MyPost";
-import ReviewArticle from "../views/me/mypost/ArticlePostReview";
+import ReviewArticle from "../components/article/ArticlePostReview";
 import MyAccount from "../views/me/MyAccount";
 import Photo from "../components/Photo";
 import NotFound from "../views/error-page/404";
@@ -69,6 +70,12 @@ const routes = [
       {
         path: "/createvideo",
         component: CreateVideo,
+        meta: { keepAlive: true },
+      },
+      {
+        path: "/editarticle",
+        name: "EditArticle",
+        component: EditArticle,
         meta: { keepAlive: true },
       },
       {

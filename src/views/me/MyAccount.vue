@@ -18,7 +18,7 @@
         </div>
         <div class="avator_right">
           <div class="name">{{name || "___ ___"}}</div>
-          <div class="introduction">{{introduction || "亲，还没有写励志短语。。。"}}</div>
+          <div class="introduction">{{introduction || "靓，还没有写励志短语。。。"}}</div>
         </div>
       </div>
       <div class="account_info">
