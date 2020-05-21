@@ -5,6 +5,7 @@
       <el-breadcrumb-item>管理员</el-breadcrumb-item>
       <el-breadcrumb-item>发布广告</el-breadcrumb-item>
     </el-breadcrumb>
+    <el-divider></el-divider>
     <el-upload
       ref="avdForm"
       class="avatar-uploader"
@@ -145,6 +146,9 @@ export default {
 
 <style scoped>
 .adv {
+  padding: 20px;
+}
+.el-breadcrumb {
   padding: 20px;
 }
 .el-form {

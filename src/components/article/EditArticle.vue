@@ -8,7 +8,7 @@
           label-width="100px"
           style="padding: 20px 0 10px 0px"
         >
-          <el-form-item label="文章标题：" prop="title">
+          <el-form-item :label="this.$t(`article.atitle`)" prop="title">
             <el-input
               maxlength="50"
               clearable
@@ -84,7 +84,7 @@ export default {
       },
       editorOption: {
         theme: "snow", // or 'bubble'
-        placeholder: "您想说点什么？",
+        placeholder: this.$t("article.asay"),
         modules: {
           toolbar: {
             container: toolbarOptions,

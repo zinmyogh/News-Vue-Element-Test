@@ -23,28 +23,36 @@
         </div>
       </div>
       <div class="account_info">
-        <div class="account_info_left">账号信息</div>
+        <div class="account_info_left">{{ this.$t("myaccount.accinfo") }}</div>
         <div class="account_info_right">
           <div class="account_right1">
-            <div class="account_right1_1">名称</div>
+            <div class="account_right1_1">
+              {{ this.$t("myaccount.accname") }}
+            </div>
             <div class="account_right1_2">{{ name || "___ ___" }}</div>
           </div>
           <div class="account_right1">
-            <div class="account_right1_1">手机</div>
+            <div class="account_right1_1">
+              {{ this.$t("myaccount.accphone") }}
+            </div>
             <div class="account_right1_2">{{ phone }}</div>
           </div>
           <div class="account_right1">
-            <div class="account_right1_1">密码</div>
+            <div class="account_right1_1">
+              {{ this.$t("myaccount.accpassword") }}
+            </div>
 
             <el-button
               style="padding-left: 150px;"
               type="text"
               @click="changePassForm = true"
-              >更改密码</el-button
+              >{{ this.$t("myaccount.accpasswordc") }}</el-button
             >
           </div>
           <div class="account_right11">
-            <div class="account_right1_1">励志短语</div>
+            <div class="account_right1_1">
+              {{ this.$t("myaccount.accintro") }}
+            </div>
             <div class="account_right1_2" style="overflow:hidden;">
               {{ introduction || "亲，还没有写励志短语。。。" }}
             </div>
@@ -53,27 +61,29 @@
       </div>
 
       <div class="account_info">
-        <div class="account_info_left">登录账号</div>
+        <div class="account_info_left">{{ this.$t("myaccount.loginacc") }}</div>
         <div class="account_info_right">
           <div class="account_right1">
-            <div class="account_right1_1">账号ID</div>
+            <div class="account_right1_1">{{ this.$t("myaccount.accid") }}</div>
             <div class="account_right1_2">15983646156534869813</div>
           </div>
           <div class="account_right1">
-            <div class="account_right1_1">账号类型</div>
+            <div class="account_right1_1">
+              {{ this.$t("myaccount.acctype") }}
+            </div>
             <div class="account_right1_2" style="color: gray">
               {{ phone == "13100000000" ? "管理员" : "个人" }}
             </div>
           </div>
           <div class="account_right11">
-            <el-button type="text" @click="updateInfoForm = true"
-              >更新信息</el-button
-            >
+            <el-button type="text" @click="updateInfoForm = true">{{
+              this.$t("myaccount.accinfoc")
+            }}</el-button>
             <el-button
               type="text"
               @click="logout"
               style="padding-left: 82px; color: #e80000"
-              >退出登录</el-button
+              >{{ this.$t("myaccount.acclogout") }}</el-button
             >
           </div>
         </div>

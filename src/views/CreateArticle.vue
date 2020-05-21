@@ -3,7 +3,7 @@
     <el-card shadow="hover">
       <el-form ref="titleForm" :model="titleForm" label-width="100px">
         <el-form-item
-          label="文章标题："
+          :label="this.$t(`article.atitle`)"
           prop="title"
           :rules="[
             { required: true, message: '标题不能为空', trigger: 'blur' },
@@ -19,7 +19,7 @@
         <el-form-item>
           <el-select
             v-model="titleForm.categoryID"
-            placeholder="请选择文章类型"
+            :placeholder="this.$t(`article.acty`)"
             style="width: 150px"
           >
             <el-option
@@ -39,9 +39,9 @@
       <el-divider></el-divider>
       <CoverUpload ref="cover" @cover="coverList" />
       <div class="upload-btn">
-        <el-button @click="uploadArticle()" type="primary"
-          >点击上传文章</el-button
-        >
+        <el-button @click="uploadArticle()" type="primary">{{
+          this.$t("article.abtn")
+        }}</el-button>
       </div>
     </el-card>
   </div>

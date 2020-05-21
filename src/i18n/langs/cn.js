@@ -1,0 +1,81 @@
+const cn = {
+  header: {
+    logo: "缅甸头条",
+    setting: "账号设置",
+  },
+  home: {
+    caption: "我的头条",
+    home: "首页",
+    article: "文章",
+    moment: "动态",
+    video: "视屏",
+
+    follower: "粉丝",
+    follow: "关注",
+    tlc: "获赞",
+    post: "发布",
+    hot: "热点新闻",
+  },
+  me: {
+    me: "个人中心",
+    mypost: "我的发布",
+    myacc: "我的账号",
+  },
+  admin: {
+    admin: "管理员",
+    cty: "标题管理",
+    adv: "发布广告",
+    img: "发布图片",
+  },
+  article: {
+    atitle: "文章标题",
+    acty: "请选择文章类型",
+    asay: "您想写点什么...",
+    acover: "放置封面图",
+    ac1: "一张封面",
+    ac3: "三张封面",
+    acn: "不放封面",
+    abtn: "发布文章",
+  },
+  video: {
+    vtitle: "视屏标题",
+    vcty: "请选择视屏类型",
+    vsfile: "选择视屏文件",
+    vbtn: "发布视屏",
+  },
+  moment: {
+    msay: "和好友分享，新鲜事...",
+    msselect: "您共选择: ",
+    msremain: "还可选: ",
+    mbtn: "发布动态",
+  },
+  mypost: {
+    like: "获赞",
+    view: "阅读",
+    review: "查看",
+    edit: "编辑",
+    delete: "删除",
+  },
+  myaccount: {
+    accinfo: "账号信息",
+    accname: "名称",
+    accphone: "手机",
+    accpassword: "密码",
+    accpasswordc: "更改登录密码",
+    accintro: "励志短语",
+    loginacc: "登录账号",
+    accid: "账号ID",
+    acctype: "账号类型",
+    accinfoc: "更改信息",
+    acclogout: "退出登录",
+  },
+  time: {
+    mins: "分钟",
+    hrs: "小时",
+    day: "天",
+    month: "月",
+    year: "年",
+  },
+};
+
+export default cn;

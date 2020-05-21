@@ -3,7 +3,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">粉丝</div>
+          <div class="card-panel-text">{{ this.$t("home.follower") }}</div>
           <count-to
             :start-val="0"
             :end-val="this.followers"
@@ -23,7 +23,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">关注</div>
+          <div class="card-panel-text">{{ this.$t("home.follow") }}</div>
           <count-to
             :start-val="0"
             :end-val="this.follow"
@@ -43,7 +43,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">获赞</div>
+          <div class="card-panel-text">{{ this.$t("home.tlc") }}</div>
           <count-to
             :start-val="0"
             :end-val="this.totallike || 0"
@@ -63,7 +63,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">我的文章</div>
+          <div class="card-panel-text">{{ this.$t("home.post") }}</div>
           <count-to
             :start-val="0"
             :end-val="this.articlepost"

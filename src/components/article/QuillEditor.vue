@@ -36,19 +36,19 @@ const toolbarOptions = [
   [{ list: "bullet" }], // 有序、无序列表
   [{ align: [] }], // 对齐方式
   ["clean"], // 清除文本格式
-  ["image"] // 链接、图片、视频 // 链接、图片、视频
+  ["image"], // 链接、图片、视频 // 链接、图片、视频
 ];
 export default {
   props: {
     /*编辑器的内容*/
     value: {
-      type: String
+      type: String,
     },
     /*图片大小*/
     maxSize: {
       type: Number,
-      default: 4000 //kb
-    }
+      default: 4000, //kb
+    },
   },
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
       editorOption: {
         // placeholder: "",
         theme: "snow", // or 'bubble'
-        placeholder: "您想说点什么？",
+        placeholder: this.$t("article.asay"),
         modules: {
           toolbar: {
             container: toolbarOptions,
@@ -71,12 +71,12 @@ export default {
                 } else {
                   this.quill.format("image", false);
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      serverUrl: `${BaseUrl}article/articleimage` // 这里写你要上传的图片服务器地址
+      serverUrl: `${BaseUrl}article/articleimage`, // 这里写你要上传的图片服务器地址
     };
   },
   methods: {
@@ -142,8 +142,8 @@ export default {
         this.quillUpdateImg = false;
         return false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -170,4 +170,3 @@ export default {
   display: none;
 }
 </style>
-

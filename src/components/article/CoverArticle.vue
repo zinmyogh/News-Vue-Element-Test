@@ -1,11 +1,11 @@
 <template>
   <div class="cover">
-    <div>放置封面图</div>
+    <div>{{ this.$t("article.acover") }}</div>
     <div style="padding-left: 80px">
       <el-radio-group v-model="radio" @change="radioChange(radio)">
-        <el-radio :label="1">一张封面</el-radio>
-        <el-radio :label="3">三张封面</el-radio>
-        <el-radio :label="0">不放封面</el-radio>
+        <el-radio :label="1">{{ this.$t("article.ac1") }}</el-radio>
+        <el-radio :label="3">{{ this.$t("article.ac3") }}</el-radio>
+        <el-radio :label="0">{{ this.$t("article.acn") }}</el-radio>
       </el-radio-group>
       <div style="display: flex;">
         <el-upload

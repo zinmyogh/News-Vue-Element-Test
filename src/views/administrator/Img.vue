@@ -1,8 +1,18 @@
 <template>
   <div class="admin_image">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>管理员</el-breadcrumb-item>
+      <el-breadcrumb-item>发布图片</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-divider></el-divider>
     <div>
-      <p style="letter-spacing: 2px">上传某些关于活动或广告类图片，用于轮播图显示</p>
-      <p style="color: #e80000; letter-spacing: 2px">注：此操作只由管理员执行</p>
+      <p style="letter-spacing: 2px">
+        上传某些关于活动或广告类图片，用于轮播图显示
+      </p>
+      <p style="color: #e80000; letter-spacing: 2px">
+        注：此操作只由管理员执行
+      </p>
     </div>
     <p>
       共选择了 {{ uploadLength }} 张，还可选
@@ -44,7 +54,7 @@ export default {
       limitCount: 3,
       uploadRemain: null,
       hideUpload: false,
-      imageList: []
+      imageList: [],
     };
   },
   methods: {
@@ -59,11 +69,11 @@ export default {
         this.imageList.push(res.url);
         if (this.imageList.length == this.uploadLength) {
           let data = {
-            images: this.imageList
+            images: this.imageList,
           };
           const result = await adminImage(data);
           this.$message.success({
-            message: result.data.msg
+            message: result.data.msg,
           });
           setTimeout(() => {
             this.$refs.upload.clearFiles();
@@ -73,7 +83,7 @@ export default {
         }
       } else {
         this.$message.error({
-          message: "上传时出现错误了！"
+          message: "上传时出现错误了！",
         });
       }
     },
@@ -91,13 +101,16 @@ export default {
     },
     adminAddImage() {
       this.$refs.upload.submit();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
 .admin_image {
-  padding: 30px;
+  padding: 20px;
+}
+.el-breadcrumb {
+  padding: 20px;
 }
 </style>

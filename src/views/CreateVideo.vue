@@ -2,7 +2,7 @@
   <div class="create_video">
     <div class="video_title">
       <span style="min-width: 80px; padding: 10px;color: #202020"
-        >视屏标题:</span
+        >{{ this.$t("video.vtitle") }}:</span
       >
       <el-input
         maxlength="50"
@@ -14,7 +14,7 @@
     <div style="padding-left: 110px">
       <el-select
         v-model="categoryID"
-        placeholder="请选择视屏类型"
+        :placeholder="this.$t(`video.vcty`)"
         style="width: 150px"
       >
         <el-option
@@ -39,14 +39,14 @@
         :on-remove="handleRemove"
         :before-upload="beforeUploadVideo"
       >
-        <el-button v-show="selectVideo" slot="trigger" type="primary"
-          >选取视屏文件</el-button
-        >
+        <el-button v-show="selectVideo" slot="trigger" type="primary">{{
+          this.$t("video.vsfile")
+        }}</el-button>
         <el-button
           style="margin-left: 10px;"
           type="success"
           @click="submitUpload"
-          >上传到服务器</el-button
+          >{{ this.$t("video.vbtn") }}</el-button
         >
       </el-upload>
     </div>

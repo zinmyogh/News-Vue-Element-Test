@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div style="padding-bottom: 10px; font-size: 18px; letter-spacing: 2px;">
+      <div style="padding-bottom: 10px; font-size: 18px; word-spacing: 2px;">
         <i class="el-icon-s-data" style="padding: 10px; font-size: 18px;"></i>
-        热点新闻
+        {{ this.$t("home.hot") }}
       </div>
 
       <div

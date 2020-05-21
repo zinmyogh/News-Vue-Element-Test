@@ -1,13 +1,13 @@
 <template>
   <div class="my_post">
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="文章" name="article">
+      <el-tab-pane :label="this.$t(`home.article`)" name="article">
         <MyArticlePost />
       </el-tab-pane>
-      <el-tab-pane label="微头条" name="moment">
+      <el-tab-pane :label="this.$t(`home.moment`)" name="moment">
         <MyMomentPost />
       </el-tab-pane>
-      <el-tab-pane label="视屏" name="video">
+      <el-tab-pane :label="this.$t(`home.video`)" name="video">
         <MyVideoPost />
       </el-tab-pane>
     </el-tabs>
@@ -22,18 +22,18 @@ export default {
   components: {
     MyArticlePost,
     MyMomentPost,
-    MyVideoPost
+    MyVideoPost,
   },
   data() {
     return {
-      activeName: "article"
+      activeName: "article",
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
-    }
-  }
+    },
+  },
 };
 </script>
 

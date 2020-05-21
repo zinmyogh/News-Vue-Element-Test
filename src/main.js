@@ -7,6 +7,7 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import VueQuillEditor from "vue-quill-editor";
 import filters from "./utils/filters";
+import i18n from "./i18n/i18n";
 import "quill/dist/quill.core.css"; // import styles
 import "quill/dist/quill.snow.css"; // for snow theme
 import "quill/dist/quill.bubble.css"; // for bubble theme
@@ -21,8 +22,9 @@ Vue.config.productionTip = false;
 // Vue.filter("time", dateDiff);
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]));
 
-new Vue({
+window.app = new Vue({
   router,
   store,
+  i18n,
   render: (h) => h(App),
 }).$mount("#app");

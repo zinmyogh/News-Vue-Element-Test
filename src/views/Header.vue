@@ -1,19 +1,28 @@
 <template>
   <div class="header">
-    <el-menu :default-active="activeIndex" class="header-bar" mode="horizontal" :router="true">
+    <el-menu
+      :default-active="activeIndex"
+      class="header-bar"
+      mode="horizontal"
+      :router="true"
+    >
       <el-menu-item>
-        <span style="font-size: 30px; color: #0088ff;font-weight:900;">缅甸头条</span>
+        <span style="font-size: 30px; color: #0088ff;font-weight:900;">{{
+          label
+        }}</span>
       </el-menu-item>
       <el-submenu class="header-bar-item" index="1">
         <template slot="title">
           <el-avatar :src="this.imageUrl" :size="35" @error="errorHandler">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <img
+              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+            />
           </el-avatar>
-          <span style="padding-left: 10px">{{ (name ? name : phone) }}</span>
+          <span style="padding-left: 10px">{{ name ? name : phone }}</span>
         </template>
         <el-menu-item index="/myaccount">
           <i class="el-icon-setting"></i>
-          <span>账号设置</span>
+          <span>{{ this.$t("header.setting") }}</span>
         </el-menu-item>
       </el-submenu>
 
@@ -33,11 +42,12 @@
         </el-dropdown>
       </el-menu-item>
     </el-menu>
+    <button @click="switchLang">切换</button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "MainHeader",
   data() {
@@ -46,25 +56,39 @@ export default {
       activeIndex: "1",
       fits: "scale-down",
       url:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
     };
   },
   computed: {
-    ...mapGetters(["name", "phone"])
+    ...mapGetters(["name", "phone"]),
+    ...mapState("i18n", ["lang"]),
+    label() {
+      return this.$t("header.logo");
+    },
   },
   methods: {
     errorHandler() {
       return true;
-    }
+    },
+    switchLang() {
+      let lang = "";
+      if (this.lang === "en") {
+        lang = "cn";
+      } else {
+        lang = "en";
+      }
+      this.$store.commit("i18n/switchLang", lang);
+    },
   },
   mounted() {
+    console.log(this.$store);
     if (localStorage.userName == "null") {
       return;
     } else {
       this.$store.commit("user/SET_NAME", localStorage.userName);
       this.imageUrl = localStorage.profile;
     }
-  }
+  },
 };
 </script>
 

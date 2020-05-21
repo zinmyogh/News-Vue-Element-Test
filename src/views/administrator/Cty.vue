@@ -5,6 +5,7 @@
       <el-breadcrumb-item>管理员</el-breadcrumb-item>
       <el-breadcrumb-item>标题管理</el-breadcrumb-item>
     </el-breadcrumb>
+    <el-divider></el-divider>
     <div class="create_cty">
       <span>添加分类：</span>
       <el-input
@@ -173,7 +174,7 @@ export default {
   position: relative;
 }
 .el-breadcrumb {
-  padding: 20px;
+  padding: 40px 40px 20px 40px;
 }
 .create_cty {
   padding: 20px;

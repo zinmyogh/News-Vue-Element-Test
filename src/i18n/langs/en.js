@@ -1,0 +1,81 @@
+const en = {
+  header: {
+    logo: "Myanmar News",
+    setting: "Setting",
+  },
+  home: {
+    caption: "My News",
+    home: "Home",
+    article: "Article",
+    moment: "Moment",
+    video: "Video",
+
+    follower: "Followers",
+    follow: "Follow",
+    tlc: "Got Like",
+    post: "Post Count",
+    hot: "Hot News",
+  },
+  me: {
+    me: "Me",
+    mypost: "My Post",
+    myacc: "My Account",
+  },
+  admin: {
+    admin: "Admin",
+    cty: "Categories",
+    adv: "Advertisement",
+    img: "Image Adv",
+  },
+  article: {
+    atitle: "Title",
+    acty: "Category Type",
+    asay: "Write Something.....",
+    acover: "Put Cover",
+    ac1: "One Cover",
+    ac3: "Three Cover",
+    acn: "No Cover",
+    abtn: "Upload Article",
+  },
+  video: {
+    vtitle: "Title",
+    vcty: "Categories",
+    vsfile: "Select File",
+    vbtn: "Upload Video",
+  },
+  moment: {
+    msay: "Have Something to Say...",
+    msselect: "You had select: ",
+    msremain: "Remain: ",
+    mbtn: "Upload Moment",
+  },
+  mypost: {
+    like: "like",
+    view: "view",
+    review: "Review",
+    edit: "Edit",
+    delete: "Delete",
+  },
+  myaccount: {
+    accinfo: "Account Info",
+    accname: "UserName",
+    accphone: "Phone No.",
+    accpassword: "Password",
+    accpasswordc: "Change Password",
+    accintro: "Introduction",
+    loginacc: "Login Account",
+    accid: "Account ID",
+    acctype: "Account Type",
+    accinfoc: "Change Info.",
+    acclogout: "Logout",
+  },
+  time: {
+    mins: "mins",
+    hrs: "hrs",
+    day: "day",
+    month: "month",
+    year: "year",
+  },
+};
+
+export default en;

@@ -1,4 +1,5 @@
 import moment from "moment";
+import i18n from "../i18n/i18n";
 
 let dateDiff = (sDate2) => {
   //sDate1和sDate2是字符串 yyyy-MM-dd格式
@@ -20,15 +21,15 @@ let dateDiff = (sDate2) => {
   timeSpan.Seconds = parseInt(TotalMilliseconds / 1000);
   timeSpan.Milliseconds = TotalMilliseconds;
   if (timeSpan.Minutes <= 60) {
-    return timeSpan.Minutes + "分钟";
+    return timeSpan.Minutes + " " + i18n.t("time.mins");
   } else if (timeSpan.Hours <= 24) {
-    return timeSpan.Hours + "小时";
+    return timeSpan.Hours + " " + i18n.t("time.hrs");
   } else if (timeSpan.Days <= 30) {
-    return timeSpan.Days + "天";
+    return timeSpan.Days + " " + i18n.t("time.day");
   } else if (timeSpan.Months <= 12) {
-    return timeSpan.Months + "月";
+    return timeSpan.Months + " " + i18n.t("time.month");
   } else {
-    return timeSpan.Years + "年";
+    return timeSpan.Years + " " + i18n.t("time.year");
   }
 };
 

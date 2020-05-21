@@ -1,9 +1,9 @@
 <template>
   <div class="my_moment_post">
     <el-breadcrumb separator-class="el-icon-caret-right">
-      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-      <el-breadcrumb-item>我的发布</el-breadcrumb-item>
-      <el-breadcrumb-item>微头条</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("me.me") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("me.mypost") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("home.moment") }}</el-breadcrumb-item>
     </el-breadcrumb>
     <div
       class="moment_post"
@@ -23,14 +23,17 @@
       </div>
       <div>
         <div>
-          <span>获赞 &nbsp;&nbsp;{{ moment.likeCount || 0 }}</span>
+          <span>{{ moment.likeCount || 0 }}</span>
+          <span>{{ like }}</span>
+
           <span>{{ moment.createDate | dateDiff }}</span>
           <el-button
             @click="momentDelete(moment.momentPostID)"
             type="text"
-            style="color: #e80000"
-            >删除</el-button
+            style="color: #e80000; padding-left: 5px;"
           >
+            {{ del }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -55,6 +58,14 @@ export default {
       ],
       imgUrl: [],
     };
+  },
+  computed: {
+    like() {
+      return this.$t("mypost.like");
+    },
+    del() {
+      return this.$t("mypost.delete");
+    },
   },
   methods: {
     splitImgAddUrl(images) {
@@ -128,7 +139,7 @@ p {
   overflow: hidden;
 }
 span {
-  padding: 10px;
+  padding: 5px;
   font-size: 13px;
   color: #888888;
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="my_article_post">
     <el-breadcrumb separator-class="el-icon-caret-right">
-      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-      <el-breadcrumb-item>我的发布</el-breadcrumb-item>
-      <el-breadcrumb-item>文章</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("me.me") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("me.mypost") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("home.article") }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <div
@@ -23,26 +23,30 @@
           ></p>
         </div>
         <div class="article_action">
-          <span>获赞 {{ article.likeCount || 0 }}</span>
+          <span>{{ like }}</span>
+          <span> {{ article.likeCount || 0 }}</span>
           <span>.</span>
-          <span>阅读 {{ article.viewCount || 0 }}</span>
+          <span>{{ view }}</span>
+          <span> {{ article.viewCount || 0 }}</span>
           <span>.</span>
           <span>{{ article.createDate | dateDiff }}</span>
           <div class="btn_group">
-            <el-button type="text" @click="articleView(article.articlePostID)"
-              >查看</el-button
+            <el-button
+              type="text"
+              @click="articleView(article.articlePostID)"
+              >{{ review }}</el-button
             >
             <el-button
               type="text"
               @click="articleEdit(article.articlePostID)"
               style="color: #ff9900"
-              >编辑</el-button
+              >{{ edit }}</el-button
             >
             <el-button
               type="text"
               @click="articleDelete(article.articlePostID)"
               style="color: #e80000"
-              >删除</el-button
+              >{{ del }}</el-button
             >
           </div>
         </div>
@@ -72,6 +76,23 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    like() {
+      return this.$t("mypost.like");
+    },
+    view() {
+      return this.$t("mypost.view");
+    },
+    review() {
+      return this.$t("mypost.review");
+    },
+    edit() {
+      return this.$t("mypost.edit");
+    },
+    del() {
+      return this.$t("mypost.delete");
+    },
   },
   methods: {
     splitImg(cover1) {
@@ -167,7 +188,7 @@ h3 {
   overflow: hidden;
 }
 span {
-  font-size: 13px;
+  font-size: 14px;
   color: #888888;
   padding: 10px 5px 10px 5px;
 }

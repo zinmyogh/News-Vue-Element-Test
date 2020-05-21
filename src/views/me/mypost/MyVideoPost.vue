@@ -1,9 +1,9 @@
 <template>
   <div class="my_video_post">
     <el-breadcrumb separator-class="el-icon-caret-right">
-      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-      <el-breadcrumb-item>我的发布</el-breadcrumb-item>
-      <el-breadcrumb-item>视屏</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("me.me") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("me.mypost") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("home.video") }}</el-breadcrumb-item>
     </el-breadcrumb>
     <div v-for="video in videoPost" :key="video.videoPostID" class="video_wrap">
       <div>
@@ -18,9 +18,11 @@
           <h3>{{ video.caption }}</h3>
         </div>
         <div class="video_action">
-          <span>获赞 {{ video.likeCount || 0 }}</span>
+          <span>{{ like }}</span>
+          <span> {{ video.likeCount || 0 }}</span>
           <span>.</span>
-          <span>观看 {{ video.viewCount || 0 }}</span>
+          <span>{{ view }}</span>
+          <span> {{ video.viewCount || 0 }}</span>
           <span>.</span>
           <span>{{ video.createDate | dateDiff }}</span>
         </div>
@@ -29,13 +31,13 @@
             type="text"
             @click="videoEdit(video.videoPostID)"
             style="color: #ff9900"
-            >编辑</el-button
+            >{{ edit }}</el-button
           >
           <el-button
             type="text"
             @click="videoDelete(video.videoPostID)"
             style="color: #e80000"
-            >删除</el-button
+            >{{ del }}</el-button
           >
         </div>
       </div>
@@ -89,6 +91,20 @@ export default {
       ],
       id: "",
     };
+  },
+  computed: {
+    like() {
+      return this.$t("mypost.like");
+    },
+    view() {
+      return this.$t("mypost.view");
+    },
+    edit() {
+      return this.$t("mypost.edit");
+    },
+    del() {
+      return this.$t("mypost.delete");
+    },
   },
   methods: {
     videoEdit(data) {
@@ -202,7 +218,7 @@ p {
   overflow: hidden; /** 隐藏超出的内容 **/
 }
 span {
-  font-size: 13px;
+  font-size: 14px;
   color: #888888;
   padding: 10px 5px 10px 5px;
 }
