@@ -62,7 +62,7 @@ export default {
       uploadRemain: null,
       hideUpload: false,
       content: "",
-      imageList: [],
+      imageList: []
     };
   },
   methods: {
@@ -71,7 +71,7 @@ export default {
         return this.$refs.upload.submit();
       } else {
         return this.$message.error({
-          message: "动态不能为空！",
+          message: "动态不能为空！"
         });
       }
     },
@@ -84,15 +84,14 @@ export default {
     async handleSuccess(res) {
       let data = {
         content: this.content,
-        images: this.imageList,
+        images: this.imageList
       };
       if (res.code == 200) {
-        console.log("moment imgUrl : ", res.url);
         this.imageList.push(res.url);
         if (this.imageList.length == this.uploadLength) {
           const result = await addMoment(data);
           this.$message.success({
-            message: result.data.msg,
+            message: result.data.msg
           });
           setTimeout(() => {
             this.$refs.upload.clearFiles();
@@ -103,7 +102,7 @@ export default {
         }
       } else {
         this.$message.error({
-          message: "上传是出现错误了！",
+          message: "上传是出现错误了！"
         });
       }
     },
@@ -132,8 +131,8 @@ export default {
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -8,43 +8,56 @@
     </div>
     <PanelGroup />
     <el-carousel height="200px" direction="vertical" :autoplay="false">
-      <el-carousel-item v-for="item in 3" :key="item">
-        <h3 class="medium">{{ item }}</h3>
+      <el-carousel-item v-for="(img, i) in this.imageList" :key="i">
+        <img style="width:100%; height:100%;" :src="img" alt />
       </el-carousel-item>
     </el-carousel>
-    <Infinite />
+    <HotFour />
   </div>
 </template>
 
 <script>
 import PanelGroup from "../components/PanelGroup";
-import Infinite from "../components/InfiniteScroll";
+import HotFour from "../components/HotFour";
+import { getAdminImage } from "../api/user";
+import { ImgUrl } from "../api/default";
 export default {
   components: {
     PanelGroup,
-    Infinite,
+    HotFour
   },
   data() {
     return {
-      carasoulImg: [{}],
       textArr: [
         " 第一条公告",
         " 第二条公告第二条公告",
-        " 第三条公告第三条公告第三条公告",
+        " 第三条公告第三条公告第三条公告"
       ],
       number: 0,
+      imageList: []
     };
   },
   computed: {
     text() {
       return {
         id: this.number,
-        val: this.textArr[this.number],
+        val: this.textArr[this.number]
       };
-    },
+    }
   },
-  mounted() {
+  async mounted() {
     this.startMove();
+    const res = await getAdminImage();
+    // console.log("res: ", res);
+    let imgArr = [];
+    if (res.data.code == 200) {
+      res.data.info[0].images.split(",").forEach(i => {
+        imgArr.push(ImgUrl + i);
+      });
+      // console.log(imgArr);
+      this.imageList = imgArr;
+      console.log("this: ", this.imageList);
+    }
   },
   methods: {
     startMove() {
@@ -56,8 +69,8 @@ export default {
         }
         this.startMove();
       }, 5000); // 滚动不需要停顿则将2000改成动画持续时间
-    },
-  },
+    }
+  }
 };
 </script>
 

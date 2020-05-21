@@ -46,3 +46,10 @@ export const getTotalLike = () => {
 export const getArticlePostCount = () => {
   return get(`user/getarticlepostcount`);
 };
+
+/**
+ *获取adminimage
+ */
+export const getAdminImage = () => {
+  return get(`user/getadminimage`);
+};

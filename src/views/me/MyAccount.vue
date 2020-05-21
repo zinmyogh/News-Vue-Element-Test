@@ -132,11 +132,11 @@
 <script>
 import { changePass } from "../../api/user";
 import { mapGetters } from "vuex";
-import BaseUrl from "../../api/default";
+import { BaseUrl, ImgUrl } from "../../api/default";
 export default {
   data() {
     return {
-      serverUrl: `${BaseUrl.BaseUrl}user/uploadprofile`,
+      serverUrl: `${BaseUrl}user/uploadprofile`,
       imageUrl: "",
       token: { authorization: localStorage.token },
       updateInfoForm: false,
@@ -207,8 +207,9 @@ export default {
       this.updateInfoForm = false;
     },
     handleAvatarSuccess(res) {
-      localStorage.setItem("profile", res.url);
-      this.imageUrl = res.url;
+      let profile = ImgUrl + res.url;
+      localStorage.setItem("profile", profile);
+      this.imageUrl = profile;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";

@@ -1,5 +1,14 @@
 <template>
-  <div>
+  <div class="admin_image">
+    <div>
+      <p style="letter-spacing: 2px">上传某些关于活动或广告类图片，用于轮播图显示</p>
+      <p style="color: #e80000; letter-spacing: 2px">注：此操作只由管理员执行</p>
+    </div>
+    <p>
+      共选择了 {{ uploadLength }} 张，还可选
+      <span v-if="uploadRemain == null">{{ uploadLimit }}</span>
+      <span v-else>{{ uploadRemain }}</span> 张
+    </p>
     <el-upload
       ref="upload"
       :action="serverUrl"
@@ -16,27 +25,26 @@
     >
       <i class="el-icon-plus icon-hidden"></i>
     </el-upload>
-    <p>
-      共选择了 {{ uploadLength }} 张，还可选
-      <span v-if="uploadRemain == null">{{ uploadLimit }}</span>
-      <span v-else>{{ uploadRemain }}</span> 张
-    </p>
+    <div style="padding-top: 20px">
+      <el-button type="primary" @click="adminAddImage">上传</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import BaseUrl from "../../api/default";
+import { BaseUrl } from "../../api/default";
+import { adminImage } from "../../api/admin";
 export default {
   data() {
     return {
-      serverUrl: `${BaseUrl.BaseUrl}moment/uploadimages`,
+      serverUrl: `${BaseUrl}admin/uploadimages`,
       token: { authorization: localStorage.token },
       uploadLength: 0,
       uploadLimit: 3,
       limitCount: 3,
       uploadRemain: null,
       hideUpload: false,
-      imageList: [],
+      imageList: []
     };
   },
   methods: {
@@ -46,8 +54,28 @@ export default {
       this.uploadRemain += 1;
       this.uploadLength -= 1;
     },
-    handleSuccess(res) {
-      console.log(res);
+    async handleSuccess(res) {
+      if (res.code == 200) {
+        this.imageList.push(res.url);
+        if (this.imageList.length == this.uploadLength) {
+          let data = {
+            images: this.imageList
+          };
+          const result = await adminImage(data);
+          this.$message.success({
+            message: result.data.msg
+          });
+          setTimeout(() => {
+            this.$refs.upload.clearFiles();
+            this.uploadLength = 0;
+            this.uploadRemain = 3;
+          }, 1000);
+        }
+      } else {
+        this.$message.error({
+          message: "上传时出现错误了！"
+        });
+      }
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -57,60 +85,19 @@ export default {
       );
     },
     handleOnChange(file, fileList) {
-      console.log("filelIst: ", fileList);
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
     },
-  },
-};
-</script>
-
-<style></style>
-
-<!--<template>
-  <div class="container">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>管理员</el-breadcrumb-item>
-      <el-breadcrumb-item>图片广告</el-breadcrumb-item>
-    </el-breadcrumb>
-    <el-tabs v-model="activeName" type="border-card">
-    <el-tab-pane label="网页版广告图" name="advWeb">
-    <ImgWeb />
-    </el-tab-pane>
-    <el-tab-pane label="手机版广告图" name="advApp">
-    <ImgApp />
-    </el-tab-pane>
-    </el-tabs>
-  </div>
-</template>
-
-<script>
-import ImgWeb from "./ImgWeb";
-// import ImgApp from "./ImgApp";
-export default {
-  data() {
-    return {
-      activeName: "advWeb"
-    };
-  },
-  components: {
-    ImgWeb
-    // ImgApp
+    adminAddImage() {
+      this.$refs.upload.submit();
+    }
   }
 };
 </script>
 
-<style scoped>
-.container {
-  width: 100%;
-  height: 100%;
-}
-
-.el-tabs {
-  min-height: 750px;
+<style>
+.admin_image {
+  padding: 30px;
 }
 </style>
-
--->

@@ -26,3 +26,11 @@ export const updCty = (data) => {
 export const delCty = (data) => {
   return del(`admin/delete/category`, data);
 };
+
+/**
+ *上传图片
+ */
+export const adminImage = (data) => {
+  console.log("admin add image : ", data);
+  return post(`admin/adminimage`, data);
+};
