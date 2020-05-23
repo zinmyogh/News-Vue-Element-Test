@@ -91,6 +91,8 @@ const en = {
       "Upload some pictures about activities or advertisements for the display of the carousel",
     warn: "Note: this operation is only performed by the administrator",
     upload: "Upload",
+    public: "Publish announcement: ",
+    enterp: "Please enter announcement message...",
   },
   ad: {
     adtitle: "Ad Caption",

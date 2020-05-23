@@ -13,18 +13,26 @@
               <i class="el-icon-edit-outline"></i>
               <span>{{ this.$t("home.caption") }}</span>
             </template>
-            <el-menu-item index="/mainbody">{{
+            <el-menu-item index="/mainbody">
+              {{
               this.$t("home.home")
-            }}</el-menu-item>
-            <el-menu-item index="/createarticle">{{
+              }}
+            </el-menu-item>
+            <el-menu-item index="/createarticle">
+              {{
               this.$t("home.article")
-            }}</el-menu-item>
-            <el-menu-item index="/createvideo">{{
+              }}
+            </el-menu-item>
+            <el-menu-item index="/createvideo">
+              {{
               this.$t("home.video")
-            }}</el-menu-item>
-            <el-menu-item index="/createmoment">{{
+              }}
+            </el-menu-item>
+            <el-menu-item index="/createmoment">
+              {{
               this.$t("home.moment")
-            }}</el-menu-item>
+              }}
+            </el-menu-item>
           </el-submenu>
 
           <el-submenu v-if="checkPermission(['admin', 'editor'])" index="2">
@@ -32,12 +40,16 @@
               <i class="el-icon-user"></i>
               <span>{{ this.$t("me.me") }}</span>
             </template>
-            <el-menu-item index="/mypost">{{
+            <el-menu-item index="/mypost">
+              {{
               this.$t("me.mypost")
-            }}</el-menu-item>
-            <el-menu-item index="/myaccount">{{
+              }}
+            </el-menu-item>
+            <el-menu-item index="/myaccount">
+              {{
               this.$t("me.myacc")
-            }}</el-menu-item>
+              }}
+            </el-menu-item>
           </el-submenu>
           <el-submenu v-if="checkPermission(['admin'])" index="3">
             <template slot="title">
@@ -45,15 +57,21 @@
               <span>{{ this.$t("admin.admin") }}</span>
               <!-- <span>管理员</span> -->
             </template>
-            <el-menu-item index="/administrator/upload/cty">{{
+            <el-menu-item index="/administrator/upload/cty">
+              {{
               this.$t("admin.cty")
-            }}</el-menu-item>
-            <el-menu-item index="/administrator/upload/img">{{
+              }}
+            </el-menu-item>
+            <el-menu-item index="/administrator/upload/img">
+              {{
               this.$t("admin.img")
-            }}</el-menu-item>
-            <el-menu-item index="/administrator/upload/adv">{{
+              }}
+            </el-menu-item>
+            <el-menu-item index="/administrator/upload/adv">
+              {{
               this.$t("admin.adv")
-            }}</el-menu-item>
+              }}
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -69,8 +87,8 @@ export default {
     return {};
   },
   methods: {
-    checkPermission,
-  },
+    checkPermission
+  }
 };
 </script>
 

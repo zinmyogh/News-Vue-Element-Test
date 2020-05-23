@@ -1,29 +1,25 @@
 <template>
   <div class="admin_image">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">
-        {{ this.$t("home.home") }}
-      </el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">{{ this.$t("home.home") }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ this.$t("admin.admin") }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ this.$t("admin.img") }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
-    <div>
-      <p style="letter-spacing: 2px">
-        {{ this.$t("imgadv.info") }}
-      </p>
-      <p style="color: #e80000; word-spacing: 2px">
-        {{ this.$t("imgadv.warn") }}
-      </p>
+    <div style="padding-left: 20px">
+      <p style="letter-spacing: 2px">{{ this.$t("imgadv.info") }}</p>
+      <p style="color: #e80000; word-spacing: 2px">{{ this.$t("imgadv.warn") }}</p>
     </div>
-    <p>
+    <p style="padding-left: 20px">
       {{
-        this.$t("moment.msselect") +
-          uploadLength +
-          ", " +
-          this.$t("moment.msremain")
+      this.$t("moment.msselect") +
+      uploadLength +
+      ", " +
+      this.$t("moment.msremain")
       }}
-      <span v-if="uploadRemain == null">{{ uploadLimit }}</span>
+      <span
+        v-if="uploadRemain == null"
+      >{{ uploadLimit }}</span>
       <span v-else>{{ uploadRemain }}</span>
     </p>
     <el-upload
@@ -39,20 +35,40 @@
       :auto-upload="false"
       :on-change="handleOnChange"
       :class="{ hide: hideUpload }"
+      style="padding-left: 20px"
     >
       <i class="el-icon-plus icon-hidden"></i>
     </el-upload>
-    <div style="padding-top: 20px">
-      <el-button type="primary" @click="adminAddImage">{{
+    <div style="padding-top: 20px; padding-left: 20px">
+      <el-button type="primary" @click="adminAddImage">
+        {{
         this.$t("imgadv.upload")
-      }}</el-button>
+        }}
+      </el-button>
+    </div>
+    <el-divider></el-divider>
+    <div class="add_public">
+      <p>{{ this.$t("imgadv.public") }}</p>
+      <el-input
+        class="alert_msg"
+        :placeholder="this.$t(`imgadv.enterp`)"
+        v-model="public_msg"
+        clearable
+      ></el-input>
+      <div style="padding-top: 20px">
+        <el-button class="add_cty" type="primary" @click="publicMsg">
+          {{
+          this.$t("imgadv.upload")
+          }}
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { BaseUrl } from "../../api/default";
-import { adminImage } from "../../api/admin";
+import { adminImage, adminPublic } from "../../api/admin";
 export default {
   data() {
     return {
@@ -64,6 +80,7 @@ export default {
       uploadRemain: null,
       hideUpload: false,
       imageList: [],
+      public_msg: ""
     };
   },
   methods: {
@@ -78,11 +95,11 @@ export default {
         this.imageList.push(res.url);
         if (this.imageList.length == this.uploadLength) {
           let data = {
-            images: this.imageList,
+            images: this.imageList
           };
           const result = await adminImage(data);
           this.$message.success({
-            message: result.data.msg,
+            message: result.data.msg
           });
           setTimeout(() => {
             this.$refs.upload.clearFiles();
@@ -92,7 +109,7 @@ export default {
         }
       } else {
         this.$message.error({
-          message: "上传时出现错误了！",
+          message: "上传时出现错误了！"
         });
       }
     },
@@ -111,7 +128,24 @@ export default {
     adminAddImage() {
       this.$refs.upload.submit();
     },
-  },
+    publicMsg() {
+      console.log("public message; ");
+      let data = { publicMsg: this.public_msg };
+      adminPublic(data)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.public_msg = "";
+            this.$message.success({
+              message: res.data.msg
+            });
+          }
+          // console.log(res);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  }
 };
 </script>
 
@@ -121,5 +155,16 @@ export default {
 }
 .el-breadcrumb {
   padding: 20px;
+}
+.add_public {
+  padding: 0 20px 20px 20px;
+}
+.add_public span {
+  display: flex;
+  flex-direction: column;
+  color: #303030;
+}
+.alert_msg {
+  width: 500px;
 }
 </style>

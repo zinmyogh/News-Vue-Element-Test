@@ -31,6 +31,12 @@ export const delCty = (data) => {
  *上传图片
  */
 export const adminImage = (data) => {
-  console.log("admin add image : ", data);
   return post(`admin/adminimage`, data);
+};
+
+/**
+ *上传图片
+ */
+export const adminPublic = (data) => {
+  return post(`admin/adminpublic`, data);
 };

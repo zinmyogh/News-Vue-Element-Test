@@ -19,7 +19,7 @@
 <script>
 import PanelGroup from "../components/PanelGroup";
 import HotFour from "../components/HotFour";
-import { getAdminImage } from "../api/user";
+import { getAdminImage, getAdminPublic } from "../api/user";
 import { ImgUrl } from "../api/default";
 export default {
   components: {
@@ -28,11 +28,7 @@ export default {
   },
   data() {
     return {
-      textArr: [
-        " 第一条公告",
-        " 第二条公告第二条公告",
-        " 第三条公告第三条公告第三条公告"
-      ],
+      textArr: ["公 告"],
       number: 0,
       imageList: []
     };
@@ -48,15 +44,21 @@ export default {
   async mounted() {
     this.startMove();
     const res = await getAdminImage();
-    // console.log("res: ", res);
     let imgArr = [];
     if (res.data.code == 200) {
       res.data.info[0].images.split(",").forEach(i => {
         imgArr.push(ImgUrl + i);
       });
-      // console.log(imgArr);
       this.imageList = imgArr;
-      console.log("this: ", this.imageList);
+    }
+    const result = await getAdminPublic();
+    if (result.data.code == 200) {
+      this.textArr.push(
+        result.data.info[0].createDate + " " + result.data.info[0].publicMsg
+      );
+      this.textArr.push(
+        result.data.info[1].createDate + " " + result.data.info[1].publicMsg
+      );
     }
   },
   methods: {

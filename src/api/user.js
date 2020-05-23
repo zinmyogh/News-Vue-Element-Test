@@ -53,3 +53,10 @@ export const getArticlePostCount = () => {
 export const getAdminImage = () => {
   return get(`user/getadminimage`);
 };
+
+/**
+ *获取adminpublic
+ */
+export const getAdminPublic = () => {
+  return get(`user/getadminpublic`);
+};

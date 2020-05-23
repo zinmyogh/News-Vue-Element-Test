@@ -1,9 +1,7 @@
 <template>
   <div class="cty">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">
-        {{ this.$t("home.home") }}
-      </el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">{{ this.$t("home.home") }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ this.$t("admin.admin") }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ this.$t("admin.cty") }}</el-breadcrumb-item>
     </el-breadcrumb>
@@ -16,16 +14,14 @@
         v-model="categoryNameA"
       ></el-input>
       <span style="padding: 0 10px;"></span>
-      <el-button class="add_cty" type="primary" @click="addcate">{{
+      <el-button class="add_cty" type="primary" @click="addcate">
+        {{
         this.$t("category.add")
-      }}</el-button>
+        }}
+      </el-button>
     </div>
     <el-table :data="categoryData" style="width: 100%;">
-      <el-table-column
-        type="index"
-        width="50px"
-        align="center"
-      ></el-table-column>
+      <el-table-column type="index" width="50px" align="center"></el-table-column>
       <el-table-column
         :label="this.$t(`category.ctyname`)"
         prop="categoryName"
@@ -44,21 +40,14 @@
         width="320px"
         align="center"
       ></el-table-column>
-      <el-table-column
-        :label="this.$t(`category.ctyaction`)"
-        fixed="right"
-        align="center"
-      >
+      <el-table-column :label="this.$t(`category.ctyaction`)" fixed="right" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="updatecate(scope.$index, scope.row)">{{
+          <el-button size="mini" @click="updatecate(scope.$index, scope.row)">
+            {{
             edit
-          }}</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="delcate(scope.$index, scope.row)"
-            >{{ del }}</el-button
-          >
+            }}
+          </el-button>
+          <el-button size="mini" type="danger" @click="delcate(scope.$index, scope.row)">{{ del }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -75,9 +64,9 @@ export default {
         {
           categoryID: "",
           categoryName: "",
-          categoryOrder: "",
-        },
-      ],
+          categoryOrder: ""
+        }
+      ]
     };
   },
   computed: {
@@ -86,28 +75,28 @@ export default {
     },
     del() {
       return this.$t("mypost.delete");
-    },
+    }
   },
   methods: {
     addcate() {
       let data = { categoryName: this.categoryNameA };
       addCty(data)
-        .then((result) => {
+        .then(result => {
           if (result.data.code == 200) {
             this.$message.success({
-              message: result.data.msg,
+              message: result.data.msg
             });
             this.categoryName = null;
             this.$router.go(0);
           } else {
             this.$message.error({
-              message: result.data.msg,
+              message: result.data.msg
             });
             this.categoryNameA = null;
           }
           // console.log(result);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -117,7 +106,7 @@ export default {
         title: "提示！",
         message: h("p", null, [
           h("span", null, `您确定要删除 "${row.categoryName}类" 分类标题吗？`),
-          h("i", { style: "color: #c00000" }, "永久性操作，请慎重操作！"),
+          h("i", { style: "color: #c00000" }, "永久性操作，请慎重操作！")
         ]),
         showCancelButton: true,
         confirmButtonText: "确定",
@@ -133,24 +122,24 @@ export default {
                 instance.confirmButtonLoading = false;
                 this.$router.go(0);
               })
-              .catch((e) => {
+              .catch(e => {
                 console.log(e);
               });
           } else {
             done();
           }
-        },
+        }
       }).then(() => {
         this.$message({
           type: "success",
-          message: "已删除完毕！",
+          message: "已删除完毕！"
         });
       });
     },
     updatecate(index, row) {
       this.$prompt("请输入新标题名称", "提示", {
         confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        cancelButtonText: "取消"
       })
         .then(({ value }) => {
           let data = { categoryName: value, categoryOrder: row.categoryOrder };
@@ -158,27 +147,27 @@ export default {
             .then(() => {
               this.$router.go(0);
             })
-            .catch((e) => {
+            .catch(e => {
               console.log(e);
             });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "取消更改",
+            message: "取消更改"
           });
         });
-    },
+    }
   },
   mounted() {
     getCty()
-      .then((res) => {
+      .then(res => {
         this.categoryData = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
