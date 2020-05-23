@@ -1,8 +1,15 @@
 import { Login, SetInfo } from "@/api/user";
 import { setToken } from "../../utils/auth";
 import { Message } from "element-ui";
+// import ws from "../../api/ws";
+// const socket = new ws({
+//   url: "ws://192.168.0.111:3000/wx/ws/",
+//   reconnectTimes: 0,
+// });
 
 const state = {
+  // WS: socket, //webSocket
+  // WS_MSG: null,
   token: "",
   userID: "",
   userName: "",
@@ -12,6 +19,15 @@ const state = {
   introduction: "",
   roles: [],
 };
+// //socket接收信息
+// state.WS.onmessage((data) => {
+//   const data1 = atob(data);
+//   const data2 = data1.toString();
+//   // const data2 = window.pako.inflate(data1, { to: "string" });
+//   console.log("accept data2:", btoa(data2));
+//   // const data3 = JSON.parse(data2);
+//   // state.WS_MSG = data3;
+// });
 
 const mutations = {
   SET_TOKEN: (state, token) => {
@@ -41,6 +57,10 @@ const mutations = {
   SET_ROLES: (state, roles) => {
     state.roles = roles;
   },
+  // sendMsg(state, payload) {
+  //   console.log("sendmsg:", payload);
+  //   state.WS.send(payload);
+  // },
 };
 
 const actions = {
