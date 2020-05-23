@@ -5,11 +5,7 @@
       <el-breadcrumb-item>{{ this.$t("me.mypost") }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ this.$t("home.moment") }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <div
-      class="moment_post"
-      v-for="moment in momentPost"
-      :key="moment.momentPostID"
-    >
+    <div class="moment_post" v-for="moment in momentPost" :key="moment.momentPostID">
       <div>
         <p>{{ moment.content }}</p>
       </div>
@@ -31,9 +27,7 @@
             @click="momentDelete(moment.momentPostID)"
             type="text"
             style="color: #e80000; padding-left: 5px;"
-          >
-            {{ del }}
-          </el-button>
+          >{{ del }}</el-button>
         </div>
       </div>
     </div>
@@ -53,10 +47,10 @@ export default {
           content: "",
           images: "",
           likeCount: "",
-          createDate: "",
-        },
+          createDate: ""
+        }
       ],
-      imgUrl: [],
+      imgUrl: []
     };
   },
   computed: {
@@ -65,7 +59,7 @@ export default {
     },
     del() {
       return this.$t("mypost.delete");
-    },
+    }
   },
   methods: {
     splitImgAddUrl(images) {
@@ -73,7 +67,7 @@ export default {
         return "";
       } else {
         let arrImg = [];
-        images.split(",").forEach((e) => {
+        images.split(",").forEach(e => {
           arrImg.push(ImgUrl + e);
         });
         return arrImg.toString();
@@ -90,38 +84,38 @@ export default {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(async () => {
           let data = { momentPostID: momentPostID };
           const res = await deleteMoment(data);
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg,
+              message: res.data.msg
             });
           } else {
             this.$message.error({
-              message: res.data.msg,
+              message: res.data.msg
             });
           }
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
-    },
+    }
   },
   activated() {
     getMoment()
-      .then((res) => {
+      .then(res => {
         this.momentPost = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
@@ -139,7 +133,7 @@ p {
   overflow: hidden;
 }
 span {
-  padding: 5px;
+  padding: 10px 5px 10px 5px;
   font-size: 13px;
   color: #888888;
 }

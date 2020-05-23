@@ -10,12 +10,13 @@
         prop="loginForm"
         @submit.native.prevent="login"
       >
-        <el-form-item label="用户名" prop="phone">
-          <el-input v-model="loginForm.phone"></el-input>
+        <el-form-item label="手机" prop="phone">
+          <el-input v-model="loginForm.phone" placeholder="Phone"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
             type="password "
+            placeholder="Password"
             v-model="loginForm.password"
             show-password
           ></el-input>
@@ -26,19 +27,12 @@
             :loading="loading"
             native-type="submit"
             style="width: 150px"
-            >账号登录</el-button
-          >
+          >账号登录</el-button>
         </el-form-item>
       </el-form>
 
       <div class="register">
-        <el-link
-          class="register"
-          @click="goRegister"
-          type="info"
-          :underline="false"
-          >没有账号，去注册</el-link
-        >
+        <el-link class="register" @click="goRegister" type="info" :underline="false">没有账号，去注册</el-link>
       </div>
     </el-card>
   </div>
@@ -70,13 +64,13 @@ export default {
     return {
       loginForm: {
         phone: "",
-        password: "",
+        password: ""
       },
       rules: {
         phone: [{ validator: validatePhone, trigger: "blur" }],
-        password: [{ validator: validatePass, trigger: "blur" }],
+        password: [{ validator: validatePass, trigger: "blur" }]
       },
-      loading: false,
+      loading: false
     };
   },
   methods: {
@@ -85,25 +79,26 @@ export default {
     },
 
     login() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
               this.loading = false;
+              this.loginForm.phone = "";
+              this.loginForm.password = "";
               this.$router.push("/");
             })
-            .catch((e) => {
-              console.log(e);
+            .catch(() => {
               this.loading = false;
             });
         } else {
           return false;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

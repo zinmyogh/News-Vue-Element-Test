@@ -1,23 +1,30 @@
 <template>
   <div class="admin_image">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>管理员</el-breadcrumb-item>
-      <el-breadcrumb-item>发布图片</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">
+        {{ this.$t("home.home") }}
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("admin.admin") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("admin.img") }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
     <div>
       <p style="letter-spacing: 2px">
-        上传某些关于活动或广告类图片，用于轮播图显示
+        {{ this.$t("imgadv.info") }}
       </p>
-      <p style="color: #e80000; letter-spacing: 2px">
-        注：此操作只由管理员执行
+      <p style="color: #e80000; word-spacing: 2px">
+        {{ this.$t("imgadv.warn") }}
       </p>
     </div>
     <p>
-      共选择了 {{ uploadLength }} 张，还可选
+      {{
+        this.$t("moment.msselect") +
+          uploadLength +
+          ", " +
+          this.$t("moment.msremain")
+      }}
       <span v-if="uploadRemain == null">{{ uploadLimit }}</span>
-      <span v-else>{{ uploadRemain }}</span> 张
+      <span v-else>{{ uploadRemain }}</span>
     </p>
     <el-upload
       ref="upload"
@@ -36,7 +43,9 @@
       <i class="el-icon-plus icon-hidden"></i>
     </el-upload>
     <div style="padding-top: 20px">
-      <el-button type="primary" @click="adminAddImage">上传</el-button>
+      <el-button type="primary" @click="adminAddImage">{{
+        this.$t("imgadv.upload")
+      }}</el-button>
     </div>
   </div>
 </template>

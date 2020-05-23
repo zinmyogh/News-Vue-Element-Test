@@ -2,6 +2,7 @@ const cn = {
   header: {
     logo: "缅甸头条",
     setting: "账号设置",
+    language: "中-ZH",
   },
   home: {
     caption: "我的头条",
@@ -45,8 +46,8 @@ const cn = {
   },
   moment: {
     msay: "和好友分享，新鲜事...",
-    msselect: "您共选择: ",
-    msremain: "还可选: ",
+    msselect: "您共选择 : ",
+    msremain: "还可选 : ",
     mbtn: "发布动态",
   },
   mypost: {
@@ -75,6 +76,29 @@ const cn = {
     day: "天",
     month: "月",
     year: "年",
+  },
+  category: {
+    addcty: "添加分类 ：",
+    writecty: "请输入分类名",
+    add: "添加",
+    ctyname: "分类名称",
+    ctyid: "分类ID",
+    ctyuuid: "分类UUID",
+    ctyaction: "操作",
+  },
+  imgadv: {
+    info: "上传某些关于活动或广告类图片，用于轮播图显示",
+    warn: "注：此操作只由管理员执行",
+    upload: "上传",
+  },
+  ad: {
+    adtitle: "广告标题",
+    adcaption: "广告标语",
+    adurl: "广告URL",
+    adday: "广告有效期",
+    advd: "广告日期，以天数计算",
+    adsubmit: "提交",
+    adreset: "重置",
   },
 };
 

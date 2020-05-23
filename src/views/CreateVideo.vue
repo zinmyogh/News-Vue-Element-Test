@@ -1,22 +1,11 @@
 <template>
   <div class="create_video">
     <div class="video_title">
-      <span style="min-width: 80px; padding: 10px;color: #202020"
-        >{{ this.$t("video.vtitle") }}:</span
-      >
-      <el-input
-        maxlength="50"
-        clearable
-        show-word-limit
-        v-model="videoTitle"
-      ></el-input>
+      <span style="min-width: 80px; padding: 10px;color: #202020">{{ this.$t("video.vtitle") }}:</span>
+      <el-input maxlength="50" clearable show-word-limit v-model="videoTitle"></el-input>
     </div>
     <div style="padding-left: 110px">
-      <el-select
-        v-model="categoryID"
-        :placeholder="this.$t(`video.vcty`)"
-        style="width: 150px"
-      >
+      <el-select v-model="categoryID" :placeholder="this.$t(`video.vcty`)" style="width: 150px">
         <el-option
           v-for="item in categories"
           :key="item.categoryID"
@@ -39,15 +28,16 @@
         :on-remove="handleRemove"
         :before-upload="beforeUploadVideo"
       >
-        <el-button v-show="selectVideo" slot="trigger" type="primary">{{
+        <el-button v-show="selectVideo" slot="trigger" type="success">
+          {{
           this.$t("video.vsfile")
-        }}</el-button>
+          }}
+        </el-button>
         <el-button
           style="margin-left: 10px;"
-          type="success"
+          type="primary"
           @click="submitUpload"
-          >{{ this.$t("video.vbtn") }}</el-button
-        >
+        >{{ this.$t("video.vbtn") }}</el-button>
       </el-upload>
     </div>
     <div class="videoArea">
@@ -56,9 +46,10 @@
         :src="videoUrl(videoForm.showVideoPath)"
         class="video"
         controls="controls"
-      >
-        您的浏览器不支持视频播放
-      </video>
+      >您的浏览器不支持视频播放</video>
+    </div>
+    <div class="reset_video">
+      <el-button type="primary" v-if="showReset" @click="resetVideo">{{this.$t("ad.adreset")}}</el-button>
     </div>
   </div>
 </template>
@@ -81,7 +72,7 @@ export default {
       isShowUploadVideo: false,
       //显示上传按钮
       videoForm: {
-        showVideoPath: "",
+        showVideoPath: ""
       },
       categoryID: "",
       selectVideo: true,
@@ -89,9 +80,10 @@ export default {
       categories: [
         {
           categoryID: "",
-          categoryName: "",
-        },
+          categoryName: ""
+        }
       ],
+      showReset: false
     };
   },
   methods: {
@@ -108,29 +100,29 @@ export default {
           "video/avi",
           "video/wmv",
           "video/rmvb",
-          "video/mov",
+          "video/mov"
         ].indexOf(file.type) == -1
       ) {
         this.$alert("请上传正确的视频格式", "提示", {
           confirmButtonText: "确定",
-          callback: (action) => {
+          callback: action => {
             this.$message({
               type: "info",
-              message: `action: ${action}`,
+              message: `action: ${action}`
             });
-          },
+          }
         });
         return false;
       }
       if (!fileSize) {
         this.$alert("视频大小不能超过1GB", "提示", {
           confirmButtonText: "确定",
-          callback: (action) => {
+          callback: action => {
             this.$message({
               type: "info",
-              message: `action: ${action}`,
+              message: `action: ${action}`
             });
-          },
+          }
         });
         return false;
       }
@@ -141,7 +133,7 @@ export default {
         return this.$refs.upload.submit();
       } else {
         return this.$message.error({
-          message: "视屏 标题 或 分类 不能为空！",
+          message: "视屏 标题 或 分类 不能为空！"
         });
       }
     },
@@ -172,20 +164,21 @@ export default {
         this.videoForm.showVideoPath = res.url;
         const result = this.postVideo();
         const results = Promise.resolve(result);
-        results.then((r) => {
+        results.then(r => {
           if (r.code == 200) {
+            this.showReset = true;
             return this.$message.success({
-              message: r.msg,
+              message: r.msg
             });
           } else {
             return this.$message.error({
-              message: r.msg,
+              message: r.msg
             });
           }
         });
       } else {
         return this.$message.error({
-          message: "上传视屏失败",
+          message: "上传视屏失败"
         });
       }
     },
@@ -194,7 +187,7 @@ export default {
       let data = {
         videoUrl: this.videoForm.showVideoPath,
         caption: this.videoTitle,
-        categoryID: this.categoryID,
+        categoryID: this.categoryID
       };
       const res = await addVideo(data);
       const result = res.data;
@@ -204,16 +197,25 @@ export default {
         return;
       }
     },
+    resetVideo() {
+      setTimeout(() => {
+        this.videoForm.showVideoPath = "";
+        this.videoTitle = "";
+        this.categoryID = "";
+        this.selectVideo = true;
+        this.showReset = false;
+      }, 1000);
+    }
   },
   mounted() {
     getCty()
-      .then((res) => {
+      .then(res => {
         this.categories = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
@@ -245,5 +247,10 @@ export default {
 .video {
   position: relative;
   width: 100%;
+}
+.reset_video {
+  position: absolute;
+  bottom: 10px;
+  left: 120px;
 }
 </style>

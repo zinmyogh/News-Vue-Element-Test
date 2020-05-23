@@ -1,9 +1,9 @@
 <template>
   <div class="adv">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>管理员</el-breadcrumb-item>
-      <el-breadcrumb-item>发布广告</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">{{ this.$t("home.home") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("admin.admin") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("admin.adv") }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
     <el-upload
@@ -26,38 +26,42 @@
       label-width="100px"
       class="demo-advForm"
     >
-      <el-form-item label="广告标题" prop="advTitle">
+      <el-form-item :label="this.$t(`ad.adtitle`)" prop="advTitle">
         <el-input
           clearable
           v-model.number="advForm.advTitle"
-          placeholder="视屏标语"
+          :placeholder="this.$t(`ad.adcaption`)"
         ></el-input>
       </el-form-item>
-      <el-form-item label="广告URL" prop="advUrl">
-        <el-input
-          clearable
-          v-model.number="advForm.advUrl"
-          placeholder="http://xxx.com/"
-        ></el-input>
+      <el-form-item :label="this.$t(`ad.adurl`)" prop="advUrl">
+        <el-input clearable v-model.number="advForm.advUrl" placeholder="http://xxx.com/"></el-input>
       </el-form-item>
-      <el-form-item label="广告有效期" prop="advDay">
+      <el-form-item :label="this.$t(`ad.adday`)" prop="advDay">
         <el-input
           type="int"
           clearable
           v-model.number="advForm.advDay"
-          placeholder="广告要显示几天"
+          :placeholder="this.$t(`ad.advd`)"
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm">提交</el-button>
-        <el-button @click="resetForm('advForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm">
+          {{
+          this.$t("ad.adsubmit")
+          }}
+        </el-button>
+        <el-button @click="resetForm('advForm')">
+          {{
+          this.$t("ad.adreset")
+          }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import BaseUrl from "../../api/default";
+import { BaseUrl, ImgUrl } from "../../api/default";
 import { addAdv } from "../../api/adv";
 export default {
   data() {
@@ -85,7 +89,7 @@ export default {
       }
     };
     return {
-      serverUrl: `${BaseUrl.BaseUrl}article/articleimage`,
+      serverUrl: `${BaseUrl}article/articleimage`,
       token: { authorization: localStorage.token },
       limitCount: 1,
       advImgUrl: "",
@@ -93,32 +97,32 @@ export default {
       advForm: {
         advTitle: "",
         advUrl: "",
-        advDay: "",
+        advDay: ""
       },
       rules: {
         advTitle: [{ validator: checkadvTitle, trigger: "blur" }],
         advUrl: [{ validator: checkadvUrl, trigger: "blur" }],
-        advDay: [{ validator: checkadvDay, trigger: "blur" }],
-      },
+        advDay: [{ validator: checkadvDay, trigger: "blur" }]
+      }
     };
   },
   methods: {
     handleAvatarSuccess(res) {
-      this.advImgUrl = res.url;
+      this.advImgUrl = ImgUrl + res.url;
     },
     submitForm() {
-      this.$refs.advForm.validate(async (valid) => {
+      this.$refs.advForm.validate(async valid => {
         if (valid && this.advImgUrl) {
           let data = {
             caption: this.advForm.advTitle,
             advImage: this.advImgUrl,
             advUrl: this.advForm.advUrl,
-            validDay: this.advForm.advDay,
+            validDay: this.advForm.advDay
           };
           const res = await addAdv(data);
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg,
+              message: res.data.msg
             });
             setTimeout(() => {
               this.$refs.advForm.resetFields();
@@ -126,12 +130,12 @@ export default {
             }, 1000);
           } else {
             this.$message.error({
-              message: res.data.msg,
+              message: res.data.msg
             });
           }
         } else {
           this.$message.error({
-            message: "错误提交！",
+            message: "错误提交！"
           });
         }
       });
@@ -139,8 +143,8 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.advImgUrl = "";
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -156,5 +160,28 @@ export default {
 }
 .el-input {
   width: 80%;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

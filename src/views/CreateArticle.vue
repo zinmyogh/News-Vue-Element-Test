@@ -9,12 +9,7 @@
             { required: true, message: '标题不能为空', trigger: 'blur' },
           ]"
         >
-          <el-input
-            maxlength="50"
-            clearable
-            show-word-limit
-            v-model="titleForm.title"
-          ></el-input>
+          <el-input maxlength="50" clearable show-word-limit v-model="titleForm.title"></el-input>
         </el-form-item>
         <el-form-item>
           <el-select
@@ -39,9 +34,11 @@
       <el-divider></el-divider>
       <CoverUpload ref="cover" @cover="coverList" />
       <div class="upload-btn">
-        <el-button @click="uploadArticle()" type="primary">{{
+        <el-button @click="uploadArticle()" type="primary">
+          {{
           this.$t("article.abtn")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
     </el-card>
   </div>
@@ -55,14 +52,14 @@ import { addArticle } from "../api/article";
 export default {
   components: {
     QuillEditor,
-    CoverUpload,
+    CoverUpload
   },
 
   data() {
     return {
       titleForm: {
         title: "",
-        categoryID: "",
+        categoryID: ""
       },
       content: "", //文章内容
       cover1: "",
@@ -72,33 +69,41 @@ export default {
       categories: [
         {
           categoryID: "",
-          categoryName: "",
-        },
-      ],
+          categoryName: ""
+        }
+      ]
     };
   },
 
   methods: {
-    async uploadArticle() {
-      let data = {
-        caption: this.titleForm.title,
-        categoryID: this.titleForm.categoryID,
-        content: this.content,
-        cover1: this.cover,
-      };
-      const res = await addArticle(data);
-      if (res.data.code == 200) {
-        this.$message.success({
-          message: res.data.msg,
-        });
-        setTimeout(() => {
-          this.$router.go(0);
-        }, 1000);
-      } else {
-        this.$message.error({
-          message: "Server Error! Please try again later!",
-        });
-      }
+    uploadArticle() {
+      this.$refs.titleForm.validate(async valid => {
+        if (valid && this.titleForm.categoryID != "" && this.content != "") {
+          let data = {
+            caption: this.titleForm.title,
+            categoryID: this.titleForm.categoryID,
+            content: this.content,
+            cover1: this.cover
+          };
+          const res = await addArticle(data);
+          if (res.data.code == 200) {
+            this.$message.success({
+              message: res.data.msg
+            });
+            setTimeout(() => {
+              this.$router.go(0);
+            }, 1000);
+          } else {
+            this.$message.error({
+              message: "服务器错误！请稍后重试！"
+            });
+          }
+        } else {
+          this.$message.error({
+            message: "格式错误！"
+          });
+        }
+      });
     },
     coverList(payload) {
       this.cover = payload.toString();
@@ -114,21 +119,21 @@ export default {
               }
             )
           );
-        },
+        }
       };
       let encoded = Base64.encode(payload);
       this.content = encoded;
-    },
+    }
   },
   mounted() {
     getCty()
-      .then((res) => {
+      .then(res => {
         this.categories = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 

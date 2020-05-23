@@ -17,45 +17,35 @@
         </div>
         <div class="avator_right">
           <div class="name">{{ name || "___ ___" }}</div>
-          <div class="introduction">
-            {{ introduction || "靓，还没有写励志短语。。。" }}
-          </div>
+          <div class="introduction">{{ introduction || "靓，还没有写励志短语。。。" }}</div>
         </div>
       </div>
       <div class="account_info">
         <div class="account_info_left">{{ this.$t("myaccount.accinfo") }}</div>
         <div class="account_info_right">
           <div class="account_right1">
-            <div class="account_right1_1">
-              {{ this.$t("myaccount.accname") }}
-            </div>
+            <div class="account_right1_1">{{ this.$t("myaccount.accname") }}</div>
             <div class="account_right1_2">{{ name || "___ ___" }}</div>
           </div>
           <div class="account_right1">
-            <div class="account_right1_1">
-              {{ this.$t("myaccount.accphone") }}
-            </div>
+            <div class="account_right1_1">{{ this.$t("myaccount.accphone") }}</div>
             <div class="account_right1_2">{{ phone }}</div>
           </div>
           <div class="account_right1">
-            <div class="account_right1_1">
-              {{ this.$t("myaccount.accpassword") }}
-            </div>
+            <div class="account_right1_1">{{ this.$t("myaccount.accpassword") }}</div>
 
             <el-button
               style="padding-left: 150px;"
               type="text"
               @click="changePassForm = true"
-              >{{ this.$t("myaccount.accpasswordc") }}</el-button
-            >
+            >{{ this.$t("myaccount.accpasswordc") }}</el-button>
           </div>
           <div class="account_right11">
-            <div class="account_right1_1">
-              {{ this.$t("myaccount.accintro") }}
-            </div>
-            <div class="account_right1_2" style="overflow:hidden;">
-              {{ introduction || "亲，还没有写励志短语。。。" }}
-            </div>
+            <div class="account_right1_1">{{ this.$t("myaccount.accintro") }}</div>
+            <div
+              class="account_right1_2"
+              style="overflow:hidden;"
+            >{{ introduction || "亲，还没有写励志短语。。。" }}</div>
           </div>
         </div>
       </div>
@@ -68,23 +58,23 @@
             <div class="account_right1_2">15983646156534869813</div>
           </div>
           <div class="account_right1">
-            <div class="account_right1_1">
-              {{ this.$t("myaccount.acctype") }}
-            </div>
-            <div class="account_right1_2" style="color: gray">
-              {{ phone == "13100000000" ? "管理员" : "个人" }}
-            </div>
+            <div class="account_right1_1">{{ this.$t("myaccount.acctype") }}</div>
+            <div
+              class="account_right1_2"
+              style="color: gray"
+            >{{ phone == "13100000000" ? "管理员" : "个人" }}</div>
           </div>
           <div class="account_right11">
-            <el-button type="text" @click="updateInfoForm = true">{{
+            <el-button type="text" @click="updateInfoForm = true">
+              {{
               this.$t("myaccount.accinfoc")
-            }}</el-button>
+              }}
+            </el-button>
             <el-button
               type="text"
               @click="logout"
               style="padding-left: 82px; color: #e80000"
-              >{{ this.$t("myaccount.acclogout") }}</el-button
-            >
+            >{{ this.$t("myaccount.acclogout") }}</el-button>
           </div>
         </div>
       </div>
@@ -96,14 +86,18 @@
           <el-input
             clearable
             v-model="passFrom.oldpassword"
+            type="password"
             autocomplete="off"
+            show-password
           ></el-input>
         </el-form-item>
         <el-form-item label="新密码" :label-width="formLabelWidth">
           <el-input
             clearable
+            type="password"
             v-model="passFrom.newpassword"
             autocomplete="off"
+            show-password
           ></el-input>
         </el-form-item>
       </el-form>
@@ -117,18 +111,10 @@
     <el-dialog title="更新信息" :visible.sync="updateInfoForm">
       <el-form :model="infoForm">
         <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input
-            clearable
-            v-model="infoForm.userName"
-            autocomplete="off"
-          ></el-input>
+          <el-input clearable v-model="infoForm.userName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="励志短语" :label-width="formLabelWidth">
-          <el-input
-            clearable
-            v-model="infoForm.introduction"
-            autocomplete="off"
-          ></el-input>
+          <el-input clearable v-model="infoForm.introduction" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -153,17 +139,17 @@ export default {
       changePassForm: false,
       infoForm: {
         userName: "",
-        introduction: "",
+        introduction: ""
       },
       passFrom: {
         oldpassword: "",
-        newpassword: "",
+        newpassword: ""
       },
-      formLabelWidth: "120px",
+      formLabelWidth: "120px"
     };
   },
   computed: {
-    ...mapGetters(["phone", "name", "introduction"]),
+    ...mapGetters(["phone", "name", "introduction"])
   },
   mounted() {
     this.$store.commit("user/SET_PHONE", localStorage.phone);
@@ -189,21 +175,21 @@ export default {
     changePassword() {
       let data = {
         oldpassword: this.passFrom.oldpassword,
-        newpassword: this.passFrom.newpassword,
+        newpassword: this.passFrom.newpassword
       };
       changePass(data)
-        .then((res) => {
+        .then(res => {
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg,
+              message: res.data.msg
             });
           } else {
             this.$message.error({
-              message: res.data.msg,
+              message: res.data.msg
             });
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log("eee: ", e);
         });
       this.changePassForm = false;
@@ -211,7 +197,7 @@ export default {
     async changeInfo() {
       let data = {
         userName: this.infoForm.userName,
-        introduction: this.infoForm.introduction,
+        introduction: this.infoForm.introduction
       };
       this.$store.dispatch("user/setInfo", data);
       this.updateInfoForm = false;
@@ -232,8 +218,8 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
-    },
-  },
+    }
+  }
 };
 </script>
 

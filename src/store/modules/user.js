@@ -1,5 +1,6 @@
 import { Login, SetInfo } from "@/api/user";
 import { setToken } from "../../utils/auth";
+import { Message } from "element-ui";
 
 const state = {
   token: "",
@@ -63,8 +64,10 @@ const actions = {
           resolve(response);
         })
         .catch((error) => {
-          console.log("error lar");
-          reject(error);
+          Message.error({
+            message: "手机或密码错误！",
+          });
+          return reject(error);
         });
     });
   },

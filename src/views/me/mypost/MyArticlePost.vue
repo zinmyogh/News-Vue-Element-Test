@@ -6,48 +6,35 @@
       <el-breadcrumb-item>{{ this.$t("home.article") }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div
-      v-for="article in articlePost"
-      :key="article.articlePostID"
-      class="article_wrap"
-    >
+    <div v-for="article in articlePost" :key="article.articlePostID" class="article_wrap">
       <div v-if="article.cover1">
         <img class="article_img" :src="splitImg(article.cover1)" alt />
       </div>
       <div class="article_info">
         <div>
           <h3>{{ article.caption }}</h3>
-          <p
-            class="content_2_l"
-            v-html="delHtmlTag($options.filters.decode(article.content))"
-          ></p>
+          <p class="content_2_l" v-html="delHtmlTag($options.filters.decode(article.content))"></p>
         </div>
         <div class="article_action">
           <span>{{ like }}</span>
-          <span> {{ article.likeCount || 0 }}</span>
+          <span>{{ article.likeCount || 0 }}</span>
           <span>.</span>
           <span>{{ view }}</span>
-          <span> {{ article.viewCount || 0 }}</span>
+          <span>{{ article.viewCount || 0 }}</span>
           <span>.</span>
           <span>{{ article.createDate | dateDiff }}</span>
           <div class="btn_group">
-            <el-button
-              type="text"
-              @click="articleView(article.articlePostID)"
-              >{{ review }}</el-button
-            >
+            <el-button type="text" @click="articleView(article.articlePostID)">{{ review }}</el-button>
             <el-button
               type="text"
               @click="articleEdit(article.articlePostID)"
               style="color: #ff9900"
-              >{{ edit }}</el-button
-            >
+            >{{ edit }}</el-button>
             <el-button
               type="text"
               @click="articleDelete(article.articlePostID)"
               style="color: #e80000"
-              >{{ del }}</el-button
-            >
+            >{{ del }}</el-button>
           </div>
         </div>
       </div>
@@ -72,9 +59,9 @@ export default {
           viewCount: "",
           likeCount: "",
           createDate: "",
-          categoryName: "",
-        },
-      ],
+          categoryName: ""
+        }
+      ]
     };
   },
   computed: {
@@ -92,7 +79,7 @@ export default {
     },
     del() {
       return this.$t("mypost.delete");
-    },
+    }
   },
   methods: {
     splitImg(cover1) {
@@ -104,51 +91,51 @@ export default {
     articleView(data) {
       this.$router.push({
         name: "ReviewArticle",
-        params: { articlePostID: data },
+        params: { articlePostID: data }
       });
     },
     articleEdit(data) {
       this.$router.push({
         name: "EditArticle",
-        params: { articlePostID: data },
+        params: { articlePostID: data }
       });
     },
     articleDelete(articlePostID) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(async () => {
           let data = { articlePostID: articlePostID };
           const res = await deleteArticle(data);
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg,
+              message: res.data.msg
             });
           } else {
             this.$message.error({
-              message: res.data.msg,
+              message: res.data.msg
             });
           }
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
-    },
+    }
   },
   activated() {
     getArticle()
-      .then((res) => {
+      .then(res => {
         this.articlePost = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
@@ -160,6 +147,7 @@ export default {
 }
 .article_img {
   width: 200px;
+  height: 120px;
   padding: 10px 0px 10px 10px;
 }
 .article_info {
@@ -188,7 +176,7 @@ h3 {
   overflow: hidden;
 }
 span {
-  font-size: 14px;
+  font-size: 13px;
   color: #888888;
   padding: 10px 5px 10px 5px;
 }

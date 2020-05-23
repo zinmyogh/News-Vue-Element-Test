@@ -2,6 +2,7 @@ const en = {
   header: {
     logo: "Myanmar News",
     setting: "Setting",
+    language: "英-EN",
   },
   home: {
     caption: "My News",
@@ -12,7 +13,7 @@ const en = {
 
     follower: "Followers",
     follow: "Follow",
-    tlc: "Got Like",
+    tlc: "Liked",
     post: "Post Count",
     hot: "Hot News",
   },
@@ -45,8 +46,8 @@ const en = {
   },
   moment: {
     msay: "Have Something to Say...",
-    msselect: "You had select: ",
-    msremain: "Remain: ",
+    msselect: "You have selected : ",
+    msremain: "Remaining : ",
     mbtn: "Upload Moment",
   },
   mypost: {
@@ -75,6 +76,30 @@ const en = {
     day: "day",
     month: "month",
     year: "year",
+  },
+  category: {
+    addcty: "Add Category :  ",
+    writecty: "Create a new Category",
+    add: "Add",
+    ctyname: "C-Name",
+    ctyid: "C-ID",
+    ctyuuid: "C-UUID",
+    ctyaction: "Action",
+  },
+  imgadv: {
+    info:
+      "Upload some pictures about activities or advertisements for the display of the carousel",
+    warn: "Note: this operation is only performed by the administrator",
+    upload: "Upload",
+  },
+  ad: {
+    adtitle: "Ad Caption",
+    adcaption: "Add Ad Caption",
+    adurl: "Ad URL",
+    adday: "Valid Days",
+    advd: "Advertising date in days",
+    adsubmit: "Submit",
+    adreset: "Reset",
   },
 };
 

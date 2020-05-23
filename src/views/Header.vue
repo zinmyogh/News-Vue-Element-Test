@@ -41,8 +41,10 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-menu-item>
+      <el-button type="text" @click="switchLang">{{
+        this.$t("header.language")
+      }}</el-button>
     </el-menu>
-    <button @click="switchLang">切换</button>
   </div>
 </template>
 

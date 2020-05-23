@@ -7,11 +7,7 @@
     </el-breadcrumb>
     <div v-for="video in videoPost" :key="video.videoPostID" class="video_wrap">
       <div>
-        <video
-          class="video_img"
-          :src="videoUrl(video.videoURL)"
-          controls="controls"
-        ></video>
+        <video class="video_img" :src="videoUrl(video.videoURL)" controls="controls"></video>
       </div>
       <div class="video_info">
         <div>
@@ -19,10 +15,10 @@
         </div>
         <div class="video_action">
           <span>{{ like }}</span>
-          <span> {{ video.likeCount || 0 }}</span>
+          <span>{{ video.likeCount || 0 }}</span>
           <span>.</span>
           <span>{{ view }}</span>
-          <span> {{ video.viewCount || 0 }}</span>
+          <span>{{ video.viewCount || 0 }}</span>
           <span>.</span>
           <span>{{ video.createDate | dateDiff }}</span>
         </div>
@@ -31,14 +27,12 @@
             type="text"
             @click="videoEdit(video.videoPostID)"
             style="color: #ff9900"
-            >{{ edit }}</el-button
-          >
+          >{{ edit }}</el-button>
           <el-button
             type="text"
             @click="videoDelete(video.videoPostID)"
             style="color: #e80000"
-            >{{ del }}</el-button
-          >
+          >{{ del }}</el-button>
         </div>
       </div>
     </div>
@@ -46,12 +40,7 @@
     <el-dialog Caption="更新视屏标题" :visible.sync="updateVideoCaption">
       <el-form :model="videoForm">
         <el-form-item label="视屏标题" label-width="120px">
-          <el-input
-            clearable
-            maxlength="50"
-            v-model="videoForm.videoCaption"
-            autocomplete="off"
-          ></el-input>
+          <el-input clearable maxlength="50" v-model="videoForm.videoCaption" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -66,7 +55,7 @@
 import {
   getVideo,
   updateVideoCaption,
-  deleteVideoPost,
+  deleteVideoPost
 } from "../../../api/video";
 import { ImgUrl } from "../../../api/default";
 export default {
@@ -74,7 +63,7 @@ export default {
     return {
       updateVideoCaption: false,
       videoForm: {
-        videoCaption: "",
+        videoCaption: ""
       },
       videoPost: [
         {
@@ -86,10 +75,10 @@ export default {
           viewCount: "",
           likeCount: "",
           createDate: "",
-          categoryName: "",
-        },
+          categoryName: ""
+        }
       ],
-      id: "",
+      id: ""
     };
   },
   computed: {
@@ -104,7 +93,7 @@ export default {
     },
     del() {
       return this.$t("mypost.delete");
-    },
+    }
   },
   methods: {
     videoEdit(data) {
@@ -121,22 +110,22 @@ export default {
       if (this.videoForm.videoCaption) {
         let data = {
           videoPostID: this.id,
-          caption: this.videoForm.videoCaption,
+          caption: this.videoForm.videoCaption
         };
         const res = await updateVideoCaption(data);
         if (res.data.code == 200) {
           this.$message.success({
-            message: res.data.msg,
+            message: res.data.msg
           });
           this.updateVideoCaption = false;
         } else {
           this.$message.error({
-            message: res.data.msg,
+            message: res.data.msg
           });
         }
       } else {
         this.$message.error({
-          message: "视屏标题不能为空！",
+          message: "视屏标题不能为空！"
         });
       }
     },
@@ -144,38 +133,38 @@ export default {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(async () => {
           let data = { videoPostID: videoPostID };
           const res = await deleteVideoPost(data);
           if (res.data.code == 200) {
             this.$message.success({
-              message: res.data.msg,
+              message: res.data.msg
             });
           } else {
             this.$message.error({
-              message: res.data.msg,
+              message: res.data.msg
             });
           }
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
-    },
+    }
   },
   activated() {
     getVideo()
-      .then((res) => {
+      .then(res => {
         this.videoPost = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
@@ -218,7 +207,7 @@ p {
   overflow: hidden; /** 隐藏超出的内容 **/
 }
 span {
-  font-size: 14px;
+  font-size: 13px;
   color: #888888;
   padding: 10px 5px 10px 5px;
 }

@@ -1,22 +1,24 @@
 <template>
   <div class="cty">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>管理员</el-breadcrumb-item>
-      <el-breadcrumb-item>标题管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">
+        {{ this.$t("home.home") }}
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("admin.admin") }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$t("admin.cty") }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
     <div class="create_cty">
-      <span>添加分类：</span>
+      <span>{{ this.$t("category.addcty") }}</span>
       <el-input
         placeholder="请输入要添加的分类名"
         suffix-icon="el-icon-circle-plus-outline"
         v-model="categoryNameA"
       ></el-input>
       <span style="padding: 0 10px;"></span>
-      <el-button class="add_cty" type="primary" @click="addcate"
-        >添加</el-button
-      >
+      <el-button class="add_cty" type="primary" @click="addcate">{{
+        this.$t("category.add")
+      }}</el-button>
     </div>
     <el-table :data="categoryData" style="width: 100%;">
       <el-table-column
@@ -25,33 +27,37 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        label="分类名称"
+        :label="this.$t(`category.ctyname`)"
         prop="categoryName"
         width="120px"
         align="center"
       ></el-table-column>
       <el-table-column
-        label="分类ID"
+        :label="this.$t(`category.ctyid`)"
         prop="categoryID"
         width="80px"
         align="center"
       ></el-table-column>
       <el-table-column
-        label="分类UUID"
+        :label="this.$t(`category.ctyuuid`)"
         prop="categoryOrder"
         width="320px"
         align="center"
       ></el-table-column>
-      <el-table-column label="操作" fixed="right" align="center">
+      <el-table-column
+        :label="this.$t(`category.ctyaction`)"
+        fixed="right"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button size="mini" @click="updatecate(scope.$index, scope.row)"
-            >编辑</el-button
-          >
+          <el-button size="mini" @click="updatecate(scope.$index, scope.row)">{{
+            edit
+          }}</el-button>
           <el-button
             size="mini"
             type="danger"
             @click="delcate(scope.$index, scope.row)"
-            >删除</el-button
+            >{{ del }}</el-button
           >
         </template>
       </el-table-column>
@@ -73,6 +79,14 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    edit() {
+      return this.$t("mypost.edit");
+    },
+    del() {
+      return this.$t("mypost.delete");
+    },
   },
   methods: {
     addcate() {

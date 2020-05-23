@@ -4,11 +4,11 @@
       <el-tab-pane :label="this.$t(`home.article`)" name="article">
         <MyArticlePost />
       </el-tab-pane>
-      <el-tab-pane :label="this.$t(`home.moment`)" name="moment">
-        <MyMomentPost />
-      </el-tab-pane>
       <el-tab-pane :label="this.$t(`home.video`)" name="video">
         <MyVideoPost />
+      </el-tab-pane>
+      <el-tab-pane :label="this.$t(`home.moment`)" name="moment">
+        <MyMomentPost />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -22,18 +22,18 @@ export default {
   components: {
     MyArticlePost,
     MyMomentPost,
-    MyVideoPost,
+    MyVideoPost
   },
   data() {
     return {
-      activeName: "article",
+      activeName: "article"
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,11 +1,8 @@
 <template>
   <div class="review" v-if="this.article != null">
-    <h2>{{ this.article[0].caption }}</h2>
-    <h6>{{ this.article[0].createDate }}</h6>
-    <div
-      class="content"
-      v-html="$options.filters.decode(this.article[0].content)"
-    ></div>
+    <h2 class="review_h2">{{ this.article[0].caption }}</h2>
+    <h6 class="review_h6">{{ this.article[0].createDate }}</h6>
+    <div class="content" v-html="$options.filters.decode(this.article[0].content)"></div>
   </div>
 </template>
 
@@ -18,9 +15,9 @@ export default {
         {
           caption: "",
           content: "",
-          createDate: "",
-        },
-      ],
+          createDate: ""
+        }
+      ]
     };
   },
   async activated() {
@@ -31,11 +28,11 @@ export default {
     } else {
       return;
     }
-  },
+  }
 };
 </script>
 
-<style scoped>
+<style>
 .review {
   width: 1030px;
   height: 150vh;
@@ -45,18 +42,22 @@ export default {
   word-break: normal;
   overflow: scroll;
 }
-h2 {
+.review_h2 {
   position: relative;
   display: flex;
   justify-content: center;
 }
-h6 {
+.review_h6 {
   position: relative;
   display: flex;
   justify-content: center;
 }
 .content {
-  position: relative;
+  position: inherit;
   padding: 0 100px 0 100px;
+}
+.content p img {
+  width: 512px;
+  height: 320px;
 }
 </style>

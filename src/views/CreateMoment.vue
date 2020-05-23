@@ -12,12 +12,14 @@
       ></el-input>
       <p>
         {{
-          this.$t("moment.msselect") +
-            uploadLength +
-            ", " +
-            this.$t("moment.msremain")
+        this.$t("moment.msselect") +
+        uploadLength +
+        ", " +
+        this.$t("moment.msremain")
         }}
-        <span v-if="uploadRemain == null">{{ uploadLimit }}</span>
+        <span
+          v-if="uploadRemain == null"
+        >{{ uploadLimit }}</span>
         <span v-else>{{ uploadRemain }}</span>
       </p>
       <div class="image-upload">
@@ -45,9 +47,11 @@
         </el-dialog>
       </div>
       <div class="moment_btn">
-        <el-button type="primary" @click="uploadMoment">{{
+        <el-button type="primary" @click="uploadMoment">
+          {{
           this.$t("moment.mbtn")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
     </div>
   </div>
@@ -69,16 +73,16 @@ export default {
       uploadRemain: null,
       hideUpload: false,
       content: "",
-      imageList: [],
+      imageList: []
     };
   },
   methods: {
     uploadMoment() {
       if (this.content) {
-        return this.$refs.upload.submit();
+        this.$refs.upload.submit();
       } else {
-        return this.$message.error({
-          message: "动态不能为空！",
+        this.$message.error({
+          message: "动态不能为空！"
         });
       }
     },
@@ -89,27 +93,30 @@ export default {
       this.uploadLength -= 1;
     },
     async handleSuccess(res) {
+      console.log("success: ", res);
       let data = {
         content: this.content,
-        images: this.imageList,
+        images: this.imageList
       };
       if (res.code == 200) {
         this.imageList.push(res.url);
         if (this.imageList.length == this.uploadLength) {
           const result = await addMoment(data);
+          console.log("result: ", result);
           this.$message.success({
-            message: result.data.msg,
+            message: result.data.msg
           });
           setTimeout(() => {
             this.$refs.upload.clearFiles();
             this.content = "";
+            this.imageList = [];
             this.uploadLength = 0;
             this.uploadRemain = 9;
           }, 1000);
         }
       } else {
         this.$message.error({
-          message: "上传是出现错误了！",
+          message: "上传是出现错误了！"
         });
       }
     },
@@ -138,8 +145,8 @@ export default {
       this.uploadLength = fileList.length;
       this.uploadRemain = this.uploadLimit - fileList.length;
       this.hideUpload = fileList.length == this.limitCount;
-    },
-  },
+    }
+  }
 };
 </script>
 
