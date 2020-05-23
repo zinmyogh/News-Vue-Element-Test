@@ -83,7 +83,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$store);
+    // console.log(this.$store);
     if (localStorage.userName == "null") {
       return;
     } else {

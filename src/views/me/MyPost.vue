@@ -37,7 +37,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .my_post {
   width: 1020px;
   height: 750px;

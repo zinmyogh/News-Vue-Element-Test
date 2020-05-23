@@ -125,8 +125,103 @@ export default {
   },
 };
 </script>
+<style scoped>
+.el-row {
+  display: flex;
+}
 
-<style lang="scss" scoped>
+.panel-group {
+  margin-top: 18px;
+}
+.panel-group .card-panel-col {
+  margin-bottom: 32px;
+}
+.panel-group .card-panel {
+  border-radius: 3px;
+  height: 120px;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+  overflow: hidden;
+  color: #666;
+  background: #fff;
+  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+.panel-group .card-panel:hover .card-panel-icon-wrapper {
+  color: #fff;
+}
+.panel-group .card-panel:hover .icon-fans {
+  background: #40c9c6;
+}
+.panel-group .card-panel:hover .icon-follower {
+  background: #36a3f7;
+}
+.panel-group .card-panel:hover .icon-like {
+  background: #f4516c;
+}
+.panel-group .card-panel:hover .icon-article {
+  background: #34bfa3;
+}
+.panel-group .card-panel .icon-fans {
+  color: #40c9c6;
+}
+.panel-group .card-panel .icon-follower {
+  color: #36a3f7;
+}
+.panel-group .card-panel .icon-like {
+  color: #f4516c;
+}
+.panel-group .card-panel .icon-article {
+  color: #34bfa3;
+}
+.panel-group .card-panel .card-panel-icon-wrapper {
+  float: left;
+  margin: 14px 0 0 14px;
+  padding: 16px;
+  transition: all 0.38s ease-out;
+  border-radius: 6px;
+}
+.panel-group .card-panel .card-panel-icon {
+  float: left;
+  font-size: 60px;
+}
+.panel-group .card-panel .card-panel-description {
+  float: right;
+  font-weight: bold;
+  margin: 26px;
+  margin-left: 0px;
+}
+.panel-group .card-panel .card-panel-description .card-panel-text {
+  line-height: 18px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.panel-group .card-panel .card-panel-description .card-panel-num {
+  font-size: 20px;
+}
+
+@media (max-width: 550px) {
+  .card-panel-description {
+    display: none;
+  }
+
+  .card-panel-icon-wrapper {
+    float: none !important;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+  }
+  .card-panel-icon-wrapper .i {
+    display: block;
+    margin: 14px auto !important;
+    float: none !important;
+  }
+}
+</style>
+
+<!-- <style lang="scss" scoped>
 .el-row {
   display: flex;
 }
@@ -239,3 +334,4 @@ export default {
   }
 }
 </style>
+-->

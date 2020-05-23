@@ -14,9 +14,7 @@
       >
         <div class="hot_header">
           <u>
-            <div style="padding-bottom: 5px; font-weight: bold;">
-              {{ hot.caption }}
-            </div>
+            <div style="padding-bottom: 5px; font-weight: bold;">{{ hot.caption }}</div>
           </u>
           <div>
             <i class="el-icon-star-on"></i>
@@ -25,10 +23,7 @@
         </div>
 
         <i>
-          <div
-            class="hot_content"
-            v-html="delHtmlTag($options.filters.decode(hot.content))"
-          ></div>
+          <div class="hot_content" v-html="delHtmlTag($options.filters.decode(hot.content))"></div>
         </i>
       </div>
     </el-card>
@@ -45,9 +40,9 @@ export default {
           articlePostID: "",
           caption: "",
           content: "",
-          likeCount: "",
-        },
-      ],
+          likeCount: ""
+        }
+      ]
     };
   },
   methods: {
@@ -57,23 +52,23 @@ export default {
     viewHot(id) {
       this.$router.push({
         name: "ReviewArticle",
-        params: { articlePostID: id },
+        params: { articlePostID: id }
       });
-    },
+    }
   },
   mounted() {
     getHotArticle()
-      .then((res) => {
+      .then(res => {
         this.data = res.data.info;
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
-  },
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .text {
   font-size: 14px;
 }
@@ -90,6 +85,7 @@ export default {
 .hot_content {
   word-break: break-all;
   text-overflow: ellipsis;
+  /* height: 38px; */
   display: -webkit-box;
   /*! autoprefixer: off */
   -webkit-box-orient: vertical;

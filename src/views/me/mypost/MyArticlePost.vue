@@ -139,7 +139,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .article_wrap {
   display: flex;
   flex-direction: row;
@@ -168,6 +168,7 @@ h3 {
   margin-block-end: 0px;
   word-break: break-all;
   text-overflow: ellipsis;
+  /* height: 38px; */
   display: -webkit-box;
   /*! autoprefixer: off */
   -webkit-box-orient: vertical;
